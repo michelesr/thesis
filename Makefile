@@ -1,5 +1,5 @@
 pdf: latex
-	docker run --rm -v $$PWD:/code michelesr/latex /bin/bash scripts/compile.sh
+	docker run --rm -v $$PWD:/code michelesr/latex /bin/bash scripts/compile_pdf.sh
 
 latex:
-	pandoc src/protractor.rst -t latex --chapters -o template/latex/protractor.tex
+	bash scripts/compile_tex.sh
