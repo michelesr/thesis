@@ -1,6 +1,5 @@
 #! /bin/sh
 
-mkdir -p dist
 cd template
 
 # in order to parse generated .toc .aux. .lof .lot
