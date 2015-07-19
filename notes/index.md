@@ -6,10 +6,10 @@
   - how to improve beFair products
   - how is organized the document
 
-2) Improve develop and quality of software
+2) Improve development and quality of software
   - agile software development
   - quality of software
-  - continuos integration
+  - continuous integration
   - the evolution of the software architecture
 
 3) Overview of the different types of automated tests:
@@ -30,7 +30,7 @@
   - Docker containers for e2e testing purpose
   - Using VNC to inspect the browser behaviour inside the containers
 
-6) Continuos Integration
+6) Continuous Integration
   - Travis CI 
   - drone.io
   - ... (TODO)
