@@ -1,27 +1,27 @@
 # Index
 
 1) Introduction
-  - context: beFair, free software and social business
-  - overview of gasistafelice and sbcatalog
-  - improvement of beFair products
-  - organization of this document
+  - Context: beFair, free software and social business
+  - Overview of gasistafelice and sbcatalog
+  - Improvement of beFair products
+  - Organization of this document
 
 2) Improve development and quality of software
-  - agile software development
-  - quality of software
-  - continuous integration
-  - the evolution of the software architecture
+  - Agile software development
+  - Quality of software
+  - Continuous integration
+  - The evolution of the software architecture
 
 3) Overview of the different types of automated tests:
-  - unit tests
-  - integration tests
-  - end-to-end tests
+  - Unit tests
+  - Integration tests
+  - End-to-end tests
 
 4) Modern web applications architecture:
-  - docker container engine
-  - docker-compose: a containers orchestrator made for developers
-  - the relevance of a reproducible environment
-  - gasistafelice and sbcatalog architectures
+  - Docker container engine
+  - Docker Compose: a containers orchestrator made for developers
+  - The relevance of a reproducible environment
+  - Gasistafelice and sbcatalog architectures
 
 5) End-to-end tests:
   - PhantomJS and CasperJS
@@ -32,8 +32,8 @@
 
 6) Continuous Integration
   - Travis CI 
-  - drone.io
-  - ... (TODO)
+  - Drone.io
+  - ...
 
 7) Conclusion
 
