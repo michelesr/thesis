@@ -19,4 +19,4 @@ l'installazione e configurazione dei framework per i browser tests (quali Protra
 
 Tramite l'approccio a container possiamo automatizzare il processo di installazione e configurazione
 di questi ambienti per diversi sistemi operativi, e quindi far girare i test end-to-end anche nelle
-macchine degli sviluppatori.
+macchine degli sviluppatori. (Docker VS Vagrant)
