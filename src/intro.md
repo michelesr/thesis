@@ -50,8 +50,10 @@ In this manifesto, priorities are given in the development process, but the conc
 
 ## Improvement of beFair products
 
-In order to improve beFair software products, we have review our software architecture to fit the microservices model, that emerged out recently and became a standard for many organisations, such as *Google* and *Red Hat*. 
+In order to improve beFair software products, we have adapted our software architecture to fit the microservices model, that emerged out recently and became a standard for many organisations, such as *Google* and *Red Hat*. 
 
-This approach is based to divide the application microservices isolated inside containers, that can communicate with a Virtual Private Network (VPN). Containers provide many advantages if used in production and they will replace Virtual Machines soon.
+This approach divides the application in isolated microservices that live inside containers, and communicate through a Virtual Private Network (VPN). Containers are a evolution of virtual machines and provide many advantages if used in production.
+
+...
 
 ## Organization of this document
