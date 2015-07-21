@@ -115,7 +115,7 @@ In this manifesto, priorities are given in the development process, but the conc
 
 Chapter 2 exhibits the main typologies of automatic tests with example, starting from unit tests, going through integration tests and finally introducing the end to end tests.
 
-Chapter 3 talks about how Docker container engine and *Docker Compose* @docker-compose can be used to easily reproduce an environment similar to the one deployed in production in order to make developers life better, and the main advantages of this approach compared to the use of Vagrant. This chapter will also expose the motivation that leads to the choice of this instruments and will show the architecture of the software that will be tested.
+Chapter 3 talks about how Docker container engine and *Docker Compose* @docker-compose can be used to easily reproduce an environment similar to the one deployed in production in order to make developers life better, and the main advantages of this approach compared to the use of *Vagrant* @vagrant. This chapter will also expose the motivation that leads to the choice of this instruments and will show the architecture of the software that will be tested.
 
 Chapter 4 shows the main tools used in end to end tests and how to configure the testing framework to work with the container ecosystem. The configuration is an integral part of this thesis and aims to reduce the developer effort to get the testing environment.
 
