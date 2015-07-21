@@ -36,7 +36,7 @@ In addition to the configuration of the testing environment in a container based
 
 Tests can run in the developer machines, but it is important that also run in a continuous integration environment. Once the code is pushed to a SCM (Source Code Management) system, a hook for automated tests has to be run, and if the tests pass then the application must be automatically deployed (continuous delivery). If the tests don't pass, the deploy abort and developers have to be warned about the critical situation.
 
-This thesis will cover a implementation of a system like this, using the most recent tool realized for the purpose. These tools provide support for container based architecture, so they fits particularly with the design choices of our projects.
+This thesis will cover a implementation of a system like this, using the most recent tool realized for the purpose. These tools provide support for container based architecture, so they fits particularly with the design choices of the projects.
 
 ### Use cases
 
@@ -44,7 +44,7 @@ This thesis will cover a implementation of a system like this, using the most re
 
 *Gasista felice* @gasistafelice is an online management application made for GAS (Ethical Purchasing Groups) made by the beFair team, and initially developed for *DES* (Distretto Economia Solidale) Macerata.
 
-Gasista felice will be the main use cases for end to end testing, and in particularly, the focus will stay on his new, responsive and mobile friendly web-interface, based on *AngularJS* framework by Google.
+Gasista felice will be the main use case for end to end testing, and in particularly, the focus will stay on his new, responsive and mobile friendly web-interface, based on *AngularJS* framework by Google.
 
 #### Social Business Catalog
 
@@ -113,7 +113,7 @@ In this manifesto, priorities are given in the development process, but the conc
 
 ## Organization of this document
 
-Chapter 2 exhibits the main typologies of automatic tests with example, starting from unit tests, going through integration tests and finally introducing the end to end tests.
+Chapter 2 exhibits the main typologies of automatic tests with related examples, starting from unit tests, going through integration tests and finally introducing the end to end tests.
 
 Chapter 3 talks about how Docker container engine and *Docker Compose* @docker-compose can be used to easily reproduce an environment similar to the one deployed in production in order to make developers life better, and the main advantages of this approach compared to the use of *Vagrant* @vagrant. This chapter will also expose the motivation that leads to the choice of this instruments and will show the architecture of the software that will be tested.
 
