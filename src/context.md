@@ -1,8 +1,6 @@
-# Introduction
+# Context
 
-## Context
-
-### The evolution of software architecture
+## The evolution of software architecture
 
 Over the last few years the software architecture has shift from service based architecture toward smaller micro services.
 
@@ -17,6 +15,18 @@ In the past, the applications followed monolithic architecture style, that means
 But this approach is not suitable to distribute the service in a scalable way. For example an update on a small components of the application require a rebuild and deploy of the entire monolithic application.
 
 In order to reach a microservice approach, the first step to do is to divide the applications in containers, and manage them with a container engine, such as *Docker* @docker.
+
+### The magic of Docker
+
+Docker is a powerful tool. It permits to build images of applications that can be istancied as containers. For example, this thesis is built using *LaTeX*, that is a powerful language for generating documents. Instead of installing the software to generate the document from LaTeX sources, a prebuilt images with all the latex packages necessary to compile the thesis can be used.
+
+With docker, compile this thesis in every operating system is just a matter of running this command on a shell:
+
+	docker run -v $PWD:/code michelesr/latex /bin/bash pdflatex tesi.tex
+
+This command will search for the `michelesr/latex` image in the system, and if is not found, will pull the image from *Docker Hub* @docker-hub that is a repository of docker images. Then the working directory, that contains the LaTeX source files, will be mount to `/code` inside the container, and will be used as working directory. At last, the command will run and the thesis will be magically compiled even if LaTeX is not installed in your system.
+
+Everyone can make an image for docker, the only requirements is to learn to write a *Dockerfile* with defines how to install the software inside the container and which is the working directory to start when running the container (in this example is `/code`) . The Dockerfile used to build this image can be found also on Docker Hub.
 
 ### Containers for production and development
 
