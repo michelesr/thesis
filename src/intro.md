@@ -16,7 +16,7 @@ In the past, the applications followed monolithic architecture style, that means
 
 But this approach is not suitable to distribute the service in a scalable way. For example an update on a small components of the application require a rebuild and deploy of the entire monolithic application.
 
-In order to reach a microservice approach, the first step to do is to divide the applications in containers, and manage them with a container engine, such as *Docker*.
+In order to reach a microservice approach, the first step to do is to divide the applications in containers, and manage them with a container engine, such as *Docker* @docker.
 
 ### Containers for production and development
 
@@ -30,7 +30,7 @@ Regard the testing of the software, there is a series of steps to perform in ord
 
 ### End-to-end testing
 
-In addition to the configuration of the testing environment in a container based software architecture, this document will talk about the end-to-end testing techniques. End-to-end testing is the testing of the final product, and his purpose is to programmatically simulate the user interaction with the application interface in order to discover bug that are visible from the extern, that are the same bugs the users discover first.
+In addition to the configuration of the testing environment in a container based software architecture, this document will talk about the end to end testing techniques. End-to-end testing is the testing of the final product, and his purpose is to programmatically simulate the user interaction with the application interface in order to discover bug that are visible from the extern, that are the same bugs the users discover first.
 
 ### Continuous integration and delivery
 
@@ -44,7 +44,7 @@ This thesis will cover a implementation of a system like this, using the most re
 
 *Gasista felice* @gasistafelice is an online management application made for GAS (Ethical Purchasing Groups) made by the beFair team, and initially developed for *DES* (Distretto Economia Solidale) Macerata.
 
-Gasista felice will be the main use cases for end-to-end testing, and in particularly, the focus will stay on his new, responsive and mobile friendly web-interface, based on *AngularJS* framework by Google.
+Gasista felice will be the main use cases for end to end testing, and in particularly, the focus will stay on his new, responsive and mobile friendly web-interface, based on *AngularJS* framework by Google.
 
 #### Social Business Catalog
 
@@ -56,7 +56,7 @@ Gasista felice will be the main use cases for end-to-end testing, and in particu
 
 Integration tests has been conducted for this application and will be used as example in the overview of integration tests.
 
-The web interface of sbcatalog is made with AngularJS, and will be used a use case for end-to-end tests.
+The web interface of sbcatalog is made with AngularJS, and will be used a use case for end to end tests.
 
 ## New Economy
 
@@ -113,12 +113,12 @@ In this manifesto, priorities are given in the development process, but the conc
 
 ## Organization of this document
 
-Chapter 2 exhibits the main typologies of automatic tests with example, starting from unit tests, going through integration tests and finally introducing the end-to-end tests.
+Chapter 2 exhibits the main typologies of automatic tests with example, starting from unit tests, going through integration tests and finally introducing the end to end tests.
 
-Chapter 3 talks about how Docker Engine and Docker Compose can be used to easily reproduce an environment similar to the one deployed in production in order to make developers life better, and the main advantages of this approach compared to the use of Vagrant. This chapter will also expose the motivation that leads to the choice of this instruments and will show the architecture of the software that will be tested.
+Chapter 3 talks about how Docker container engine and *Docker Compose* @docker-compose can be used to easily reproduce an environment similar to the one deployed in production in order to make developers life better, and the main advantages of this approach compared to the use of Vagrant. This chapter will also expose the motivation that leads to the choice of this instruments and will show the architecture of the software that will be tested.
 
-Chapter 4 shows the main tools used in end-to-end tests, how to configure them to work with the container ecosystem. The configuration is an integral part of this thesis and aims to reduce the developer effort to get the testing environment.
+Chapter 4 shows the main tools used in end to end tests and how to configure the testing framework to work with the container ecosystem. The configuration is an integral part of this thesis and aims to reduce the developer effort to get the testing environment.
 
-Chapter 5 will cover the end-to-end test techniques used for ensure a better quality of the tested software. Testing often reveals bad design choice made during the development process, so this chapter will also give some advice to how to write a better software and better tests.
+Chapter 5 will cover the end to end test techniques used for ensure a better quality of the tested software. In particullary *AngularJS* @angularjs applications will be tested using *Protractor* @protractor testing framework. Testing often reveals bad design choice made during the development process, so this chapter will also give some advice to how to write a better software and better tests.
 
 Chapter 6 will explain how to build a Continuous Integration system to provide automatic run of tests once the code is updated and pushed into the project repository. Continuous integration is essential if we talk about continuous delivery and rolling release of the software products.
