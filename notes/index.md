@@ -18,7 +18,7 @@
   - Docker container engine
   - Docker vs Vagrant
   - Docker Compose: a containers orchestrator made for developers
-  - Gasistafelice architecture
+  - Gasista Felice architecture
 
 4) End-to-end tests:
   - AngularJS
