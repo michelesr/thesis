@@ -8,7 +8,7 @@
 \usepackage[\lingua]{babel}
 %\usepackage{longtable}
 %\usepackage{booktabs}
-%\usepackage{biblatex}
+%\usepackage{bibchapters}
 
 \begin{document}
 
@@ -26,13 +26,18 @@
 %\indicetabelle
 \iniziatesto
 
-\include{latex/intro}
-%\include{latex/context}
-%\include{latex/protractor}
+\include{chapters/intro}
+\include{chapters/context}
+\include{chapters/mvaa}
+\include{chapters/end-to-end}
+\include{chapters/test-setup}
+\include{chapters/ci-cd}
+\include{chapters/conclusions}
+%\include{chapters/appendix}
 
 %\appendix
 %\include{sorgenti/app_a}
-\include{latex/biblio}
+\include{chapters/biblio}
 
 %\ringraziamenti
 %Vorrei ringraziare ...
