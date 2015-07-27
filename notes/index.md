@@ -1,31 +1,42 @@
 # Index
 
 1) Introduction
+  - Organization
 
-2) Context
-
-3) Overview of the different types of automated tests:
+2) Context:
+  - History of testing
   - Unit tests
   - Integration tests
+  - Acceptance tests
   - End-to-end tests
+  - From waterfall to agile development
+  - TDD
+  - BDD
+  - beFair: FLOSS and Social Business
 
-4) Modern web applications architecture:
+3) Modern web applications architecture:
   - Docker container engine
+  - Docker vs Vagrant
   - Docker Compose: a containers orchestrator made for developers
-  - The relevance of a reproducible environment
-  - Gasistafelice and sbcatalog architectures
+  - Gasistafelice architecture
 
-5) End-to-end tests:
-  - PhantomJS and CasperJS
+4) End-to-end tests:
+  - AngularJS
   - Protractor framework for testing AngularJS applications
+  - Testing of gf-ng
+  - Testing of gf legacy (optional)
+  - Good practices for writing a better code
+
+5) Setup of the test environment
+  - Building a docker image for Protractor
   - Selenium and Selenium Grid
-  - Docker containers for e2e testing purpose
+  - Linking Protractor and Selenium containers
+  - Database handling
   - Using VNC to inspect the browser behaviour inside the containers
 
-6) Continuous Integration and Delivery
-  - Travis CI 
-  - Drone.io
-  - ...
+5) Continuous Integration and Delivery
+  - Overview
+  - Setup a continuous integration system with drone.io
 
 C) Conclusion
 
