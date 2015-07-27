@@ -9,9 +9,9 @@
   - Integration tests
   - Acceptance tests
   - End-to-end tests
-  - From waterfall to agile development
-  - TDD
-  - BDD
+  - From Waterfall to Agile Development
+  - Test Driven Development
+  - Behaviour Driven Development
   - beFair: FLOSS and Social Business
 
 3) Modern web applications architecture:
