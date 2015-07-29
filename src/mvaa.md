@@ -2,7 +2,7 @@
 
 ## Docker container engine
 
-*Docker* is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.@wikipedia-docker Docker permits to build images of applications that can be instanced as containers. For any container, Docker provides an isolated and reproducible environment with the advantage of accessing directly to the virtualization feature of the Linux kernel , avoiding the overhead of installing and maintaining virtual machines. To access the virtualization features, Docker can use different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers) and *systemd-nspawn*.@wikipedia-docker
+*Docker* is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux @wikipedia-docker. Docker permits to build images of applications that can be instanced as containers. For any container, Docker provides an isolated and reproducible environment with the advantage of accessing directly to the virtualization feature of the Linux kernel , avoiding the overhead of installing and maintaining virtual machines. To access the virtualization features, Docker can use different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers) and *systemd-nspawn* @wikipedia-docker.
 
 ![Applications running in Virtual Machines](images/vm-diagram.eps)
 
@@ -12,9 +12,9 @@
 
 The base for creating a docker container is an image of an application. The main repository of docker images is *Docker Hub*, where images for all the most famous open-source applications can be found. Any user can sign to Docker Hub and push an image, or make it build on the server. In order to create an image, a *Dockerfile* with the specification of the environment has to be written.
 
-For example, this thesis is built using *LaTeX*, that is a powerful language for generating documents. Instead of installing the software to generate the document from LaTeX sources, a prebuilt images with all the latex packages necessary to compile the thesis can be used. With docker, compile this thesis in every operating system is just a matter of running this command on a shell:
+For example, this thesis is built using *LaTeX*, that is a powerful language for generating documents. Instead of installing the software to generate the document from LaTeX sources, a prebuilt images with all the latex packages necessary to compile the thesis can be used. With Docker, compile this thesis in every supported operating system @docker-install is just a matter of running this command on a shell:
 
-	docker run -v $PWD:/code michelesr/latex /bin/bash pdflatex tesi.tex
+	$ docker run -v $PWD:/code michelesr/latex /bin/bash pdflatex tesi.tex
 
 This command will search for the `michelesr/latex` image in the system, and if is not found, will pull the image from Docker Hub. Then the working directory, that contains the LaTeX source files, will be mount to `/code` inside the container, and will be used as working directory. At last, the command will run and the thesis will be magically compiled even if LaTeX is not installed in your system. The Dockerfile used to build the image is the following:
 
@@ -54,7 +54,7 @@ Sometimes is useful to run a shell inside the environment of a container. In ord
 
     $ docker run --rm -it image_name /bin/bash
 
-The `-i` stands for `--interactive`, and the `-t` is used to allocate a `tty` device for shell. The `--rm` option is used to destroy the container after the exit of the shell. The destruction can be safely performed because once a container is started (for example as a daemon) with a command, will continue to execute that command until its death. Containers can be stopped, started and restarted, but once a container is created, the command cannot be changed.
+The `-i` stands for `--interactive`, and the `-t` is used to allocate a *tty* device for shell. The `--rm` option is used to destroy the container after the exit of the shell. The destruction can be safely performed because once a container is started (for example as a daemon) with a command, will continue to execute that command until its death. Containers can be stopped, started and restarted, but once a container is created, the command cannot be changed.
 
 Even if the container is isolated and launching a command inside it can seems meaningless, is useful when containers are linked in network. For example with can use a shell for a container that is linked to a database container to perform a manual manipulation of the data.
 
