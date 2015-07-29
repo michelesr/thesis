@@ -4,9 +4,9 @@
 
 *Docker* is an open-source project that automates the deployment of applications inside software containers, by providing an additional layer of abstraction and automation of operating-system-level virtualization on Linux.@wikipedia-docker Docker permits to build images of applications that can be instanced as containers. For any container, Docker provides an isolated and reproducible environment with the advantage of accessing directly to the virtualization feature of the Linux kernel , avoiding the overhead of installing and maintaining virtual machines. To access the virtualization features, Docker can use different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers) and *systemd-nspawn*.@wikipedia-docker
 
-![Applications running in Virtual Machines @what-is-docker](images/vm-diagram.png)
+![Applications running in Virtual Machines](images/vm-diagram.eps)
 
-![Applications running in Docker containers @what-is-docker](images/docker-diagram.png)
+![Applications running in Docker containers](images/docker-diagram.eps)
 
 ### Docker images
 
