@@ -47,9 +47,17 @@ Ho linkato insieme Gogs e Jenkins e ho pushato il repository di gasistafelice su
 Jenkins offre un API REST per permettere a software come Gogs di triggerare build o richiedere altre funzioni. Per ottenere questo pero' e' necessario impostare un token di autenticazione per il job all'interno di jenkins.
 
     $ curl http://localhost:5000/job/gasistafelice/build -X POST  --user mike:fendstrat --data token=df8d369b7e42a1cd4d6573ed0bec94c0
+
+Per triggerare solo il build invece:
+
+    $ curl http://localhost:5000/git/notifyCommit?url=http://gogs:3000/mike/gasistafelice/
     
 La faccenda inizia a farsi interessante poiche' e' necessario fare un two-way linking tra i container gogs e jenkins... come si fa???
 
-    $ curl http://localhost:5000/git/notifyCommit?url=http://gogs:3000/mike/gasistafelice/
+    # we export also the 5000 port because jenkins will use the same network stack
+    $ docker run --name gogs -d -p 3000:3000 -p 5000:8080 -v /home/michele/Projects/gogs:/data codeskyblue/docker-gogs
 
-https://github.com/gogits/gogs/issues/264
+    # with --net container:gogs we connect jenkins to the same network as gogs
+    $ docker run -d --name jenkins -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -v /usr/lib/libdevmapper.so.1.02:/usr/lib/libdevmapper.so.1.02 -v /home/michele/Projects/jenkins_home:/var/jenkins_home --net container:gogs michelesr/jenkins
+
+Info sugli HOOK: https://github.com/gogits/gogs/issues/264
