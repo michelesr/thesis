@@ -2,9 +2,9 @@
 
 ## Gogs - Go Git Service
 
-*Gogs* (Go Git Service) is an open source lightweight Git Service that will be used as repository and manager of the source code of the projects. Gogs is written in the Go programming language, that is a compiled language. Go uses a static linking of libraries for producing a single binary that can be run in all Linux distribution without install any dependency.
+*Gogs* (Go Git Service) is an open source lightweight Git Service that will be used as repository and manager of the source code of the projects. Gogs is written in the Go programming language, that is a compiled language. Go uses a static linking of libraries for producing a single binary that can be run in all Linux distribution without install any dependency, so Gogs is composed of a single binary.
 
-For installing Go, a prebuilt image will be used for Docker Hub. The command to install and run is:
+For installing Gogs, a prebuilt image will be used for Docker Hub. To install and run Gogs:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
@@ -13,11 +13,11 @@ For installing Go, a prebuilt image will be used for Docker Hub. The command to 
           -v $HOME/gogs_data:/data \
           codeskyblue/docker-gogs
 
-The ports `3000` and `8080` will be exported respectively to `3000` and `5000` of our host. The port `3000` is reserved for the Gogs service, while the `8080` will be used for the Continuous Integration system that will be linked with Gogs later. Gogs require a directory for the configuration file and data storage, then `$HOME/gogs_data` has been mounted inside the container as `/data`.
+The ports `3000` and `8080` will be exported respectively to `3000` and `5000` of our host. The port `3000` is reserved for the Gogs service, while the `8080` will be used for the Continuous Integration system that will be linked with Gogs later. Gogs require a directory for the configuration file and data storage, so `$HOME/gogs_data` has been mounted inside the container as `/data`.
 
 ### Configuration
 
-Opening the browser at `http://localhost:3000/` will redirect to the first configuration page. The configuration adopted is:
+Opening the browser at `http://localhost:3000/` will redirect to the first configuration page. The configuration to adopt is:
 
 - Database type:  `SQLite3`
 - Database path: `data/gogs.db`
@@ -33,7 +33,7 @@ For the admin account:
 - Password: `*********`
 - Email: `superuser@example.org`
 
-Settings are confirmed with `Install Gogs` button. Then a normal user account will be registered through the `Register` button:
+Settings are confirmed with `Install Gogs` button. Then a normal user account has to be registered through the `Register` button:
 
 - Username: `Mike`
 - Email: `mikefender@cryptolab.net`
@@ -41,8 +41,9 @@ Settings are confirmed with `Install Gogs` button. Then a normal user account wi
 
 ### Pushing the Gasista Felice repository
 
-After the registration and sign in, will be added a repository for Gasista Felice named `gasistafelice`. After the creation, the local repository needs to be pushed on the Gogs server using git:
+After the registration and sign in, a repository for Gasista Felice named `gasistafelice` has to be created. After the creation, the local repository can be pushed on the Gogs server using git:
 
+    $ cd path/to/gasistafelice/
     $ git remote add gogs http://localhost:3000/mike/gasistafelice.git
 
     $ git push gogs master
@@ -58,7 +59,7 @@ After the registration and sign in, will be added a repository for Gasista Felic
 
 <!-- ![Commits page for `dev` branch of Gasista Felice on Gogs](images/gasistafelice_commits.png) -->
 
-Note: the http protocol has been used for the push because we are in a local environment. Consider replace http with ssh or https.
+Note: the http protocol has been used for the push because Gogs is running in a local environment, and has to be replaced with http or ssh in production.
 
 ## Continuous Integration with Jenkins
 
