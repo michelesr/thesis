@@ -161,7 +161,7 @@ In order to trigger the source code pulling from Jenkins when a push on the SCM 
 The `post-recieve` script must be:
 
     #! /bin/sh 
-    curl http://localhost:8080/git/notifyCommit?url=http://localhost:3000/Mike/gasistafelice/
+    curl 2>/dev/null http://localhost:8080/git/notifyCommit?url=http://localhost:3000/Mike/gasistafelice/
 
 Then the script permission must be setted:
     
