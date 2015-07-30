@@ -132,9 +132,7 @@ Then the access to unlogged user can be disabled returning to the security confi
 
 ### Setting up a Job for Gasista Felice
 
-Navigating to the page `http://localhost:5000/newJob` a new job for the Gasista Felice project can be setted choosing the `Freestyle Project` option and `gasistafelice` as project name.
-
-Configuration for the project is:
+Navigating to the page `http://localhost:5000/newJob` a new job for the Gasista Felice project can be setted choosing the `Freestyle Project` option and `gasistafelice` as project name. Configuration for the project is:
 
 - Source Code Management: `Git`
 - Build: `Add build step -> Execute Shell`
@@ -154,6 +152,8 @@ The command to build is:
     sudo make dbtest
     sudo make test
     sudo docker-compose stop 
+
+The `docker-compose-ci.yml` is renamed to `docker-compose.yml`, replacing the configuration used for development with the one used in continuous integration builds, that is more similar to the production environment configuration. Docker Compose is used to build the container from the Dockerfiles, link and run them, then the test database is loaded and the test are launched. Before finishing the build, the containers are stopped.  
 
 ### Add a hook for triggering a SCM poll
 
