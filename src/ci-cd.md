@@ -104,6 +104,10 @@ Note that this process has been tested on an Arch Linux distribution and some pa
 
     $ cat /etc/passwd | grep $(whoami)
     michele:x:1000:1000::/home/michele:/usr/bin/zsh
+
+If the users doesn't match, using of UUID `1000` can always be forced with:
+
+    # chmod 1000:1000 $HOME/jenkins_data
     
 If Gogs is up and has been launched with the command provided previously, Jenkins can be accessed at the URL `http://localhost:5000`, because the port for the Jenkins service has been exported at the Gogs launch.
 
