@@ -1,16 +1,13 @@
-# Continuous integration and Delivery
+# Continuous Integration
 
 ## Gogs - Go Git Service
 
 *Gogs* (Go Git Service) is an open source lightweight Git Service that will be
-used as repository and manager of the source code of the projects. Gogs is
-written in the Go programming language, that is a compiled language. Go uses a
-static linking of libraries for producing a single binary that can be run in all
-Linux distribution without install any dependency, so Gogs is composed of a
-single binary.
-
-For installing Gogs, a prebuilt image will be used for Docker Hub. To install
-and run Gogs:
+used as *SCM* (Source Code Management) tool. Gogs is written in the Go
+programming language, that is a compiled language. Go uses a static linking of
+libraries for producing a single binary that can be run in all Linux
+distribution without install any dependency, so Gogs is composed of a single
+binary. In order to install Gogs, a prebuilt image from Docker Hub can be used:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
@@ -74,20 +71,45 @@ be pushed on the Gogs server using git:
 <!-- ![Commits page for `dev` branch of Gasista Felice on Gogs](images/gasistafelice_commits.png) -->
 
 Note: the http protocol has been used for the push because Gogs is running in a
-local environment, and has to be replaced with http or ssh in production.
+local environment, and, for security reasons, needs to be replaced with http or
+ssh when the SCM system is running in a remote server.
 
-## Continuous Integration with Jenkins
+## Jenkins
 
-*Jenkins* is a open source software for continuous integration written in Java.
-It permits to run scheduled jobs and, with the required plugins, to schedule
-periodical or triggered automated build for the continuous integration.
+*Jenkins* is a open source software for Continuous Integration written in Java.
+It permits to run scheduled jobs and to schedule periodical or triggered
+automated build for the continuous integration.
 
-### Using Docker inside a container
+To build and test container based applications, Jenkins container require to
+access a Docker daemon, and two different approach are available for the
+purpose:
 
-The solution proposed is to install Jenkins inside a container, but give him the
-access to the Docker daemon on the host in order to make him build and run
-container based applications. In order to do this, a custom Dockerfile to build
-Jenkins is required:
+- grant access to the host Docker daemon inside the Jenkins container
+- use HTTPS to talk to the Docker daemon
+- install Docker inside the Jenkins container
+
+In term of security, the HTTPS based solution is the worst because expose Docker
+daemon on the network. The other two solution instead are on the same security
+level. Sharing the Docker daemon on the host allow trusted users in Jenkins to
+mount host volumes with write permission using Docker, while installing and
+running Docker inside a container require the creation of privileged container
+that can access all the host features including kernel features and device
+access. In every case, using a container for Jenkins is always better than
+installing Jenkins in the host system because Docker provides a layer of
+isolation from the system resources.
+
+For the purpose of this project, the first solution has been adopted, because it
+allows the reuse of the installed and cached images in the host, reducing
+building and testing times. In fact, Docker implements a smart caching system
+that avoid rebuilding images if is not necessary.
+
+![Jenkins interaction with Docker and Testing
+environment](images/jenkins-docker.eps)
+
+### Installation
+
+In order to install Jenkins and the support software, a custom Dockerfile is
+required:
 
     FROM jenkins:1.596
     
@@ -104,19 +126,23 @@ Jenkins is required:
     COPY plugins.txt /usr/share/jenkins/plugins.txt
     RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
-In this Dockerfile, starting from a Jenkins base image,  *Python 2*, *PIP*
+In this Dockerfile, starting from a Jenkins base image,  `python2`, `pip`
 (Python Package Manager), `docker-compose` and `sudo` are installed, then
 superuser privileges are granted to the jenkins user in order to permit the use
 of Docker. Note that the Docker daemon can be accessed without superuser
 privileges if the user is added to the `docker` group, but this can't be done
-inside the Jenkins container so sudo is required. The image built upon that
-Dockerfile can be obtained  with this command:
+inside the Jenkins container so sudo is required. The `plugins.txt` file
+containing the list of plugin to install copied inside the container is:
 
-    $ docker pull michelesr/jenkins
+    scm-api:latest
+    git-client:latest
+    git:latest
+    greenballs:latest
 
 The command to properly run the Jenkins container, giving him the access to
 docker and connecting him to the gogs network is:
 
+    $ docker pull michelesr/jenkins
     $ mkdir $HOME/jenkins_data
     $ docker run --name jenkins -d \
          -v /var/run/docker.sock:/var/run/docker.sock \
@@ -126,13 +152,13 @@ docker and connecting him to the gogs network is:
          --net container:gogs \
          michelesr/jenkins
 
-In order to grant the docker access inside the container, the UNIX socket
-`/var/run/docker.sock`, the docker client (retrieved with the bashism `$(which
-docker)`), the device mapper library `/usr/lib/libdevmmaper.so.1.02`, and a
-directory for jenkins data have to be mounted. With the `--net container:gogs`
-parameter, the Jenkins container will share the same network stack of the Gogs
-container, and the they will be able to communicate connecting to the loopback
-device `localhost`.
+In order to grant access to the Docker daemon inside the container, the UNIX
+socket `/var/run/docker.sock`, the docker client (retrieved with the bashism
+`$(which docker)`), the device mapper library `/usr/lib/libdevmmaper.so.1.02`,
+and a directory for jenkins data have to be mounted. With the `--net
+container:gogs` parameter, the Jenkins container will share the same network
+stack of the Gogs container, and the they will be able to communicate connecting
+to the loopback device `localhost`.
 
 Note that this process has been tested on an Arch Linux distribution and some
 parameters (such as the library path) can be different in another distribution.
@@ -170,7 +196,7 @@ After confirming, an user must be added accessing the page at the URL:
 - E-mail address: `mikefender@cryptolab.net`
 
 Then the access to unlogged user can be disabled returning to the security
-configuration paged and setting:
+configuration page and setting:
 
 - Authorization: `Logged-in users can do anything`
 
