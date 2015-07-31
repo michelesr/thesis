@@ -68,11 +68,9 @@ be pushed on the Gogs server using git:
     To http://localhost:3000/mike/gasistafelice.git
     * [new branch]      master -> master
 
-<!-- ![Commits page for `dev` branch of Gasista Felice on Gogs](images/gasistafelice_commits.png) -->
-
 Note: the http protocol has been used for the push because Gogs is running in a
-local environment, and, for security reasons, needs to be replaced with http or
-ssh when the SCM system is running in a remote server.
+local environment, and, for security reasons, needs to be replaced with HTTPS or
+SSH when the SCM system is running in a remote server.
 
 ## Jenkins
 
@@ -275,3 +273,32 @@ be found at the url: `http://localhost:5000/job/gasistafelice/`.
 
 ![Gogs triggers a SCM pull in reply to a developer
 push](images/jenkins-poll.eps)
+
+### Scheduling of periodic pulls
+
+The scheduling of periodic checks for the gasistafelice job can be
+done from `http://localhost:5000/job/gasistafelice/configure` by filling the
+`Poll SCM -> Schedule` field of the form.
+
+The syntax used for scheduling the pulls is similar to the one used for *CRON*
+jobs. A nightly build can be scheduling with this syntax:
+
+    0 0 * * *
+
+This will execute a build every night at midnight, but a better approach is
+using the H tag:
+
+    H H * * *
+
+This syntax will assure the execution of the job once a day, but a random chosen
+time, avoiding the overlapping of more jobs.
+
+#### Parallel Jobs 
+
+Jenkins is configured by default to execute at most two jobs in parallel. Builds
+for the same jobs are never executed in parallel and are instead queued. To
+configure the maximum number of parallel builds, the system administrator can
+navigate to the Jenkins system configuration page and set the number of executors.
+
+
+### E-mail configuration
