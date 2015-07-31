@@ -232,7 +232,7 @@ Compose is used to build the container from the Dockerfiles, link and run them,
 then the test database is loaded and the test are launched. Before finishing the
 build, the containers are stopped.  
 
-### Add a hook for triggering a SCM poll
+### Add a hook for triggering a SCM pull
 
 In order to trigger the source code pulling from Jenkins when a push on the SCM
 is performed, we must add an hook for the `gasistafelice` repository in Gogs:
@@ -273,4 +273,5 @@ project will be built and tested. The branches to be tracked can be setted in
 the Job Configuration of Jenkins. The status of all the build of the project can
 be found at the url: `http://localhost:5000/job/gasistafelice/`.
 
-## Continuous Delivery
+![Gogs triggers a SCM pull in reply to a developer
+push](images/jenkins-poll.eps)
