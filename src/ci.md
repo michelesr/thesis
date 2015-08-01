@@ -331,7 +331,7 @@ To test the configuration, push to the remote `gasistafelice` repository:
 
 As can be seen from the command output, a poll of `gasistafelice` has been
 scheduled by Jenkins and if changes are found on the `dev-ci` branch, the
-project will be built and tested. The branches to be tracked can be setted in
+project will be built and tested. The tracked branches can be setted in
 the Job Configuration of Jenkins. The status of all the build of the project can
 be found at the url: `http://localhost:5000/job/gasistafelice/`.
 
@@ -396,5 +396,8 @@ notifications:
      http://www.spamhaus.org/query/bl?ip=82.51.4.196 
      (in reply to RCPT TO command))
 
-To bypass anti-spam filter, a whitelist for Jenkins e-mail has to be setted in the
-organization mail server.
+To bypass the anti-spam filter, a whitelist for Jenkins e-mail has to be setted
+in the organization's mail server.
+Or a remote STMP server can be used. In every case, the recipient SMTP server
+can be configured with a anti-spam filter that can block this kind of e-mail
+notifications: 
