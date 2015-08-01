@@ -398,6 +398,3 @@ notifications:
 
 To bypass the anti-spam filter, a whitelist for Jenkins e-mail has to be setted
 in the organization's mail server.
-Or a remote STMP server can be used. In every case, the recipient SMTP server
-can be configured with a anti-spam filter that can block this kind of e-mail
-notifications: 
