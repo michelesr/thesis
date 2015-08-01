@@ -373,10 +373,9 @@ configuration page, the following setting has to be provided:
 - Jenkins Location -> System Admin e-mail address
 - E-mail notification -> SMTP Server
 
-A local STMP Server can be installed with the command:
+A local STMP Server can be installed and linked with Jenkins:
 
-    $ docker run 
-
+    $ docker pull panubo/postfix
     $ docker run --name postfix -d \
           -e MAILNAME='mail.example.org' \
           -e MYNETWORKS='127.0.0.1' \
