@@ -216,11 +216,10 @@ docker and connecting him to the gogs network is:
 
 In order to grant access to the Docker daemon inside the container, the UNIX
 socket `/var/run/docker.sock`, the docker client (retrieved with the bashism
-`$(which docker)`), the device mapper library `/usr/lib/libdevmmaper.so.1.02`,
-and a directory for jenkins data have to be mounted. With the `--net
-container:gogs` parameter, the Jenkins container will share the same network
-stack of the Gogs container, and the they will be able to communicate connecting
-to the loopback device `localhost`.
+`$(which docker)`), the device mapper library, and a directory for jenkins data
+have to be mounted. With the `--net container:gogs` parameter, the Jenkins
+container will share the same network stack of the Gogs container, and the they
+will be able to communicate connecting to the loopback device `localhost`.
 
 Note that this process has been tested on an Arch Linux distribution and some
 parameters (such as the library path) can be different in another distribution.
@@ -292,7 +291,9 @@ configuration used for development with the one used in continuous integration
 builds, that is more similar to the production environment configuration. Docker
 Compose is used to build the container from the Dockerfiles, link and run them,
 then the test database is loaded and the test are launched. Before finishing the
-build, the containers are stopped.  
+build, the containers are stopped.
+The build can be tested clicking on the `Build Now` button in the project
+dashboard.
 
 ### Add a hook for triggering a SCM pull
 
@@ -396,8 +397,10 @@ notifications:
      (in reply to RCPT TO command))
 
 To bypass the anti-spam filter, a whitelist for Jenkins e-mail has to be setted
-in the organization's mail server. An e-mail notification for a project can be
-added from the job configuration page:
+in the organization's mail server. 
+
+An e-mail notification for a project can be added from the job configuration
+page:
 
 - Add post-build action -> E-mail Notification
 - Recipients: whitespace-separated list of recipient addresses
