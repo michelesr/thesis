@@ -396,4 +396,34 @@ notifications:
      (in reply to RCPT TO command))
 
 To bypass the anti-spam filter, a whitelist for Jenkins e-mail has to be setted
-in the organization's mail server.
+in the organization's mail server. An e-mail notification for a project can be
+added from the job configuration page:
+
+- Add post-build action -> E-mail Notification
+- Recipients: whitespace-separated list of recipient addresses
+
+The available conditions are:
+
+- Send e-mail for every unstable build
+- Send separate e-mails to individuals who broke the build
+
+### Continuous delivery
+
+In order to provide Continuous Delivery Jenkins can play the role of trigger for
+the update of the software in production. In order to do this a new job can be
+configured to act as a post build hook. This job will execute the trigger for
+Continuous Delivery, that theoretically consists in accessing an API provided by
+the production stack to deploy the update.
+
+After this new job is configured, it can be triggered as a post-build action of
+the job used to build and test the involved software. The post-build action can
+be configured from the job configuration page:
+
+- Add post-build action -> Build other projects
+- Projects to Build -> The name of the post-build hook job
+
+The available conditions are:
+
+- Trigger only if build is stable
+- Trigger only if the build is unstable
+- Trigger even if the build fails
