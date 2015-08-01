@@ -48,7 +48,7 @@ has to be registered through the `Register` button:
 - Email: `mikefender@cryptolab.net`
 - Password: `*********`
 
-### Pushing the Gasista Felice repository
+### Adding the Gasista Felice repository
 
 After the registration and sign in, a repository for Gasista Felice named
 `gasistafelice` has to be created. After the creation, the local repository can
@@ -71,6 +71,70 @@ be pushed on the Gogs server using git:
 Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
+
+### Docker Compose configuration
+
+Gasista Felice is configured, through `docker-compose.yml`, to pull the images
+for the application components from Docker Hub, and to mount the source code of
+the application from the local repository to allow changes to be reflected
+inside the container.
+
+This approach is perfect for development, where every change to the code has to
+be applied immediately without the rebuild of the images, but in production the
+code is copied when the images are built and changes imply rebuilding.
+
+The components Dockerfile are designed to always do a COPY instruction to copy
+the source code from the repository at build time, but if the
+`docker-compose.yml` contains mount instruction, the content copied at build
+time is replaced with the content of the repository that resides in the
+developer host.
+
+To provide a Continuous Integration testing environment closer to the production
+environment, a new `docker-compose.yml` is required:
+
+    proxy:
+      build: ./proxy
+      ports:
+        - '127.0.0.1:8080:80'
+        - '127.0.0.1:8443:443'
+      links:
+        - front
+        - back
+
+    front:
+      build: ./ui
+
+    back:
+      build: ./gasistafelice
+      ports:
+        - '127.0.0.1:7000:7000'
+      links:
+        - db
+      env_file: ./settings_ci.env
+
+    db:
+      image: postgres:9.4
+      env_file: ./settings_ci.env
+
+    e2e:
+      build: ./test/e2e
+      links:
+        - hub
+
+    ...
+    ...
+
+In this `docker-compose.yml` the `image` instructions are replaced with `build`,
+and path for the Dockerfile with the build instructions are provided for every
+application component image. To avoid conflict with the original docker compose
+file, this configuration file can be called `docker-compose-ci.yml`.
+
+The `settings.env` has been replaced with `settings-ci.env` in some components
+to override the environment variables used inside the container in order to
+reproduce a production environment.
+
+These changes has been saved in the `dev-ci` branch of the gasistafelice
+repository waiting the upstream merge.
 
 ## Jenkins
 
@@ -302,3 +366,35 @@ navigate to the Jenkins system configuration page and set the number of executor
 
 
 ### E-mail configuration
+
+Jenkins can be configured to send e-mails with build reports. From the system
+configuration page, the following setting has to be provided:
+
+- Jenkins Location -> System Admin e-mail address
+- E-mail notification -> SMTP Server
+
+A local STMP Server can be installed with the command:
+
+    $ docker run 
+
+    $ docker run --name postfix -d \
+          -e MAILNAME='mail.example.org' \
+          -e MYNETWORKS='127.0.0.1' \
+          --net container:gogs \
+          panubo/postfix
+          
+Or a remote STMP server can be used. In every case, the recipient SMTP server
+can be configured with a anti-spam filter that can block this kind of e-mail
+notifications: 
+
+     postfix/smtp[200]: B5F3581CEE: to=<jenkins@befair.it>, 
+     relay=mail.befair.it[80.85.85.154]:25, delay=0.58, 
+     delays=0.02/0/0.48/0.08, dsn=5.7.1, 
+     status=bounced (host mail.befair.it[80.85.85.154] 
+     said: 554 5.7.1 Service unavailable; 
+     Client host [82.51.4.196] blocked using zen.spamhaus.org; 
+     http://www.spamhaus.org/query/bl?ip=82.51.4.196 
+     (in reply to RCPT TO command))
+
+To bypass anti-spam filter, a whitelist for Jenkins e-mail has to be setted in the
+organization mail server.
