@@ -133,8 +133,8 @@ The `settings.env` has been replaced with `settings-ci.env` in some components
 to override the environment variables used inside the container in order to
 reproduce a production environment.
 
-These changes has been saved in the `dev-ci` branch of the gasistafelice
-repository waiting the upstream merge.
+These changes has been saved in the `dev` branch of the repository waiting the
+upstream merge.
 
 ## Jenkins
 
@@ -273,7 +273,7 @@ Felice project can be setted choosing the `Freestyle Project` option and
 - Credential: `Add -> Username with Password`
 - Username: `Mike`
 - Password: `********`
-- Branches to build: `dev-ci`
+- Branches to build: `dev` and `master`
 - Build Triggers: `Poll SCM`
 - Schedule: leave blank
 
@@ -318,9 +318,9 @@ Then the script permission must be setted:
 To test the configuration, push to the remote `gasistafelice` repository:
 
     $ cd path/to/gasistafelice/
-    $ git checkout dev-ci
-    Switched to branch 'dev-ci'
-    $ git push gogs dev-ci
+    $ git checkout dev
+    Switched to branch 'dev'
+    $ git push gogs dev
     Counting objects: 12, done.
     Delta compression using up to 4 threads.
     Compressing objects: 100% (11/11), done.
@@ -328,10 +328,10 @@ To test the configuration, push to the remote `gasistafelice` repository:
     Total 12 (delta 5), reused 0 (delta 0)
     remote: Scheduled polling of gasistafelice
     To http://localhost:3000/mike/gasistafelice.git
-     * [new branch]      dev-ci -> dev-ci
+     * [new branch]      dev -> dev
 
 As can be seen from the command output, a poll of `gasistafelice` has been
-scheduled by Jenkins and if changes are found on the `dev-ci` branch, the
+scheduled by Jenkins and if changes are found on the `dev` or `master` branch, the
 project will be built and tested. The tracked branches can be setted in
 the Job Configuration of Jenkins. The status of all the build of the project can
 be found at the url: `http://localhost:5000/job/gasistafelice/`.
