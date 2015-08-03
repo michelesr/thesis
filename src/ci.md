@@ -50,6 +50,7 @@ has to be registered through the `Register` button:
 
 ### Adding the Gasista Felice repository
 
+
 After the registration and sign in, a repository for Gasista Felice named
 `gasistafelice` has to be created. After the creation, the local repository can
 be pushed on the Gogs server using git:
@@ -71,6 +72,23 @@ be pushed on the Gogs server using git:
 Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
+
+#### Forking Workflow for the Development
+
+A common approach to team development inside an organisation consist in setting
+a main repository for the project, that is called `upstream`. All the developers
+that contribute to the project fork the main repository in their account on the
+git server, clone the repository in their local machines, push the changes on
+their personal fork on the server and then make a pull request on the upstream
+for changes review and merge. If a forking workflow is adopted, is necessary
+that all the fork are pushed in SCM and tracked by the Continuous
+Integration system.
+
+For `gasistafelice`, the main repository and developer forks are located on
+Github server. The fork used in this chapter can be obtained by cloning the git
+repository at `https://github.com/michelesr/gasistafelice`. The `dev` branch
+contains the new commit by the developer, while the `master` branch is aligned
+with the upstream.
 
 ### Docker Compose configuration
 
