@@ -2,12 +2,13 @@
 
 ## Gogs - Go Git Service
 
-*Gogs* (Go Git Service) is an open source lightweight Git Service that will be
-used as *SCM* (Source Code Management) tool. Gogs is written in the Go
-programming language, that is a compiled language. Go uses a static linking of
-libraries for producing a single binary that can be run in all Linux
-distribution without install any dependency, so Gogs is composed of a single
-binary. In order to install Gogs, a prebuilt image from Docker Hub can be used:
+*Gogs* (Go Git Service) is an open source lightweight Git Service that plays the
+role of *SCM* (Source Code Management) in the Continuous Integration
+implementation. Gogs is written in the Go programming language, that is a
+compiled language. Go uses a static linking of libraries for producing a single
+binary that can be run in all Linux distribution without install any dependency,
+so Gogs is composed of a single binary. In order to install Gogs, a prebuilt
+image from Docker Hub can be used:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
@@ -16,7 +17,7 @@ binary. In order to install Gogs, a prebuilt image from Docker Hub can be used:
           -v $HOME/gogs_data:/data \
           codeskyblue/docker-gogs
 
-The ports `3000` and `8080` will be exported respectively to `3000` and `5000`
+The ports `3000` and `8080` are exported respectively to `3000` and `5000`
 of our host. The port `3000` is reserved for the Gogs service, while the `8080`
 will be used for the Continuous Integration system that will be linked with Gogs
 later. Gogs require a directory for the configuration file and data storage, so
@@ -49,7 +50,6 @@ has to be registered through the `Register` button:
 - Password: `*********`
 
 ### Adding the Gasista Felice repository
-
 
 After the registration and sign in, a repository for Gasista Felice named
 `gasistafelice` has to be created. After the creation, the local repository can
@@ -87,28 +87,29 @@ Integration system.
 For `gasistafelice`, the main repository and developer forks are located on
 Github server. The fork used in this chapter can be obtained by cloning the git
 repository at `https://github.com/michelesr/gasistafelice`. The `dev` branch
-contains the new commit by the developer, while the `master` branch is aligned
-with the upstream.
+contains the latest change introduced by the developer, while the `master`
+branch is aligned with the upstream.
 
 ### Docker Compose configuration
 
 Gasista Felice is configured, through `docker-compose.yml`, to pull the images
 for the application components from Docker Hub, and to mount the source code of
 the application from the local repository to allow changes to be reflected
-inside the container.
-
-This approach is perfect for development, where every change to the code has to
-be applied immediately without the rebuild of the images, but in production the
-code is copied when the images are built and changes imply rebuilding.
+inside the container. This approach is perfect for development, where every
+change to the code has to be applied immediately without the rebuild of the
+images, but in production the code is copied when the images are built and
+changes imply rebuilding.
 
 The components Dockerfile are designed to always do a COPY instruction to copy
 the source code from the repository at build time, but if the
 `docker-compose.yml` contains mount instruction, the content copied at build
 time is replaced with the content of the repository that resides in the
-developer host.
+developer host. This is normal in a UNIX-like system where during the mount the
+content of the directory specified as mount point is replaced with the content
+of the mounted file system.
 
-To provide a Continuous Integration testing environment closer to the production
-environment, a new `docker-compose.yml` is required:
+To provide a Continuous Integration testing environment closer to the one used
+in production, a new `docker-compose.yml` is required:
 
     proxy:
       build: ./proxy
@@ -147,12 +148,9 @@ and path for the Dockerfile with the build instructions are provided for every
 application component image. To avoid conflict with the original docker compose
 file, this configuration file can be called `docker-compose-ci.yml`.
 
-The `settings.env` has been replaced with `settings-ci.env` in some components
-to override the environment variables used inside the container in order to
-reproduce a production environment.
-
-These changes has been saved in the `dev` branch of the repository waiting the
-upstream merge.
+The `settings.env` has been replaced with `settings_ci.env` in some components
+to override the environment variables used in development with the production
+variables.
 
 ## Jenkins
 
@@ -173,9 +171,9 @@ daemon on the network. The other two solution instead are on the same security
 level. Sharing the Docker daemon on the host allow trusted users in Jenkins to
 mount host volumes with write permission using Docker, while installing and
 running Docker inside a container require the creation of privileged container
-that can access all the host features including kernel features and device
-access. In every case, using a container for Jenkins is always better than
-installing Jenkins in the host system because Docker provides a layer of
+that can access all the host features including kernel specific features and
+device access. In every case, using a container for Jenkins is always better
+than installing Jenkins in the host system because Docker provides a layer of
 isolation from the system resources.
 
 For the purpose of this project, the first solution has been adopted, because it
@@ -183,7 +181,7 @@ allows the reuse of the installed and cached images in the host, reducing
 building and testing times. In fact, Docker implements a smart caching system
 that avoid rebuilding images if is not necessary.
 
-![Jenkins interaction with Docker and Testing
+![Jenkins interaction with Docker and testing
 environment](images/jenkins-docker.eps)
 
 ### Installation
