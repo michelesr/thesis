@@ -42,7 +42,7 @@ requirements are to be satisfied:
 - a daily complete build of the projects has to be performed in order to assure
   the correctness of the software
 
-- the environment used for the build inside has to be similar to the environment
+- the environment used for the build has to be similar to the environment
   used in production
 
 The implementation will cover those aspect.
