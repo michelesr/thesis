@@ -8,9 +8,9 @@ daily, leading to multiple integrations per day. Each integration is verified by
 an automated build (including test) to detect integration errors as quickly as
 possible @martinfowler-ci. This approach is the opposite of Deferred
 Integration, where the work of the developers is integrated less frequently,
-usually leading to integration problem.  Continuous integration is one of the
-twelve practices of *XP* (*Extreme Programming*) @xp-practices-wikipedia, and is
-a main practice of Agile software development process.
+usually leading to integration problem. Continuous integration is one of the
+twelve practices of *XP* (*Extreme Programming*) @xp-practices-wikipedia, and
+is essential for adopting an Agile software development process.
 
 In Continuous Integration, a developer is always aligned with the changes
 introduced by other developers, and every change is tested by a Continuous
@@ -51,15 +51,15 @@ developers that contribute to the project fork the main repository in their
 account on the git server, clone the repository in their local machines, push
 the changes on their personal fork on the server and then make a pull request on
 the upstream for changes review and merge. If a forking workflow is adopted, is
-necessary that all the fork are pushed in SCM and tracked by the Continuous
-Integration system.
+necessary that all the fork that are pushed in SCM are also tracked by the
+Continuous Integration system.
 
 The Continuous Integration good practices involve the pulling of last changes,
 their integration and the running of automated tests before every developer
 commit, in order to discover the conflicts between the upstream and the local
 work of the developer.
 
-For `gasistafelice`, the main repository and developer forks are located on
+For `gasistafelice`, the main repository and developers forks are located on
 Github server. The fork of the repository that acts as a use case in this
 chapter is available at `https://github.com/michelesr/gasistafelice`. The `dev`
 branch contains the latest change introduced by the developer, while the
@@ -68,18 +68,16 @@ branch contains the latest change introduced by the developer, while the
 ### Organization
 
 This chapter will present the organization and implementation of a Continuous
-Integration system. Continuous Integration is an essential part of an Agile
-software development process. This implementation is based on the cooperation
+Integration system. This implementation is based on the cooperation
 between different components:
 
 - a Git based Source Code Management
 - a Continuous Integration tool
-- Docker and docker-compose
+- Docker and Docker Compose
 
 For every component used in the implementation, the installation and
-configuration procedure will be exposed. A desktop machine will be used for the
-installation of the environment, but the procedure is completely replicable in a
-server that runs a GNU/Linux operating system.
+configuration procedure will be exposed. The procedure can be reproduced in
+desktop environment as well as in servers.
 
 ## Gogs - Go Git Service
 
@@ -154,8 +152,7 @@ Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
 
-
-### Docker Compose configuration
+### Gasista Felice configuration
 
 Gasista Felice is configured, through `docker-compose.yml`, to pull the images
 for the application components from Docker Hub, and to mount the source code of
@@ -215,7 +212,28 @@ file, this configuration file can be called `docker-compose-ci.yml`.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
 to override the environment variables used in development with the production
-variables.
+variables. The discussed changes has been applied to the `dev` branch of the repository.
+
+#### Docker caching system
+
+In order to reduce build times, providing a faster feedback to the developer,
+the Docker caching system can be exploited. When Docker builds an image from a
+Dockerfile, if it founds an image layer already produced for that instruction,
+it avoids the recreation of that layer. The cache can be invalidated when the
+Dockerfile changes, or for the COPY instructions, when the content inside the
+directory to copy changes. 
+
+If the content of the directory to copy inside the container change, then the
+cache for the COPY instruction will be invalidated, and the instruction will be
+executed again, leading to a different output layer. If the layer produced by
+the COPY instruction is different, than the cache is invalidated for all the
+following instruction in the Dockerfile.
+
+To avoid the rebuilding of the entire image, including software dependencies
+that are downloaded through package managers, the COPY instructions for copying
+the source code of the component inside the container have to be placed at the
+bottom of the Dockerfile, encouraging Docker to not rebuild all the layer
+related to the dependencies.
 
 ## Jenkins
 
@@ -243,38 +261,10 @@ isolation from the system resources.
 
 For the purpose of this project, the first solution has been adopted, because it
 allows the reuse of the installed and cached images in the host, reducing
-building and testing times. In fact, Docker implements a smart caching system
-that avoid rebuilding images if is not necessary.
+building and testing times.
 
 ![Jenkins interaction with Docker and testing
 environment](images/jenkins-docker.eps)
-
-#### Docker caching system
-
-In order to reduce build times, providing a faster feedback to the developer,
-the Docker caching system can be exploited. When Docker builds an image from a
-Dockerfile, if it founds an image layer already produced for that instruction,
-it avoids the recreation of that layer. The cache can be invalidated when the
-Dockerfile changes, or for the COPY instructions, when the content inside the
-directory to copy changes. 
-
-If the content of the directory to copy inside the container change, then the
-cache for the COPY instruction will be invalidated, and the instruction will be
-executed again, leading to a different output layer. If the layer produced by
-the COPY instruction is different, than the cache is invalidated for all the
-following instruction in the Dockerfile.
-
-To avoid rebuilding the entire image, including software dependencies that are
-downloaded through package managers, the COPY instructions for copying the
-source code of the component inside the container have to be placed at the
-bottom of the Dockerfile, encouraging Docker to not rebuild all the layer
-related to the dependencies.
-
-Docker Compose can be instructed to avoid the using of the Docker cache,
-ensuring that all the build is done from scratch, that is the wanted behaviour
-for a daily scheduled build replacing the image build command in the script with:
-
-    docker-compose build --no-cache
 
 ### Installation
 
@@ -467,10 +457,17 @@ This syntax will assure the execution of the job once a day, but a random chosen
 time, avoiding the overlapping of more jobs.
 
 Periodical builds can be setted filling the form in `Build Triggers -> Build
-Periodically` using the same syntax used for scheduling pulls.
+Periodically` using the same syntax used for scheduling pulls. For daily builds
+Docker Compose can be instructed to avoid the using of the Docker cache,
+ensuring that all the build is done from scratch, creating a new job with a
+modified build script:
 
-If the periodical build is based on a different build script, for example for
-clearing Docker cache, a new job has to be added and scheduled.
+    mv docker-compose-ci.yml docker-compose.yml
+    sudo docker-compose build --no-cache
+    ...
+    ...
+
+Then the new job can be scheduled for daily execution.
 
 #### Parallel Jobs 
 
