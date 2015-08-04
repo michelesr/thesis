@@ -76,10 +76,10 @@ between different components:
 - a Continuous Integration tool
 - Docker and docker-compose
 
-For every component used in the implementation, will be exposed the installation
-and configuration procedure. A desktop machine will be used for the installation
-of the environment, but the procedure is completely replicable in a server that
-runs a GNU/Linux operating system.
+For every component used in the implementation, the installation and
+configuration procedure will be exposed. A desktop machine will be used for the
+installation of the environment, but the procedure is completely replicable in a
+server that runs a GNU/Linux operating system.
 
 ## Gogs - Go Git Service
 
