@@ -1,5 +1,86 @@
 # Continuous Integration
 
+## Overview
+
+Continuous Integration is a software development practice where members of a
+team integrate their work frequently, usually each person integrates at least
+daily, leading to multiple integrations per day. Each integration is verified by
+an automated build (including test) to detect integration errors as quickly as
+possible @martinfowler-ci. This approach is the opposite of Deferred
+Integration, where the work of the developers is integrated less frequently,
+usually leading to integration problem.  Continuous integration is one of the
+twelve practices of *XP* (*Extreme Programming*) @xp-practices-wikipedia, and is
+a main practice of Agile software development process.
+
+In Continuous Integration, a developer is always aligned with the changes
+introduced by other developers, and every change is tested by a Continuous
+Integration system as soon as committed and pushed in the Source Code Management
+system. Continuous integration helps to spot conflicts between the work of two
+or more developers, allowing fast resolution and avoiding the waste a huge
+amount of time. Also, spotting the bugs as soon as possible help to localize and
+fix them, that is common in Continuous Integration, while in Deferred
+Integration bugs are cumulative and thus hard to localize and fix.
+
+Another benefit of Continuous Integration is the communication: implementing an
+automated building and testing system will give visibility of the current status
+of a project to all the person involved in his realization, thus avoiding
+misunderstandings between those persons. Build results can also published and
+can acts as a indicator of quality of the software development process and of
+the released products. For Open Source projects, a Continuous Integration system
+provide an incentive for contribution.
+
+In order to provide a better Continuous Integration system, the following
+requirements are to be satisfied:
+
+- the build process that follows a push has to be fast to provide the feedback
+  as soon as possible
+ 
+- a daily complete build of the projects has to be performed in order to assure
+  the correctness of the software
+
+- the environment used for the build inside has to be similar to the environment
+  used in production
+
+The implementation will cover those aspect.
+
+### Forking Workflow for the Development
+
+A common approach to team development inside an organisation consist in setting
+a main repository for the project, also referred as *upstream*. All the
+developers that contribute to the project fork the main repository in their
+account on the git server, clone the repository in their local machines, push
+the changes on their personal fork on the server and then make a pull request on
+the upstream for changes review and merge. If a forking workflow is adopted, is
+necessary that all the fork are pushed in SCM and tracked by the Continuous
+Integration system.
+
+The Continuous Integration good practices involve the pulling of last changes,
+their integration and the running of automated tests before every developer
+commit, in order to discover the conflicts between the upstream and the local
+work of the developer.
+
+For `gasistafelice`, the main repository and developer forks are located on
+Github server. The fork of the repository that acts as a use case in this
+chapter is available at `https://github.com/michelesr/gasistafelice`. The `dev`
+branch contains the latest change introduced by the developer, while the
+`master` branch is aligned with the upstream.
+
+### Organization
+
+This chapter will present the organization and implementation of a Continuous
+Integration system. Continuous Integration is an essential part of an Agile
+software development process. This implementation is based on the cooperation
+between different components:
+
+- a Git based Source Code Management
+- a Continuous Integration tool
+- Docker and docker-compose
+
+For every component used in the implementation, will be exposed the installation
+and configuration procedure. A desktop machine will be used for the installation
+of the environment, but the procedure is completely replicable in a server that
+runs a GNU/Linux operating system.
+
 ## Gogs - Go Git Service
 
 *Gogs* (Go Git Service) is an open source lightweight Git Service that plays the
@@ -73,22 +154,6 @@ Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
 
-#### Forking Workflow for the Development
-
-A common approach to team development inside an organisation consist in setting
-a main repository for the project, that is called `upstream`. All the developers
-that contribute to the project fork the main repository in their account on the
-git server, clone the repository in their local machines, push the changes on
-their personal fork on the server and then make a pull request on the upstream
-for changes review and merge. If a forking workflow is adopted, is necessary
-that all the fork are pushed in SCM and tracked by the Continuous
-Integration system.
-
-For `gasistafelice`, the main repository and developer forks are located on
-Github server. The fork used in this chapter can be obtained by cloning the git
-repository at `https://github.com/michelesr/gasistafelice`. The `dev` branch
-contains the latest change introduced by the developer, while the `master`
-branch is aligned with the upstream.
 
 ### Docker Compose configuration
 
@@ -183,6 +248,33 @@ that avoid rebuilding images if is not necessary.
 
 ![Jenkins interaction with Docker and testing
 environment](images/jenkins-docker.eps)
+
+#### Docker caching system
+
+In order to reduce build times, providing a faster feedback to the developer,
+the Docker caching system can be exploited. When Docker builds an image from a
+Dockerfile, if it founds an image layer already produced for that instruction,
+it avoids the recreation of that layer. The cache can be invalidated when the
+Dockerfile changes, or for the COPY instructions, when the content inside the
+directory to copy changes. 
+
+If the content of the directory to copy inside the container change, then the
+cache for the COPY instruction will be invalidated, and the instruction will be
+executed again, leading to a different output layer. If the layer produced by
+the COPY instruction is different, than the cache is invalidated for all the
+following instruction in the Dockerfile.
+
+To avoid rebuilding the entire image, including software dependencies that are
+downloaded through package managers, the COPY instructions for copying the
+source code of the component inside the container have to be placed at the
+bottom of the Dockerfile, encouraging Docker to not rebuild all the layer
+related to the dependencies.
+
+Docker Compose can be instructed to avoid the using of the Docker cache,
+ensuring that all the build is done from scratch, that is the wanted behaviour
+for a daily scheduled build replacing the image build command in the script with:
+
+    docker-compose build --no-cache
 
 ### Installation
 
@@ -355,24 +447,30 @@ be found at the url: `http://localhost:5000/job/gasistafelice/`.
 ![Gogs triggers a SCM pull in reply to a developer
 push](images/jenkins-poll.eps)
 
-### Scheduling of periodic pulls
+### Scheduling of periodic pulls and builds
 
 The scheduling of periodic checks for the gasistafelice job can be
 done from `http://localhost:5000/job/gasistafelice/configure` by filling the
-`Poll SCM -> Schedule` field of the form.
+`Build Triggers -> Poll SCM -> Schedule` field of the form.
 
 The syntax used for scheduling the pulls is similar to the one used for *CRON*
 jobs. A nightly build can be scheduling with this syntax:
 
     0 0 * * *
 
-This will execute a build every night at midnight, but a better approach is
+This will execute a SCM pull every night at midnight, but a better approach is
 using the H tag:
 
     H H * * *
 
 This syntax will assure the execution of the job once a day, but a random chosen
 time, avoiding the overlapping of more jobs.
+
+Periodical builds can be setted filling the form in `Build Triggers -> Build
+Periodically` using the same syntax used for scheduling pulls.
+
+If the periodical build is based on a different build script, for example for
+clearing Docker cache, a new job has to be added and scheduled.
 
 #### Parallel Jobs 
 
