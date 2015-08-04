@@ -3,31 +3,35 @@
 ## Overview
 
 Continuous Integration is a software development practice where members of a
-team integrate their work frequently, usually each person integrates at least
+team integrate their work frequently: usually each person integrates at least
 daily, leading to multiple integrations per day. Each integration is verified by
 an automated build (including test) to detect integration errors as quickly as
 possible @martinfowler-ci. This approach is the opposite of Deferred
 Integration, where the work of the developers is integrated less frequently,
-usually leading to integration problem. Continuous integration is one of the
-twelve practices of *XP* (*Extreme Programming*) @xp-practices-wikipedia, and
-is essential for adopting an Agile software development process.
+usually leading to integration problem. In Deferred Integration the integration
+is treated as an event, while in Continuous Integration is a daily process.
+Continuous integration is one of the twelve practices of *XP* (*Extreme
+Programming*) @xp-practices-wikipedia, and is essential for adopting an Agile
+software development process.
 
 In Continuous Integration, a developer is always aligned with the changes
 introduced by other developers, and every change is tested by a Continuous
 Integration system as soon as committed and pushed in the Source Code Management
 system. Continuous integration helps to spot conflicts between the work of two
 or more developers, allowing fast resolution and avoiding the waste a huge
-amount of time. Also, spotting the bugs as soon as possible help to localize and
-fix them, that is common in Continuous Integration, while in Deferred
-Integration bugs are cumulative and thus hard to localize and fix.
+amount of time. Spotting the bugs as soon as possible helps their localization
+and fix, while in Deferred Integration bugs are cumulative and hard to manage.
 
-Another benefit of Continuous Integration is the communication: implementing an
-automated building and testing system will give visibility of the current status
-of a project to all the person involved in his realization, thus avoiding
-misunderstandings between those persons. Build results can also published and
-can acts as a indicator of quality of the software development process and of
-the released products. For Open Source projects, a Continuous Integration system
-provide an incentive for contribution.
+The main benefits of Continuous Integration are the reduction of the integration
+times and efforts (that involve economical costs), and the ability to always
+release a new working version of the product (frequent small releases is also an
+*XP* practice). Another benefit of Continuous Integration is the communication:
+implementing an automated building and testing system will give visibility of
+the current status of a project to all the person involved in his realization,
+thus avoiding misunderstandings between those persons. Build results can also
+published and can acts as a indicator of quality of the software development
+process and of the released products. For Open Source projects, a Continuous
+Integration system provide an incentive for contribution.
 
 In order to provide a better Continuous Integration system, the following
 requirements are to be satisfied:
