@@ -30,8 +30,8 @@ implementing an automated building and testing system will give visibility of
 the current status of a project to all the person involved in his realization,
 thus avoiding misunderstandings between those persons. Build results can also be
 published and can act as a quality indicator of the software development process
-and of the released products. For Open Source projects, a Continuous Integration
-system provides an incentive for contribution.
+and released products. For Open Source projects, a Continuous Integration system
+provides an incentive for contribution.
 
 In order to provide a better Continuous Integration system, the following
 requirements are to be satisfied:
@@ -406,10 +406,10 @@ build, the containers are stopped.
 The build can be tested clicking on the `Build Now` button in the project
 dashboard.
 
-### Add a hook for triggering a SCM pull
+### Add a hook for triggering a SCM poll
 
-In order to trigger the source code pulling from Jenkins when a push on the SCM
-is performed, we must add an hook for the `gasistafelice` repository in Gogs:
+In order to trigger the SCM poll from Jenkins when a push is performed, a hook
+for the `gasistafelice` repository in Gogs has to be added:
 
     $ cd $HOME/gogs_data/git/repositories/mike/gasistafelice.git/hooks
     $ sudo vi post-receive
@@ -447,10 +447,10 @@ project will be built and tested. The tracked branches can be setted in
 the Job Configuration of Jenkins. The status of all the build of the project can
 be found at the url: `http://localhost:5000/job/gasistafelice/`.
 
-![Gogs triggers a SCM pull in reply to a developer
+![Gogs triggers a SCM poll in reply to a developer
 push](images/jenkins-poll.eps)
 
-### Scheduling of periodic pulls and builds
+### Scheduling of periodic polls and builds
 
 The scheduling of periodic checks for the gasistafelice job can be
 done from `http://localhost:5000/job/gasistafelice/configure` by filling the

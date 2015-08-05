@@ -38,7 +38,7 @@ This command will search for the `michelesr/latex` image in the system, and if
 is not found, will pull the image from Docker Hub. Then the working directory,
 that contains the LaTeX source files, will be mount to `/code` inside the
 container, and will be used as working directory. At last, the command will run
-and the thesis will be magically compiled even if LaTeX is not installed in your
+and the thesis will be magically compiled even if LaTeX is not installed in the
 system. The Dockerfile used to build the image is the following:
 
     FROM debian:8
