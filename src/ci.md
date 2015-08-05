@@ -372,9 +372,18 @@ Felice project can be setted choosing the `Freestyle Project` option and
 - Source Code Management: `Git`
 - Build: `Add build step -> Execute Shell`
 - Repository URL: `http://localhost:3000/Mike/gasistafelice`
-- Credential: `Add -> Username with Password`
+
+More repository for the same project can be tracked. For example the upstream
+and developers forks can be tracked at the same time, and only differences
+between them will trigger a build. If the repository is private credentials are
+required:
+
+- Credentials: `Add -> Username with Password`
 - Username: `Mike`
 - Password: `********`
+
+Other options:
+
 - Branches to build: `dev` and `master`
 - Build Triggers: `Poll SCM`
 - Schedule: leave blank
