@@ -28,7 +28,7 @@ release a new working version of the product (frequent small releases is also an
 *XP* practice). Another benefit of Continuous Integration is the communication:
 implementing an automated building and testing system will give visibility of
 the current status of a project to all the person involved in his realization,
-thus avoiding misunderstandings between those persons. Build results can also
+thus avoiding misunderstandings between those persons. Build results can also be
 published and can acts as a indicator of quality of the software development
 process and of the released products. For Open Source projects, a Continuous
 Integration system provide an incentive for contribution.
