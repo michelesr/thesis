@@ -31,14 +31,14 @@ the current status of a project to all the person involved in his realization,
 thus avoiding misunderstandings between those persons. Build results can also be
 published and can act as a quality indicator of the software development process
 and of the released products. For Open Source projects, a Continuous Integration
-system provide an incentive for contribution.
+system provides an incentive for contribution.
 
 In order to provide a better Continuous Integration system, the following
 requirements are to be satisfied:
 
 - the build process that follows a push has to be fast to provide the feedback
   as soon as possible
- 
+
 - a daily complete build of the projects has to be performed in order to assure
   the correctness of the software
 
@@ -225,7 +225,7 @@ the Docker caching system can be exploited. When Docker builds an image from a
 Dockerfile, if it founds an image layer already produced for that instruction,
 it avoids the recreation of that layer. The cache can be invalidated when the
 Dockerfile changes, or for the COPY instructions, when the content inside the
-directory to copy changes. 
+directory to copy changes.
 
 If the content of the directory to copy inside the container change, then the
 cache for the COPY instruction will be invalidated, and the instruction will be
@@ -276,16 +276,16 @@ In order to install Jenkins and the support software, a custom Dockerfile is
 required:
 
     FROM jenkins:1.596
-    
+
     MAINTAINER Michele Sorcinelli "mikefender@cryptolab.net"
-     
+
     USER root
     RUN apt-get update \
           && apt-get install -y python python-pip sudo \
           && rm -rf /var/lib/apt/lists/*
     RUN pip install docker-compose
     RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
-     
+
     USER jenkins
     COPY plugins.txt /usr/share/jenkins/plugins.txt
     RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
@@ -334,7 +334,7 @@ user (`1000`). The UUID of the current user can be found with the command:
 If the users doesn't match, using of UUID `1000` can always be forced with:
 
     # chmod 1000:1000 $HOME/jenkins_data
-    
+
 If Gogs is up and has been launched with the command provided previously,
 Jenkins can be accessed at the URL `http://localhost:5000`, because the port for
 the Jenkins service has been exported at the Gogs launch.
@@ -395,7 +395,7 @@ The command to build is:
     sudo make up
     sudo make dbtest
     sudo make test
-    sudo docker-compose stop 
+    sudo docker-compose stop
 
 The `docker-compose-ci.yml` is renamed to `docker-compose.yml`, replacing the
 configuration used for development with the one used in continuous integration
@@ -416,13 +416,13 @@ is performed, we must add an hook for the `gasistafelice` repository in Gogs:
 
 The `post-recieve` hook script content is:
 
-    #! /bin/sh 
+    #! /bin/sh
     curl http://localhost:8080/git/notifyCommit\
     ?url=http://localhost:3000/Mike/gasistafelice/ \
     2>/dev/null
 
 Then the script permission must be setted:
-    
+
     $ sudo chown 999:999 post-receive
     $ sudo chmod -x post-receive
 
@@ -482,13 +482,12 @@ modified build script:
 
 Then the new job can be scheduled for daily execution.
 
-#### Parallel Jobs 
+#### Parallel Jobs
 
 Jenkins is configured by default to execute at most two jobs in parallel. Builds
 for the same jobs are never executed in parallel and are instead queued. To
 configure the maximum number of parallel builds, the system administrator can
 navigate to the Jenkins system configuration page and set the number of executors.
-
 
 ### E-mail configuration
 
@@ -506,25 +505,22 @@ A local STMP Server can be installed and linked with Jenkins:
           -e MYNETWORKS='127.0.0.1' \
           --net container:gogs \
           panubo/postfix
-          
-Or a remote STMP server can be used. In every case, the recipient SMTP server
-can be configured with a anti-spam filter that can block this kind of e-mail
-notifications: 
 
-     postfix/smtp[200]: B5F3581CEE: to=<jenkins@befair.it>, 
-     relay=mail.befair.it[80.85.85.154]:25, delay=0.58, 
-     delays=0.02/0/0.48/0.08, dsn=5.7.1, 
-     status=bounced (host mail.befair.it[80.85.85.154] 
-     said: 554 5.7.1 Service unavailable; 
-     Client host [82.51.4.196] blocked using zen.spamhaus.org; 
-     http://www.spamhaus.org/query/bl?ip=82.51.4.196 
+The recipient SMTP server can be configured with a anti-spam filter that can
+block this kind of e-mail notifications, especially if the IP address is
+domestic:
+
+     postfix/smtp[200]: B5F3581CEE: to=<jenkins@mail.example.org>,
+     relay=mail.befair.it[80.85.85.154]:25, delay=0.58,
+     delays=0.02/0/0.48/0.08, dsn=5.7.1,
+     status=bounced (host mail.befair.it[80.85.85.154]
+     said: 554 5.7.1 Service unavailable;
+     Client host [82.51.4.196] blocked using zen.spamhaus.org;
+     http://www.spamhaus.org/query/bl?ip=82.51.4.196
      (in reply to RCPT TO command))
 
-To bypass the anti-spam filter, a whitelist for Jenkins e-mail has to be setted
-in the organization's mail server. 
-
-An e-mail notification for a project can be added from the job configuration
-page:
+To avoid this problem, a remote SMTP server can configured. An e-mail
+notification for a project can be added from the job configuration page:
 
 - Add post-build action -> E-mail Notification
 - Recipients: whitespace-separated list of recipient addresses
