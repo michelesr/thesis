@@ -3,7 +3,7 @@
 ## Overview
 
 Continuous Integration is a software development practice where members of a
-team integrate their work frequently: usually each person integrates at least
+team integrate their work frequently: each person integrates at least
 daily, leading to multiple integrations per day. Each integration is verified by
 an automated build (including test) to detect integration errors as quickly as
 possible @martinfowler-ci. This approach is the opposite of Deferred
@@ -17,7 +17,7 @@ software development process.
 In Continuous Integration, a developer is always aligned with the changes
 introduced by other developers, and every change is tested by a Continuous
 Integration system as soon as committed and pushed in the Source Code Management
-system. Continuous integration helps to spot conflicts between the work of two
+system (SCM). Continuous integration helps to spot conflicts between the work of two
 or more developers, allowing fast resolution and avoiding the waste a huge
 amount of time. Spotting the bugs as soon as possible helps their localization
 and fix, while in Deferred Integration bugs are cumulative and hard to manage.
@@ -71,7 +71,7 @@ branch contains the latest change introduced by the developer, while the
 
 ### Organization
 
-This chapter will present the organization and implementation of a Continuous
+This chapter presents the organization and implementation of a Continuous
 Integration system. This implementation is based on the cooperation
 between different components:
 
@@ -80,7 +80,7 @@ between different components:
 - Docker and Docker Compose
 
 For every component used in the implementation, the installation and
-configuration procedure will be exposed. The procedure can be reproduced in
+configuration procedure is explained. The procedure can be reproduced in
 desktop environment as well as in servers.
 
 ## Gogs - Go Git Service
