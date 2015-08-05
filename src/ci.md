@@ -29,9 +29,9 @@ release a new working version of the product (frequent small releases is also an
 implementing an automated building and testing system will give visibility of
 the current status of a project to all the person involved in his realization,
 thus avoiding misunderstandings between those persons. Build results can also be
-published and can acts as a indicator of quality of the software development
-process and of the released products. For Open Source projects, a Continuous
-Integration system provide an incentive for contribution.
+published and can act as a quality indicator of the software development process
+and of the released products. For Open Source projects, a Continuous Integration
+system provide an incentive for contribution.
 
 In order to provide a better Continuous Integration system, the following
 requirements are to be satisfied:
