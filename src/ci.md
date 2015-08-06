@@ -191,8 +191,6 @@ in production, a new `docker-compose.yml` is required:
 
     back:
       build: ./gasistafelice
-      ports:
-        - '127.0.0.1:7000:7000'
       links:
         - db
       env_file: ./settings_ci.env
@@ -201,18 +199,35 @@ in production, a new `docker-compose.yml` is required:
       image: postgres:9.4
       env_file: ./settings_ci.env
 
+    hub:
+      image: selenium/hub:latest
+
     e2e:
       build: ./test/e2e
       links:
         - hub
 
-    ...
-    ...
+    firefox:
+      image: selenium/node-firefox-debug:latest
+      links:
+        - hub
+        - proxy
+      env_file:
+        - ./test/e2e/settings.env
+
+    chrome:
+      image: selenium/node-chrome-debug:latest
+      links:
+        - hub
+        - proxy
+      env_file:
+        - ./test/e2e/settings.env
 
 In this `docker-compose.yml` the `image` instructions are replaced with `build`,
 and path for the Dockerfile with the build instructions are provided for every
 application component image. To avoid conflict with the original docker compose
-file, this configuration file can be called `docker-compose-ci.yml`.
+file, this configuration file can be called `docker-compose-ci.yml`. The ports
+used for the development are removed.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
 to override the environment variables used in development with the production
