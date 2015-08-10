@@ -1,5 +1,29 @@
 # Containers and container based applications
 
+In the past Virtual Machines covered a role of great importance in cloud
+computing and virtualization, because of his attitude to provide standardized
+and reproducible environments, installable everywhere. The main problem with
+Virtual Machines is that their configuration concern also with the detail of the
+machine, such as hardware (ram, hard disk, processor, network interfaces, etc.),
+when often those feature doesn't require reproduction and introduce overhead.
+In fact, for a developer, the most important part of the virtualization is the
+operating system and application configuration, features that are reproduced
+with fidelity from containers.
+
+The elimination of the overhead and complexity introduced by Virtual Machines is
+not the only reason to prefer containers to them: *Docker* container engine
+provide versioning of the container images, that is a great benefit for software
+development, in fact versioning practices are adopted in all the software
+development team and software houses.  Also Docker provide component reuses: a
+base image can be reused by an infinite number of applications, reducing impact
+on disk space and build times.
+
+This chapter expose the main feature of *Docker* container engine and *Docker
+Compose*, a container orchestration tool for defining reproducible development
+environment. After the explanation of those tools, the structure and the
+configuration of the development environment of Gasista Felice is explained in
+detail.
+
 ## Docker container engine
 
 *Docker is an open-source project that automates the deployment of applications
@@ -309,33 +333,18 @@ With the same method, a bash shell can be launched inside a container:
 
 The `--rm` options is equal to the same option in `docker run` command.
 
-### Docker, Docker Compose and Vagrant
-
-In the past *Vagrant* @wikipedia-vagrant covered a role of great importance in
-cloud computing and virtualization, because of his attitude to provide
-standardized and reproducible environments, installable in every machines. The
-main problem with Vagrant is that it works with Virtual Machines, and the
-description of the environments concern also with the detail of the virtual
-machine configuration, such as hardware configuration (ram, hard disk,
-processor, network interfaces, etc.), when often those feature doesn't require
-reproduction. In fact, for a developer, the most important part of the
-virtualization is the operating system and application configuration, features
-that are reproduced with fidelity from Docker. 
-
-The elimination of the overhead and complexity introduced by virtual machines is
-not the only reason to prefer Docker to Vagrant: Docker provide versioning of
-the images, that is a great benefit for software development, in fact versioning
-practices are adopted in all the software development team and software houses.
-Also Docker provide component reuses as explained previously: a base image can
-be reused by an infinite number of applications, reducing impact on disk space
-and build times.
-
-*Since version 1.6, Vagrant natively supports Docker containers, which serve as
-a substitute for a fully virtualized operating system. This reduces the overhead
-as Docker uses lightweight Linux Containers* @wikipedia-vagrant. Even if Vagrant
-now supports Docker containers, Docker Compose is a preferred tool for its
-simplicity in the configuration.
-
-
 
 ## Gasista Felice architecture
+
+Gasista Felice is a container based web application  divided in different
+components:
+
+- `proxy`: a *Nginx* based proxy server for routing HTTP(S) requests trough the application
+  components 
+- `back`: the application server, also called backend, that is a *Django*
+  application served with *ugwsi*
+- `db`: a *PostgreSQL* database management system
+- `front`: an AngularJS frontend application, and the main web interface of
+  Gasista Felice
+
+
