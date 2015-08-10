@@ -87,11 +87,11 @@ desktop environment as well as in servers.
 
 *Gogs* (Go Git Service) is an open source lightweight Git Service that plays the
 role of *SCM* (Source Code Management) in the Continuous Integration
-implementation. Gogs is written in the Go programming language, that is a
-compiled language. Go uses a static linking of libraries for producing a single
-binary that can be run in all Linux distribution without install any dependency,
-so Gogs is composed of a single binary. In order to install Gogs, a prebuilt
-image from Docker Hub can be used:
+implementation. Like Docker, Gogs is written in the Go programming language,
+that is a compiled language. Go uses a static linking of libraries for producing
+a single binary that can be run in all Linux distribution without install any
+dependency, so Gogs is composed of a single binary. In order to install Gogs, a
+prebuilt image from Docker Hub can be used:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
