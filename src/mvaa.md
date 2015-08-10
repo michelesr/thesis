@@ -1,20 +1,20 @@
 # Containers and container based applications
 
 In the past Virtual Machines covered a role of great importance in cloud
-computing and virtualization, because of his attitude to provide standardized
+computing and virtualization, because of their attitude to provide standardized
 and reproducible environments, installable everywhere. The main problem with
-Virtual Machines is that their configuration concern also with the detail of the
-machine, such as hardware (ram, hard disk, processor, network interfaces, etc.),
-when often those feature doesn't require reproduction and introduce overhead.
-In fact, for a developer, the most important part of the virtualization is the
-operating system and application configuration, features that are reproduced
-with fidelity from containers.
+Virtual Machines is that their configuration concerns also with the detail of
+the machine, such as hardware (ram, hard disk, processor, network interfaces,
+etc.), when often those feature don't require reproduction and introduce
+overhead.  In fact, for a developer, the most important part of the
+virtualization is the operating system and application configuration, features
+that are reproduced with fidelity from containers.
 
 The elimination of the overhead and complexity introduced by Virtual Machines is
-not the only reason to prefer containers to them: *Docker* container engine
-provide versioning of the container images, that is a great benefit for software
+not the only reason to prefer containers: *Docker* container engine provide
+versioning of the container images, that is a great benefit for software
 development, in fact versioning practices are adopted in all the software
-development team and software houses.  Also Docker provide component reuses: a
+development teams and software houses. Also Docker provide component reuses: a
 base image can be reused by an infinite number of applications, reducing impact
 on disk space and build times.
 
@@ -217,8 +217,8 @@ container, Docker links the container named `foobar`, and register an entry in
     root@59633390aff6:/# cat /etc/hosts | grep webserver
     172.17.1.210    webserver d3dd23d4b9c6 foobar 
 
-Containers linking is the base of serving container based applications, that are
-divided in different containers, such as:
+Containers linking is the base of serving container based web applications, that
+usally are divided in different containers, such as:
 
 - Database
 - Application Server
@@ -253,7 +253,7 @@ description of the application containers to instantiate, link and run. The
 syntax used by this configuration file is *YAML* @wikipedia-yaml, a language for
 data serialization (like *JSON*).
 
-An example of a simple web app configuration consist in a Dockerfile for the
+An example of a simple web app configuration consists in a Dockerfile for the
 application server and a `docker-compose.yml`:
 
     # ./Dockerfile
@@ -333,18 +333,62 @@ With the same method, a bash shell can be launched inside a container:
 
 The `--rm` options is equal to the same option in `docker run` command.
 
-
 ## Gasista Felice architecture
 
-Gasista Felice is a container based web application  divided in different
+Gasista Felice is a container based web application divided in different
 components:
 
-- `proxy`: a *Nginx* based proxy server for routing HTTP(S) requests trough the application
+- `proxy`: a nginx based proxy server for routing http(s) requests trough the application
   components 
+
 - `back`: the application server, also called backend, that is a *Django*
   application served with *ugwsi*
-- `db`: a *PostgreSQL* database management system
-- `front`: an AngularJS frontend application, and the main web interface of
+
+- `db`: a *PostgreSQL* database management system, served with Harp web server
+
+- `front`: an *AngularJS* frontend application, the main web interface of
   Gasista Felice
 
+Nginx is the main proxy server and is used to:
+
+- serve static files (html/
+- redirect requests to the REST API of Gasista Felice backend
+- redirect the requests to Harp Server for the web interface
+
+The `docker-compose.yml` used for the development of Gasista Felice is:
+
+    proxy:
+      image: befair/gasistafelice-proxy:latest
+      volumes:
+        - ./proxy:/etc/nginx/conf.d:ro
+      volumes_from:
+        - back
+      ports:
+        - '127.0.0.1:8080:80'
+        - '127.0.0.1:8443:443'
+      links:
+        - front
+        - back
+
+    front:
+      image: befair/gasistafelice-front:latest
+      volumes:
+        - ./ui:/code/ui:rw
+
+    back:
+      image: befair/gasistafelice-back:latest
+      volumes:
+        - ./gasistafelice:/code/gasistafelice:ro
+        - ./gasistafelice/fixtures:/code/gasistafelice/fixtures:rw
+        - /tmp/gf_tracebacker:/tmp/tracebacker:rw
+        - /tmp/gf_profiling:/tmp/profiling:rw
+      ports:
+        - '127.0.0.1:7000:7000'
+      links:
+        - db
+      env_file: ./settings.env
+
+    db:
+      image: postgres:9.4
+      env_file: ./settings.env
 
