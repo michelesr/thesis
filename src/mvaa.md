@@ -335,27 +335,56 @@ The `--rm` options is equal to the same option in `docker run` command.
 
 ## Gasista Felice architecture
 
-Gasista Felice is a container based web application divided in different
-components:
+Gasista Felice born as a Python/Django application with a jQuery based
+interface. The evolution of technologies in web application clients and the
+diffusion of the mobile devices lead to the necessity of a new mobile responsive
+web interface. Gasista Felice now provides a new interface based on AngularJS
+framework by Google, and the old jQuery interface referred as legacy user
+interface. *Nginx* web server is used as the application entry point. The role
+of Nginx consists in:
 
-- `proxy`: a nginx based proxy server for routing http(s) requests trough the application
-  components 
+- routing the requests to the application components
 
-- `back`: the application server, also called backend, that is a *Django*
-  application served with *ugwsi*
+- managing cryptography (https/tls)
 
-- `db`: a *PostgreSQL* database management system, served with Harp web server
+- managing decompression of requests and compression of responses
 
-- `front`: an *AngularJS* frontend application, the main web interface of
-  Gasista Felice
+- caching the responses for reuse (disabled in development environments)
 
-Nginx is the main proxy server and is used to:
+The routing of requests consists in the following rules:
 
-- serve static files (html/
-- redirect requests to the REST API of Gasista Felice backend
-- redirect the requests to Harp Server for the web interface
+- requests related to the new user interface are forwarded to HarpJS server
+  using the http protocol
+
+- requests related to the REST API or the old user interface are forwarded to
+  uWGSI using the uwsgi protocol
+
+HarpJS is a static file server with built-in preprocessing and its role
+consist in serving HTML, CSS and Javascript files, that can be served directly
+or converted on request from higher abstraction level languages such as:
+
+- Markdown, Jade and EJS for HTML
+
+- Sass, Less, Stylus for CSS
+
+- Coffescript for Javascript
+
+uWSGI is an application server and its role consists in:
+
+- starting and managing Python/Django processes
+
+- forward the requests to the processes
+
+- serve static files for the legacy interface
 
 ![Requests routing for Gasista Felice application](images/gf-components.eps)
+
+The containers for the Gasista Felice application are:
+
+- `proxy`: Nginx container
+- `back`: uWSGI, Python/Django container
+- `front`: HarpJs container
+- `db`: PostrgreSQL container
 
 ![Gasista Felice containers and their interaction](images/gf-containers.eps)
 
@@ -365,8 +394,6 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
       image: befair/gasistafelice-proxy:latest
       volumes:
         - ./proxy:/etc/nginx/conf.d:ro
-      volumes_from:
-        - back
       ports:
         - '127.0.0.1:8080:80'
         - '127.0.0.1:8443:443'
@@ -395,3 +422,26 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
     db:
       image: postgres:9.4
       env_file: ./settings.env
+
+For the `proxy` component, configuration files are mounted from `./proxy` to
+`/etc/nginx/conf.d` in read-only mode, the `80` (http) and `443` (https) ports are exposed in
+the host `8080` and `8443` of the host machine, `front` and `back` containers
+are linked in order to allow Nginx to connect to the application frontend and
+backend.
+
+For the `front` component, the directory containing the source code of the
+AngularJS interface are mounted inside `/code/ui` in read-write mode to allow
+their conversion by HarpJS.
+
+For the `backend` component, source code and fixtures are mounted inside the
+container, and the `7000` is exposed from uWSGI to enable direct http connection
+for debug purposes. The backend is linked to `db` container to access database
+features and the `settings.env` file is used for instancing environment
+variables for application configuration.
+
+For the `db` component, the `settings.env` file is used for environment
+variables configuration.
+
+The images used for Gasista Felice application can be found on Docker Hub with
+related Dockerfiles, that are also published in Appendix. The `settings.env` and
+`site.conf` for Nginx configuration can be found also on the Appendix.
