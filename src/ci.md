@@ -340,13 +340,13 @@ will be able to communicate connecting to the loopback device `localhost`.
 
 Note that this process has been tested on an Arch Linux distribution and some
 parameters (such as the library path) can be different in another distribution.
-Also the `jenkins_data` directory must belong to the same UUID as the jenkins
-user (`1000`). The UUID of the current user can be found with the command:
+Also the `jenkins_data` directory must belong to the same UID as the jenkins
+user (`1000`). The UID of the current user can be found with the command:
 
     $ cat /etc/passwd | grep $(whoami)
     michele:x:1000:1000::/home/michele:/usr/bin/zsh
 
-If the users doesn't match, using of UUID `1000` can always be forced with:
+If the users doesn't match, using of UID `1000` can always be forced with:
 
     # chmod 1000:1000 $HOME/jenkins_data
 
