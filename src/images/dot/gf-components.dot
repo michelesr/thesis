@@ -1,0 +1,12 @@
+digraph gf_interaction {
+  size="4,4"
+  autosize=false
+  node [shape=rectangle]
+  "Web Browser" -> Nginx [label="http(s)"]
+  Nginx -> HarpJS [label="http"]
+  Nginx -> uWSGI [label="uwsgi"]
+  uWSGI -> "Python/Django"
+  uWSGI -> "Legacy UI static files"
+  HarpJS -> "UI static files"
+  "Python/Django" -> PostrgreSQL [label="sql"]
+}

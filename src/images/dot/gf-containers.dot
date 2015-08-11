@@ -1,0 +1,8 @@
+graph gf_containers {
+  size="2.5,2.5"
+  autosize=false
+  node [shape=rectangle]
+  Proxy -- Front [label="http"]
+  Proxy -- Back [label="uwsgi"]
+  Back -- DB [label="sql"]
+}
