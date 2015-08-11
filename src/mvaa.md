@@ -355,6 +355,10 @@ Nginx is the main proxy server and is used to:
 - redirect requests to the REST API of Gasista Felice backend
 - redirect the requests to Harp Server for the web interface
 
+![Requests routing for Gasista Felice application](images/gf-components.eps)
+
+![Gasista Felice containers and their interaction](images/gf-containers.eps)
+
 The `docker-compose.yml` used for the development of Gasista Felice is:
 
     proxy:
@@ -391,4 +395,3 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
     db:
       image: postgres:9.4
       env_file: ./settings.env
-
