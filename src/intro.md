@@ -50,44 +50,33 @@ in a continuous integration environment. Once the code is pushed to a *SCM*
 automatically deployed (continuous delivery). If the tests don't pass, the
 deploy must abort and developers have to be warned about the critical situation.
 
-*Gasista Felice* and *Social Business Catalog*, both developed by the beFair
-team and released as *FLOSS* (Free Libre and Open Source Software), are the use
-cases for the work.  *Gasista Felice* is an online management application made
-for GAS (Ethical Purchasing Groups) initially developed for *DES*
-    (Solidarity-based Economy District) Macerata.  *Social Business Catalog* is
-    a  aggregation tool and a showcase for suppliers and products of the social
-    business. In particular, containers for those applications will be set for
-    development and testing, and end-to-end tests using browsers automations
-    will be implemented in combination of a continuous integration and delivery
-    system.
+*Gasista Felice*, developed by the beFair team and released as *FLOSS* (Free
+Libre and Open Source Software), is the use case for the work.  *Gasista Felice*
+is an online management application made for GAS (Ethical Purchasing Groups)
+initially developed for *DES* (Solidarity-based Economy District) Macerata.
 
 ## Organization
 
 Chapter 2 is the context.
 
-Chapter 3 exhibits the main typologies of automatic tests with related examples,
-starting from unit tests, going through integration tests and finally
-introducing the end-to-end tests.
+Chapter 3 introduces and explain in detail Docker container engine, with
+practical examples of usage, then shows how Docker Compose container
+orchestration tool can be used to simply define and build portable development
+and testing environment. The last section of the chapter exposes the structure
+of Gasista Felice, as well as its configuration of the development environment.
 
-Chapter 4 talks about how *Docker container engine* and *Docker Compose* can be
-used to easily reproduce an environment similar to the one deployed in
-production in order to make developers life better, and the main advantages of
-this approach compared to the use of *Vagrant*. This chapter will also expose
-the motivation that leads to the choice of those instruments and will show the
-architecture of the software that will be tested.
+Chapter 4 will cover the end-to-end test techniques used to ensure a better
+quality of the tested software. In particularly *AngularJS* applications will be
+tested using *Protractor* testing framework. Testing often reveals bad design
+choice made during the development process, so this chapter will also give some
+advice to how to write a better software and better tests.
 
 Chapter 5 shows the main tools used in end-to-end tests and how to configure the
 testing framework to work with the container ecosystem. The configuration is an
 integral part of this thesis and aims to reduce the developer effort to get the
 testing environment.
 
-Chapter 6 will cover the end-to-end test techniques used to ensure a better
-quality of the tested software. In particularly *AngularJS* applications will be
-tested using *Protractor* testing framework. Testing often reveals bad design
-choice made during the development process, so this chapter will also give some
-advice to how to write a better software and better tests.
-
-Chapter 7 will explain how to build a Continuous Integration system to provide
+Chapter 6 will explain how to build a Continuous Integration system to provide
 automatic run of tests once the code is updated and pushed into the project
 repository. Continuous integration is essential for continuous delivery and
 rolling release of the software products.
