@@ -90,8 +90,11 @@ role of *SCM* (Source Code Management) in the Continuous Integration
 implementation. Like Docker, Gogs is written in the Go programming language,
 that is a compiled language. Go uses a static linking of libraries for producing
 a single binary that can be run in all Linux distribution without install any
-dependency, so Gogs is composed of a single binary. In order to install Gogs, a
-prebuilt image from Docker Hub can be used:
+dependency, so Gogs is composed of a single binary.
+
+### Installation
+
+In order to install Gogs, a prebuilt image from Docker Hub can be used:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
@@ -156,26 +159,25 @@ Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
 
-### Gasista Felice configuration
+### Docker Compose configuration
 
 Gasista Felice is configured, through `docker-compose.yml`, to pull the images
 for the application components from Docker Hub, and to mount the source code of
 the application from the local repository to allow changes to be reflected
-inside the container. This approach is perfect for development, where every
-change to the code has to be applied immediately without the rebuild of the
-images, but in production the code is copied when the images are built and
-changes imply rebuilding.
-
-The components Dockerfile are designed to always do a COPY instruction to copy
-the source code from the repository at build time, but if the
+inside the container. The component Dockerfiles are designed to always
+perform a COPY instruction to copy the source code from the repository
+during the build, that is performed by Docker Hub, but given that
 `docker-compose.yml` contains mount instruction, the content copied at build
 time is replaced with the content of the repository that resides in the
-developer host. This is normal in a UNIX-like system where during the mount the
-content of the directory specified as mount point is replaced with the content
-of the mounted file system.
+developer host. This is normal in a UNIX-like system where during the mount
+the content of the directory specified as mount point is replaced with the
+content of the mounted file system.
 
-To provide a Continuous Integration testing environment closer to the one used
-in production, a new `docker-compose.yml` is required:
+The mounting approach is perfect for development, where every change to the code
+has to be applied immediately without the rebuild of the images, but in
+production the code is copied when the images are built and changes imply
+rebuilding. To provide a Continuous Integration testing environment closer to
+the one used in production, a new `docker-compose.yml` is required:
 
     proxy:
       build: ./proxy

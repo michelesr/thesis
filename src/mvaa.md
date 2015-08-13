@@ -47,6 +47,22 @@ programming language.
 
 ![Applications running in Docker containers](images/docker-diagram.eps)
 
+### Installation
+
+Docker can be installed in Debian with:
+
+    # apt-get install docker.io
+
+Instructions for other GNU/Linux distributions can be found on Docker online
+documentation. For Windows and Mac OS X, on August 11 2015, *Docker Toolbox* has
+been released as new installer replacing the older *Boot2Docker*. *The Docker
+Toolbox is an installer to quickly and easily install and setup a Docker
+environment on your computer. Available for both Windows and Mac, the Toolbox
+installs Docker Client, Machine, Compose (Mac only), Kitematic and VirtualBox.
+@docker-toolbox.* It's obvious that the only operating systems that can run
+Docker natively (without the support of a virtual machine) are those that run
+on Linux kernel.
+
 ### Docker images
 
 The base for creating a Docker container is an image of an application. The main
@@ -124,7 +140,7 @@ the layers after their modification are rebuilt. Also if another image that use
 approach provides a significant boost of build speed and reduction of disk
 usage.
 
-### Running containers as daemons 
+### Running containers as daemons
 
 Containers can be also used to run daemon applications, such as web servers. For
 example, to run *Gogs*, a Git Service Application for the software versioning
@@ -200,7 +216,7 @@ directory used for storing of Docker data is `/var/lib/docker/`, and it
 contains:
 
 - images
-- containers 
+- containers
 - metadata of images and containers
 - temporary files
 
@@ -261,7 +277,7 @@ image lead to the following result:
 
     $ docker images -a | grep 9a61b6b1315e
     <none>    <none>    9a61b6b1315e    4 weeks ago    125.2 MB
-    
+   
     $ docker rmi -f 9a61b6b1315e
     Error response from daemon: Conflict, 9a61b6b1315e wasn't deleted
     Error: failed to remove images: [9a61b6b1315e]
@@ -299,7 +315,7 @@ container, Docker links the container named `foobar`, registering an entry in
 `/etc/hosts` with the hostname `webserver` referring to the `foobar` container.
 
     root@59633390aff6:/# cat /etc/hosts | grep webserver
-    172.17.1.210    webserver d3dd23d4b9c6 foobar 
+    172.17.1.210    webserver d3dd23d4b9c6 foobar
 
 Containers linking is the base of serving container based web applications, that
 usally are divided in different containers, such as:
@@ -330,6 +346,22 @@ defined in a single configuration file called `docker-compose.yml`, and
 instanced with a singe command. Docker compose is written in the *Python*
 programming language.
 
+### Installation
+
+Docker Compose can be installed with *PIP*, the Python package manager:
+
+    # pip2 install docker-compose
+
+Python 3 is not supported. Docker Compose is only a wrapper to Docker functions,
+and Docker has to be installed in the system. PIP can be installed in Debian
+with the command:
+
+    # apt-get install python-pip
+
+Currently Docker Compose is not supported on Windows operating system. Install
+instructions for other GNU/Linux distributions can be found on Docker Compose
+online documentation. Docker Toolbox for Mac OS X includes Docker Compose.
+
 ### The docker-compose.yml configuration file
 
 The `docker-compose.yml` configuration file Docker Compose contains a
@@ -352,7 +384,7 @@ application server and a `docker-compose.yml`:
 
     web:
       build: .
-      volumes: 
+      volumes:
       - ./data:/data
       links:
       - db
@@ -398,11 +430,11 @@ Compose functions is:
 In particular, the `logs` function is useful to prompt the logs from one or more
 components:
 
-    $ docker-compose logs web db 
+    $ docker-compose logs web db
 
 The `run` function can be used to run a command inside an isolated container
 that can be linked with the application ones, for example a postgres shell can be
-launched from a container linked to `db` for data manipulation: 
+launched from a container linked to `db` for data manipulation:
 
 	docker-compose run --rm web psql
 
@@ -452,9 +484,7 @@ or converted on request from higher abstraction level languages such as:
 uWSGI is an application server and its role consists in:
 
 - starting and managing Python/Django processes
-
 - forwarding the requests to the processes
-
 - serving static files for the legacy interface
 
 ![Requests routing for Gasista Felice application](images/gf-components.eps)
@@ -520,8 +550,18 @@ features and the `settings.env` file is used for instancing environment
 variables for application configuration.
 
 For the `db` component, the `settings.env` file is used for environment
-variables configuration.
+variables configuration. In order to start the Gasista Felice application:
 
-The used images are hosted on Docker Hub. The Dockerfiles used for the images, as
-well as the configuration files `site.conf` (used for Nginx configuration) and
-`settings.env` can be found in the Appendix.
+    $ git clone https://github.com/befair/gasistafelice
+    $ cd gasistafelice
+    $ git checkout master-dj17
+    $ make up
+
+To insert test data inside the database:
+    
+    $ make dbtest
+    
+The application is visitable at `http://localhost:8080`. The used
+images are hosted on Docker Hub. The Dockerfiles used for the images, as well as
+the configuration files `site.conf` used for Nginx configuration,
+`settings.env` and `Makefile` can be found in the Appendix. 
