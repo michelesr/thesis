@@ -1,34 +1,38 @@
 # Containers and container based applications
 
-In the past Virtual Machines covered a role of great importance in cloud
+In the past virtual machines covered a role of great importance in cloud
 computing and virtualization, because of their attitude to provide standardized
 and reproducible environments, installable everywhere. The main problem with
 Virtual Machines is that their configuration concerns also with the detail of
 the machine, such as hardware (ram, hard disk, processor, network interfaces,
 etc.), when often those features don't require reproduction and introduce
-overhead.  In fact, for a developer, the most important part of the
-virtualization is the operating system and application configuration, features
-that are reproduced with fidelity by application containers.
+overhead.  In fact, the most important part of the virtualization is the
+operating system and application configuration, features that are reproduced
+with fidelity by application containers. In addition, the only processes running
+inside a container are the application ones, while inside a virtual machine the
+processes of an entire operating system run, increasing significantly the
+overhead.
 
-The elimination of the overhead and complexity introduced by Virtual Machines is
+The elimination of the overhead and complexity introduced by virtual machines is
 not the only reason to prefer containers: *Docker* container engine provides
-versioning of the images used for creating containers, that is a great benefit
+versioning of the images used for container creation, that is a great benefit
 for software development, in fact versioning practices are adopted in all the
 software development teams and software houses. Also Docker provides
-component reuses: a base image can be reused by an infinite number of
+component reuse: a base image can be reused by an infinite number of
 applications, reducing impact on disk space and build times.
 
 This chapter exposes the main features of *Docker* container engine and *Docker
 Compose*, a container orchestration tool for defining and instancing
-reproducible development environment. After the explanation of those tools, the
-structure and the configuration of the development environment of Gasista Felice
-will be explained in detail.
+reproducible development environments. Once the reader is familiar with the main
+features of Docker and Docker Compose, the container based structure of Gasista
+Felice is explained in detail.
 
 ## Docker container engine
 
 *Docker is an open-source project that automates the deployment of applications
 inside software containers, by providing an additional layer of abstraction and
-automation of operating-system-level virtualization on Linux*@wikipedia-docker.
+automation of operating-system-level virtualization on Linux, Mac OS and
+Windows.* @wikipedia-docker
 
 Docker permits to build images of applications that can be instanced as
 containers. For any container, Docker provides an isolated and reproducible
@@ -37,9 +41,9 @@ features of Linux kernel, avoiding the overhead of installing and maintaining
 virtual machines. To access the virtualization features, Docker can use
 different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers)
 and *systemd-nspawn* @wikipedia-docker. Docker is written in the *Go*
-programming language @wikipedia-go.
+programming language.
 
-![Applications running in Virtual Machines](images/vm-diagram.eps)
+![Applications running in virtual machines](images/vm-diagram.eps)
 
 ![Applications running in Docker containers](images/docker-diagram.eps)
 
@@ -324,13 +328,13 @@ Docker Compose is a powerful tool for the development of container based
 applications. With Docker Compose, the entire application structure can be
 defined in a single configuration file called `docker-compose.yml`, and
 instanced with a singe command. Docker compose is written in the *Python*
-programming language @wikipedia-python.
+programming language.
 
 ### The docker-compose.yml configuration file
 
 The `docker-compose.yml` configuration file Docker Compose contains a
 description of the application containers to instantiate, link and run. The
-syntax used by this configuration file is *YAML* @wikipedia-yaml, a language for
+syntax used by this configuration file is *YAML*, a language for
 data serialization (like *JSON*).
 
 An example of a simple web app configuration consists in a Dockerfile for the
@@ -361,10 +365,10 @@ This configuration is used to build an application that consists of two
 containers:
 
 - `web`: a Python web application server
-- `db`: the *PostgreSQL* @wikipedia-psql database management system
+- `db`: the *PostgreSQL*  database management system
 
 Docker Compose use a simple syntax to define ports exposing, volumes mounting,
-and containers linking. All this function are wrapped from Docker container
+and containers linking. All these functions are wrapped from Docker container
 engine, so they work exactly as explained previously. In this example the `web`
 component image is built from the Dockerfile, while the image for `db` is pulled
 from Docker Hub image registry. To build and run the application:
