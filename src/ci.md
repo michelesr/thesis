@@ -11,16 +11,17 @@ Integration, where the work of the developers is integrated less frequently,
 usually leading to integration problem. In Deferred Integration the integration
 is treated as an event, while in Continuous Integration is a daily process.
 Continuous integration is one of the twelve practices of *XP* (*Extreme
-Programming*) @xp-practices-wikipedia, and is essential for adopting an Agile
-software development process.
+Programming*) @xp-ci, and is essential in order to adopt an Agile
+software development process inside an organization.
 
 In Continuous Integration, a developer is always aligned with the changes
 introduced by other developers, and every change is tested by a Continuous
 Integration system as soon as committed and pushed in the Source Code Management
-system (SCM). Continuous integration helps to spot conflicts between the work of two
-or more developers, allowing fast resolution and avoiding the waste a huge
-amount of time. Spotting the bugs as soon as possible helps their localization
-and fix, while in Deferred Integration bugs are cumulative and hard to manage.
+system (SCM). Continuous integration helps to spot conflicts between the work of
+two or more developers, allowing fast resolution, and therefore avoiding the
+waste of a huge amount of time. Spotting the bugs as soon as possible helps their
+localization and fix, while in Deferred Integration bugs are cumulative and hard
+to manage.
 
 The main benefits of Continuous Integration are the reduction of the integration
 times and efforts (that involve economical costs), and the ability to always
@@ -29,33 +30,36 @@ release a new working version of the product (frequent small releases is also an
 implementing an automated building and testing system will give visibility of
 the current status of a project to all the person involved in his realization,
 thus avoiding misunderstandings between those persons. Build results can also be
-published and can act as a quality indicator of the software development process
-and released products. For Open Source projects, a Continuous Integration system
+published and act as a quality indicator of the software development process and
+released products. For Open Source projects, a Continuous Integration system
 provides an incentive for contribution.
 
-In order to provide a better Continuous Integration system, the following
-requirements are to be satisfied:
+In order to provide an efficient Continuous Integration service, the CI system
+has to satisfy the following requirements:
 
-- the build process that follows a push has to be fast to provide the feedback
-  as soon as possible
+- the build process that follows a push from the developer has to be fast to
+  provide the feedback as soon as possible
 
-- a daily complete build of the projects has to be performed in order to assure
-  the correctness of the software
+- a daily or weekly automated complete build of the projects has to be performed
+  in order to assure the correctness of the software and the compatibility with
+  its external dependencies
 
 - the environment used for the build has to be similar to the environment
   used in production
 
-The implementation will cover those aspect.
+The implementation will cover those aspect. The *build* term is used to indicate
+the action of retrieving the application from SCM, building it and running the
+automated tests.
 
 ### Forking Workflow for the Development
 
-A common approach to team development inside an organisation consist in setting
-a main repository for the project, also referred as *upstream*. All the
+A common approach to team development inside an organization consists in setting
+a main repository for the project, also referred as *upstream*: all the
 developers that contribute to the project fork the main repository in their
-account on the git server, clone the repository in their local machines, push
+account on the SCM server, clone the repository in their local machines, push
 the changes on their personal fork on the server and then make a pull request on
 the upstream for changes review and merge. If a forking workflow is adopted, is
-necessary that all the fork that are pushed in SCM are also tracked by the
+necessary that all the forks that are pushed in SCM are also tracked by the
 Continuous Integration system.
 
 The Continuous Integration good practices involve the pulling of last changes,
@@ -81,7 +85,7 @@ between different components:
 
 For every component used in the implementation, the installation and
 configuration procedure is explained. The procedure can be reproduced in
-desktop environment as well as in servers.
+desktop environments as well as in servers.
 
 ## Gogs - Go Git Service
 
@@ -159,7 +163,7 @@ Note: the http protocol has been used for the push because Gogs is running in a
 local environment, and, for security reasons, needs to be replaced with HTTPS or
 SSH when the SCM system is running in a remote server.
 
-### Docker Compose configuration
+### Gasista Felice containers configuration
 
 Gasista Felice is configured, through `docker-compose.yml`, to pull the images
 for the application components from Docker Hub, and to mount the source code of
