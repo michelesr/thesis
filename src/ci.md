@@ -234,8 +234,8 @@ the one used in production, a new `docker-compose.yml` is required:
 In this `docker-compose.yml` the `image` declarations are replaced with `build`,
 and path for the Dockerfile with the build instructions are provided for every
 application component image. To avoid conflicts with the original Docker Compose
-file, this configuration file is called `docker-compose-ci.yml`. The ports
-used for the development are removed.
+file, this new configuration file is called `docker-compose-ci.yml`. The ports
+used for debugging purposes are removed.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
 to override the environment variables used in development with the production
