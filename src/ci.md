@@ -300,7 +300,7 @@ required:
     RUN apt-get update \
           && apt-get install -y python python-pip sudo \
           && rm -rf /var/lib/apt/lists/*
-    RUN pip install docker-compose
+    RUN pip install 'docker-compose==1.4'
     RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 
     USER jenkins
@@ -409,16 +409,16 @@ The command to build is:
 
     mv docker-compose-ci.yml docker-compose.yml
     sudo docker-compose build
-    sudo make up
+    sudo docker-compose up -d
     sudo make dbtest
-    sudo make test
+    sudo docker-compose run --rm e2e
     sudo docker-compose stop
 
 The `docker-compose-ci.yml` is renamed to `docker-compose.yml`, replacing the
 configuration used for development with the one used in continuous integration
 builds, that is more similar to the production environment configuration. Docker
 Compose is used to build the container from the Dockerfiles, link and run them,
-then the test database is loaded and the test are launched. Before finishing the
+then the test database is loaded and the tests are launched. Before finishing the
 build, the containers are stopped.
 The build can be tested clicking on the `Build Now` button in the project
 dashboard.

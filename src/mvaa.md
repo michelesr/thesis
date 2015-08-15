@@ -19,7 +19,9 @@ versioning of the images used for container creation, that is a great benefit
 for software development, in fact versioning practices are adopted in all the
 software development teams and software houses. Also Docker provides
 component reuse: a base image can be reused by an infinite number of
-applications, reducing impact on disk space and build times.
+applications, reducing impact on disk space and build times. Starting from
+version 1.8, released on August 11, 2015, Docker provides image signing and
+verification for improved security. @docker-content-trust
 
 This chapter exposes the main features of *Docker* container engine and *Docker
 Compose*, a container orchestration tool for defining and instancing
@@ -54,7 +56,7 @@ Docker can be installed in Debian with:
     # apt-get install docker.io
 
 Instructions for other GNU/Linux distributions can be found on Docker online
-documentation. For Windows and Mac OS X, on August 11 2015, *Docker Toolbox* has
+documentation. For Windows and Mac OS X, on August 11, 2015, *Docker Toolbox* has
 been released as new installer replacing the older *Boot2Docker*. *The Docker
 Toolbox is an installer to quickly and easily install and setup a Docker
 environment on your computer. Available for both Windows and Mac, the Toolbox
