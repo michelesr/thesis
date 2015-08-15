@@ -100,7 +100,7 @@ choice made for this implementation.
 
 ### Installation
 
-In order to install Gogs, a prebuilt image from Docker Hub can be used:
+In order to install Gogs, a prebuilt image from Docker Hub is used:
 
     $ docker pull codeskyblue/docker-gogs
     $ docker run --name gogs -d \
@@ -234,7 +234,7 @@ the one used in production, a new `docker-compose.yml` is required:
 In this `docker-compose.yml` the `image` declarations are replaced with `build`,
 and path for the Dockerfile with the build instructions are provided for every
 application component image. To avoid conflicts with the original Docker Compose
-file, this configuration file can be called `docker-compose-ci.yml`. The ports
+file, this configuration file is called `docker-compose-ci.yml`. The ports
 used for the development are removed.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
@@ -245,9 +245,9 @@ repository.
 #### Docker caching system
 
 In order to reduce build times, providing a faster feedback to the developer,
-the Docker caching system can be exploited. When Docker builds an image from a
+the Docker caching system is exploited. When Docker builds an image from a
 Dockerfile, if it founds an image layer already produced for that instruction,
-it avoids the recreation of that layer. The cache can be invalidated when the
+it avoids the recreation of that layer. The cache is invalidated when the
 Dockerfile changes, or for the COPY instructions, when the content inside the
 directory to copy changes.
 
@@ -382,7 +382,7 @@ After confirming, an user must be added accessing the page at the URL:
 - Full name: `Michele Sorcinelli`
 - E-mail address: `mikefender@cryptolab.net`
 
-Then the access to unlogged user can be disabled returning to the security
+Then the access to unlogged user is disabled returning to the security
 configuration page and setting:
 
 - Authorization: `Logged-in users can do anything`
@@ -481,7 +481,7 @@ done from `http://localhost:5000/job/gasistafelice/configure` by filling the
 `Build Triggers -> Poll SCM -> Schedule` field of the form.
 
 The syntax used for scheduling the pulls is similar to the one used for *CRON*
-jobs. A nightly build can be scheduling with this syntax:
+jobs. A nightly build can be scheduled with this syntax:
 
     0 0 * * *
 
