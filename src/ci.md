@@ -92,9 +92,11 @@ desktop environments as well as in servers.
 *Gogs* (Go Git Service) is an open source lightweight Git Service that plays the
 role of *SCM* (Source Code Management) in the Continuous Integration
 implementation. Like Docker, Gogs is written in the Go programming language,
-that is a compiled language. Go uses a static linking of libraries for producing
-a single binary that can be run in all Linux distribution without install any
-dependency, so Gogs is composed of a single binary.
+that is a compiled language. Go programs can be compiled in different operating
+systems (including Linux, Mac OS and Windows) and the result of the compilation
+is always a single binary, due to its static linking policy for libraries. Thus,
+Gogs can be run as a standalone binary or inside a Docker container, that is the
+choice made for this implementation.
 
 ### Installation
 
@@ -108,14 +110,14 @@ In order to install Gogs, a prebuilt image from Docker Hub can be used:
           codeskyblue/docker-gogs
 
 The ports `3000` and `8080` are exported respectively to `3000` and `5000`
-of our host. The port `3000` is reserved for the Gogs service, while the `8080`
-will be used for the Continuous Integration system that will be linked with Gogs
-later. Gogs require a directory for the configuration file and data storage, so
+of the host. The port `3000` is reserved for the Gogs service, while the `8080`
+is used for the Continuous Integration system, that will be linked with Gogs
+later. Gogs require a directory for configuration files and data storage, so
 `$HOME/gogs_data` has been mounted inside the container as `/data`.
 
 ### Configuration
 
-Opening the browser at `http://localhost:3000/` will redirect to the first
+The opening of the browser at `http://localhost:3000/` redirects to the first
 configuration page. The configuration to adopt is:
 
 - Database type:  `SQLite3`
@@ -159,9 +161,9 @@ be pushed on the Gogs server using git:
     To http://localhost:3000/mike/gasistafelice.git
     * [new branch]      master -> master
 
-Note: the http protocol has been used for the push because Gogs is running in a
-local environment, and, for security reasons, needs to be replaced with HTTPS or
-SSH when the SCM system is running in a remote server.
+Note: the http protocol has been used for the connection because the Gogs server
+is running in a local environment, and for security reasons, needs to be
+replaced with https or ssh when the SCM system runs in a remote machine.
 
 ### Gasista Felice containers configuration
 
