@@ -173,11 +173,11 @@ the application from the local repository to allow changes to be reflected
 inside the container. The component Dockerfiles are designed to always
 perform a COPY instruction to copy the source code from the repository
 during the build, that is performed by Docker Hub, but given that
-`docker-compose.yml` contains mount instruction, the content copied at build
-time is replaced with the content of the repository that resides in the
-developer host. This is normal in a UNIX-like system where during the mount
-the content of the directory specified as mount point is replaced with the
-content of the mounted file system.
+`docker-compose.yml` contains mount instructions, the content copied at
+build time is replaced with the content of the repository that resides in
+the developer host (this is the normal behaviour in a Unix-like system where
+during the mount the content of the directory specified as mount point is
+replaced with the content of the mounted file system).
 
 The mounting approach is perfect for development, where every change to the code
 has to be applied immediately without the rebuild of the images, but in
@@ -231,15 +231,16 @@ the one used in production, a new `docker-compose.yml` is required:
       env_file:
         - ./test/e2e/settings.env
 
-In this `docker-compose.yml` the `image` instructions are replaced with `build`,
+In this `docker-compose.yml` the `image` declarations are replaced with `build`,
 and path for the Dockerfile with the build instructions are provided for every
-application component image. To avoid conflict with the original docker compose
+application component image. To avoid conflicts with the original Docker Compose
 file, this configuration file can be called `docker-compose-ci.yml`. The ports
 used for the development are removed.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
 to override the environment variables used in development with the production
-variables. The discussed changes has been applied to the `dev` branch of the repository.
+variables. The discussed changes has been applied to the Gasista Felice
+repository.
 
 #### Docker caching system
 
