@@ -85,7 +85,106 @@ between different components:
 
 For every component used in the implementation, the installation and
 configuration procedure is explained. The procedure can be reproduced in
-desktop environments as well as in servers.
+desktop environments as well as in servers. Before the description of the
+procedure, the configuration of the Gasista Felice containers is presented.
+
+## Gasista Felice containers configuration
+
+Gasista Felice is configured, through `docker-compose.yml`, to pull the images
+for the application components from Docker Hub, and to mount the source code of
+the application from the local repository to allow changes to be reflected
+inside the container. The component Dockerfiles are designed to always
+perform a COPY instruction to copy the source code from the repository
+during the build, that is performed by Docker Hub, but given that
+`docker-compose.yml` contains mount instructions, the content copied at
+build time is replaced with the content of the repository that resides in
+the developer host (this is the normal behaviour in a Unix-like system where
+during the mount the content of the directory specified as mount point is
+replaced with the content of the mounted file system).
+
+The mounting approach is perfect for development, where every change to the code
+has to be applied immediately without the rebuild of the images, but in
+production the code is copied when the images are built and changes imply
+rebuilding. To provide a Continuous Integration testing environment closer to
+the one used in production, a new `docker-compose.yml` is required:
+
+    proxy:
+      build: ./proxy
+      ports:
+        - '127.0.0.1:8080:80'
+        - '127.0.0.1:8443:443'
+      links:
+        - front
+        - back
+
+    front:
+      build: ./ui
+
+    back:
+      build: ./gasistafelice
+      links:
+        - db
+      env_file: ./settings_ci.env
+
+    db:
+      image: postgres:9.4
+      env_file: ./settings_ci.env
+
+    hub:
+      image: selenium/hub:latest
+
+    e2e:
+      build: ./test/e2e
+      links:
+        - hub
+
+    firefox:
+      image: selenium/node-firefox-debug:latest
+      links:
+        - hub
+        - proxy
+      env_file:
+        - ./test/e2e/settings.env
+
+    chrome:
+      image: selenium/node-chrome-debug:latest
+      links:
+        - hub
+        - proxy
+      env_file:
+        - ./test/e2e/settings.env
+
+In this `docker-compose.yml` the `image` declarations are replaced with `build`,
+and path for the Dockerfile with the build instructions are provided for every
+application component image. To avoid conflicts with the original Docker Compose
+file, this new configuration file is called `docker-compose-ci.yml`. The ports
+used for debugging purposes are removed.
+
+The `settings.env` has been replaced with `settings_ci.env` in some components
+to override the environment variables used in development with the production
+variables. The discussed changes has been applied to the Gasista Felice
+repository.
+
+### Docker caching system
+
+In order to reduce build times, providing a faster feedback to the developer,
+the Docker caching system is exploited. When Docker builds an image from a
+Dockerfile, if it founds an image layer already produced for that instruction,
+it avoids the recreation of that layer. The cache is invalidated when the
+Dockerfile changes, or for the COPY instructions, when the content inside the
+directory to copy changes.
+
+If the content of the directory to copy inside the container change, then the
+cache for the COPY instruction will be invalidated, and the instruction will be
+executed again, leading to a different output layer. If the layer produced by
+the COPY instruction is different, than the cache is invalidated for all the
+following instruction in the Dockerfile.
+
+To avoid the rebuilding of the entire image, including software dependencies
+that are downloaded through package managers, the COPY instructions for copying
+the source code of the component inside the container have to be placed at the
+bottom of the Dockerfile, encouraging Docker to not rebuild all the layer
+related to the dependencies.
 
 ## Gogs - Go Git Service
 
@@ -165,103 +264,6 @@ Note: the http protocol has been used for the connection because the Gogs server
 is running in a local environment, and for security reasons, needs to be
 replaced with https or ssh when the SCM system runs in a remote machine.
 
-### Gasista Felice containers configuration
-
-Gasista Felice is configured, through `docker-compose.yml`, to pull the images
-for the application components from Docker Hub, and to mount the source code of
-the application from the local repository to allow changes to be reflected
-inside the container. The component Dockerfiles are designed to always
-perform a COPY instruction to copy the source code from the repository
-during the build, that is performed by Docker Hub, but given that
-`docker-compose.yml` contains mount instructions, the content copied at
-build time is replaced with the content of the repository that resides in
-the developer host (this is the normal behaviour in a Unix-like system where
-during the mount the content of the directory specified as mount point is
-replaced with the content of the mounted file system).
-
-The mounting approach is perfect for development, where every change to the code
-has to be applied immediately without the rebuild of the images, but in
-production the code is copied when the images are built and changes imply
-rebuilding. To provide a Continuous Integration testing environment closer to
-the one used in production, a new `docker-compose.yml` is required:
-
-    proxy:
-      build: ./proxy
-      ports:
-        - '127.0.0.1:8080:80'
-        - '127.0.0.1:8443:443'
-      links:
-        - front
-        - back
-
-    front:
-      build: ./ui
-
-    back:
-      build: ./gasistafelice
-      links:
-        - db
-      env_file: ./settings_ci.env
-
-    db:
-      image: postgres:9.4
-      env_file: ./settings_ci.env
-
-    hub:
-      image: selenium/hub:latest
-
-    e2e:
-      build: ./test/e2e
-      links:
-        - hub
-
-    firefox:
-      image: selenium/node-firefox-debug:latest
-      links:
-        - hub
-        - proxy
-      env_file:
-        - ./test/e2e/settings.env
-
-    chrome:
-      image: selenium/node-chrome-debug:latest
-      links:
-        - hub
-        - proxy
-      env_file:
-        - ./test/e2e/settings.env
-
-In this `docker-compose.yml` the `image` declarations are replaced with `build`,
-and path for the Dockerfile with the build instructions are provided for every
-application component image. To avoid conflicts with the original Docker Compose
-file, this new configuration file is called `docker-compose-ci.yml`. The ports
-used for debugging purposes are removed.
-
-The `settings.env` has been replaced with `settings_ci.env` in some components
-to override the environment variables used in development with the production
-variables. The discussed changes has been applied to the Gasista Felice
-repository.
-
-#### Docker caching system
-
-In order to reduce build times, providing a faster feedback to the developer,
-the Docker caching system is exploited. When Docker builds an image from a
-Dockerfile, if it founds an image layer already produced for that instruction,
-it avoids the recreation of that layer. The cache is invalidated when the
-Dockerfile changes, or for the COPY instructions, when the content inside the
-directory to copy changes.
-
-If the content of the directory to copy inside the container change, then the
-cache for the COPY instruction will be invalidated, and the instruction will be
-executed again, leading to a different output layer. If the layer produced by
-the COPY instruction is different, than the cache is invalidated for all the
-following instruction in the Dockerfile.
-
-To avoid the rebuilding of the entire image, including software dependencies
-that are downloaded through package managers, the COPY instructions for copying
-the source code of the component inside the container have to be placed at the
-bottom of the Dockerfile, encouraging Docker to not rebuild all the layer
-related to the dependencies.
 
 ## Jenkins
 
