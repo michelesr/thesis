@@ -377,16 +377,16 @@ container.
 
 ### Security Configuration
 
-The first configuration to do once launched Jenkins is setup the security,
-through the page at `http://localhost:5000/configureSecurity/`. To enable
-security, the `Enable security` checkbox must be checked, and these options have
-to be setted:
+In order to avoid the execution of malicious scripts in Jenkins, the creation
+and configuration of jobs has to be restricted to a small set of trusted users.
+In the page `http://localhost:5000/configureSecurity/` the `Enable security`
+checkbox has to be checked, and these options have to be setted:
 
 - TCP Port for JNLP slave agents: `Disable`
 - Security realm: `Jenkins own user database`
 - Allow user to sign-up: `unchecked`
 
-After confirming, an user must be added accessing the page at the URL:
+After confirming, an user has to be added accessing the page at the url:
 `http://localhost:5000/securityRealm/addUser`:
 
 - Username: `mike`
