@@ -324,12 +324,12 @@ required:
     COPY plugins.txt /usr/share/jenkins/plugins.txt
     RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
 
-In this Dockerfile, starting from a Jenkins base image,  `python2`, `pip`
-(Python Package Manager), `docker-compose` and `sudo` are installed, then
-superuser privileges are granted to the jenkins user in order to permit the use
-of Docker. Note that the Docker daemon can be accessed without superuser
-privileges if the user is added to the `docker` group, but this can't be done
-inside the Jenkins container so sudo is required. The `plugins.txt` file
+In this Dockerfile, starting from a Jenkins base image,  `python2`, `python-pip`
+(Python Package Manager), `docker-compose` and `sudo` packages are installed,
+then superuser privileges are granted to the Jenkins user in order to permit the
+use of Docker. Generally the Docker daemon can be accessed without superuser
+privileges if the user is added to the `docker` group, but given that Jenkins is
+running inside a container, `sudo` is necessary. The `plugins.txt` file
 containing the list of plugin to install copied inside the container is:
 
     scm-api:latest
@@ -337,8 +337,8 @@ containing the list of plugin to install copied inside the container is:
     git:latest
     greenballs:latest
 
-The command to properly run the Jenkins container, giving him the access to
-docker and connecting him to the gogs network is:
+The command to properly run the Jenkins container, providing access to Docker
+daemon and connection to the Gogs network is:
 
     $ docker pull michelesr/jenkins
     $ mkdir $HOME/jenkins_data
@@ -350,28 +350,30 @@ docker and connecting him to the gogs network is:
          --net container:gogs \
          michelesr/jenkins
 
-In order to grant access to the Docker daemon inside the container, the UNIX
-socket `/var/run/docker.sock`, the docker client (retrieved with the bashism
-`$(which docker)`), the device mapper library, and a directory for jenkins data
-have to be mounted. With the `--net container:gogs` parameter, the Jenkins
-container will share the same network stack of the Gogs container, and the they
-will be able to communicate connecting to the loopback device `localhost`.
+In order to grant access to the Docker daemon inside the container, the Unix
+socket `/var/run/docker.sock`, the Docker client (retrieved with the bashism
+`$(which docker)`), the `libdevmapper` library used for the creation of virtual
+volumes, and a directory for Jenkins data have to be mounted. With the `--net
+container:gogs` parameter, the Jenkins container will share the same network
+stack of the Gogs container, and they will be able to communicate through the
+loopback device `localhost`.
 
-Note that this process has been tested on an Arch Linux distribution and some
-parameters (such as the library path) can be different in another distribution.
-Also the `jenkins_data` directory must belong to the same UID as the jenkins
-user (`1000`). The UID of the current user can be found with the command:
+The command has been tested on an Arch Linux distribution and some parameters
+(such as the library path) can be different in another distribution.  Also the
+`jenkins_data` directory has to belong to the same UID of the Jenkins user
+(`1000`). The UID of the current user can be retrieved with the command:
 
     $ cat /etc/passwd | grep $(whoami)
     michele:x:1000:1000::/home/michele:/usr/bin/zsh
 
-If the users doesn't match, using of UID `1000` can always be forced with:
+If the UID doesn't match, it can always be forced with:
 
     # chmod 1000:1000 $HOME/jenkins_data
 
-If Gogs is up and has been launched with the command provided previously,
-Jenkins can be accessed at the URL `http://localhost:5000`, because the port for
-the Jenkins service has been exported at the Gogs launch.
+Assuming that Gogs is running and has been launched with the command provided
+previously, Jenkins can be accessed at the url `http://localhost:5000`, because
+the port for the Jenkins service has been exposed at the launch of Gogs
+container.
 
 ### Security Configuration
 
