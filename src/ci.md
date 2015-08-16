@@ -399,7 +399,7 @@ configuration page and setting:
 
 - Authorization: `Logged-in users can do anything`
 
-### Setting up a Job for Gasista Felice
+### Gasista Felice job configuration
 
 Navigating to the page `http://localhost:5000/newJob` a new job for the Gasista
 Felice project can be setted choosing the `Freestyle Project` option and
@@ -409,10 +409,12 @@ Felice project can be setted choosing the `Freestyle Project` option and
 - Build: `Add build step -> Execute Shell`
 - Repository URL: `http://localhost:3000/Mike/gasistafelice`
 
-More repository for the same project can be tracked. For example the upstream
-and developers forks can be tracked at the same time, and only differences
-between them will trigger a build. If the repository is private credentials are
-required:
+More remote repositories and branches for the same project can be tracked, for
+example the upstream and developers forks can be tracked at the same time.
+Jenkins use the git client to check the hash of the commits introduced on pushes
+and avoid rebuilding of the same changes more times if found on different remote
+repositories or branches, for example when commits are merged from a developer
+fork to the upstream. Credentials for private repositories are required:
 
 - Credentials: `Add -> Username with Password`
 - Username: `Mike`
@@ -424,7 +426,7 @@ Other options:
 - Build Triggers: `Poll SCM`
 - Schedule: leave blank
 
-The command to build is:
+Shell script for the build:
 
     mv docker-compose-ci.yml docker-compose.yml
     sudo docker-compose build
@@ -434,13 +436,12 @@ The command to build is:
     sudo docker-compose stop
 
 The `docker-compose-ci.yml` is renamed to `docker-compose.yml`, replacing the
-configuration used for development with the one used in continuous integration
+configuration used for development with the one used in Continuous Integration
 builds, that is more similar to the production environment configuration. Docker
 Compose is used to build the container from the Dockerfiles, link and run them,
-then the test database is loaded and the tests are launched. Before finishing the
-build, the containers are stopped.
-The build can be tested clicking on the `Build Now` button in the project
-dashboard.
+then the test database is loaded and the tests are launched. Before finishing
+the build, the containers are stopped. The build configuration can be tested
+clicking on the `Build Now` button in the project dashboard.
 
 ### Add a hook for triggering a SCM poll
 
