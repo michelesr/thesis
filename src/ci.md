@@ -268,30 +268,38 @@ replaced with https or ssh when the SCM system runs in a remote machine.
 ## Jenkins
 
 *Jenkins* is a open source software for Continuous Integration written in Java.
-It permits to run scheduled jobs and to schedule periodical or triggered
-automated build for the continuous integration.
+It permits the scheduling of periodical or triggered builds and SCM pools for
+Continuous Integration.
 
-To build and test container based applications, Jenkins container require to
-access a Docker daemon, and two different approach are available for the
+In order to build container based applications, Jenkins container require to
+access a Docker daemon, and three different approaches are available for the
 purpose:
 
-- grant access to the host Docker daemon inside the Jenkins container
-- use HTTPS to talk to the Docker daemon
+- grant the access to the host Docker daemon inside the Jenkins container
+- use https to communicate to the Docker daemon
 - install Docker inside the Jenkins container
 
-In term of security, the HTTPS based solution is the worst because expose Docker
-daemon on the network. The other two solution instead are on the same security
-level. Sharing the Docker daemon on the host allow trusted users in Jenkins to
-mount host volumes with write permission using Docker, while installing and
-running Docker inside a container require the creation of privileged container
-that can access all the host features including kernel specific features and
-device access. In every case, using a container for Jenkins is always better
-than installing Jenkins in the host system because Docker provides a layer of
-isolation from the system resources.
+In term of security, the https based solution is the worst because exposes
+Docker daemon on the network, while the other two solution are on the same
+security level: sharing the Docker daemon on the host allows trusted Jenkins
+users to exploit it in order to mount host volumes with write permission, while
+installing and running Docker inside a container requires the creation of
+privileged containers that can access all the host features including devices
+and kernel specific functions. In every case, using a container for Jenkins is
+always better than installing Jenkins in the host system because Docker provides
+a layer of isolation from the system resources, and given that Jenkins is the
+only process running inside the container, the only way to launch a malicious
+script is from a Jenkins job. The creation of Jenkins jobs can be restricted to
+trusted users from the security configuration.
 
-For the purpose of this project, the first solution has been adopted, because it
-allows the reuse of the installed and cached images in the host, reducing
-building and testing times.
+The first solution, consisting in the sharing of Docker daemon inside the
+Jenkins container has been adopted for the following reasons:
+
+- it doesn't require the creation of privileged containers
+- the same Docker daemon used to run Gogs and Jenkins is reused from Jenkins,
+  avoiding overhead of running another Docker daemon
+- using the same Docker daemon increases the chances to exploit cache
+- the implementation is simple
 
 ![Jenkins interaction with Docker and testing
 environment](images/jenkins-docker.eps)
