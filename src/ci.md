@@ -525,15 +525,15 @@ for the same project are never executed in parallel and are instead queued. To
 configure the maximum number of parallel builds, the system administrator can
 navigate to the Jenkins system configuration page and set the number of executors.
 
-### E-mail configuration
+### E-mail notifications
 
 Jenkins can be configured to send e-mails with build reports. From the system
-configuration page, the following setting has to be provided:
+configuration page, the following settings has to be provided:
 
 - Jenkins Location -> System Admin e-mail address
 - E-mail notification -> SMTP Server
 
-A local STMP Server can be installed and linked with Jenkins:
+A local STMP relay server can be installed and linked with Jenkins:
 
     $ docker pull panubo/postfix
     $ docker run --name postfix -d \
@@ -555,8 +555,9 @@ domestic:
      http://www.spamhaus.org/query/bl?ip=82.51.4.196
      (in reply to RCPT TO command))
 
-To avoid this problem, a remote SMTP server can configured. An e-mail
-notification for a project can be added from the job configuration page:
+To work around this problem, a remote SMTP server can configured (this is
+required only for domestic Jenkins installations). An e-mail notification for a
+project can be added from the job configuration page:
 
 - Add post-build action -> E-mail Notification
 - Recipients: whitespace-separated list of recipient addresses
@@ -568,8 +569,7 @@ The available conditions are:
 
 ### Continuous delivery
 
-In order to provide Continuous Delivery Jenkins can play the role of trigger for
-the update of the software in production. In order to do this a new job can be
+In order to provide Continuous Delivery Jenkins a new job can be added and
 configured to act as a post build hook. This job will execute the trigger for
 Continuous Delivery, that theoretically consists in accessing an API provided by
 the production stack to deploy the update.
