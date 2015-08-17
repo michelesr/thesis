@@ -488,25 +488,25 @@ url: `http://localhost:5000/job/gasistafelice/`.
 
 ### Scheduling of periodic polls and builds
 
-The scheduling of periodic checks for the gasistafelice job can be
-done from `http://localhost:5000/job/gasistafelice/configure` by filling the
-`Build Triggers -> Poll SCM -> Schedule` field of the form.
+The scheduling of periodic polls for the gasistafelice project can be configured
+from `http://localhost:5000/job/gasistafelice/configure` by filling the `Build
+Triggers -> Poll SCM -> Schedule` field of the form.
 
-The syntax used for scheduling the pulls is similar to the one used for *CRON*
-jobs. A nightly build can be scheduled with this syntax:
+The syntax used for the scheduling is similar to the one used for *CRON* jobs. A
+nightly pool can be scheduled with this syntax:
 
     0 0 * * *
 
-This will execute a SCM pull every night at midnight, but a better approach is
+This will execute a SCM poll every night at midnight, but a better approach is
 using the H tag:
 
     H H * * *
 
-This syntax will assure the execution of the job once a day, but a random chosen
-time, avoiding the overlapping of more jobs.
+This syntax will assure the execution of the job once a day, but at a random
+chosen time, avoiding the overlapping of more jobs.
 
-Periodical builds can be setted filling the form in `Build Triggers -> Build
-Periodically` using the same syntax used for scheduling pulls. For daily builds
+Periodical builds can be set filling the form in `Build Triggers -> Build
+Periodically` using the same syntax used for scheduling pools. For daily builds
 Docker Compose can be instructed to avoid the using of the Docker cache,
 ensuring that all the build is done from scratch, creating a new job with a
 modified build script:
@@ -516,12 +516,12 @@ modified build script:
     ...
     ...
 
-Then the new job can be scheduled for daily execution.
+Then the new job can be scheduled for daily or weekly execution.
 
 #### Parallel Jobs
 
 Jenkins is configured by default to execute at most two jobs in parallel. Builds
-for the same jobs are never executed in parallel and are instead queued. To
+for the same project are never executed in parallel and are instead queued. To
 configure the maximum number of parallel builds, the system administrator can
 navigate to the Jenkins system configuration page and set the number of executors.
 
