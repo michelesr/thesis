@@ -78,9 +78,9 @@ For example, this thesis is built using *LaTeX*, that is a powerful language for
 document generation. Instead of installing LaTeX and all the required packages,
 a prebuilt and ready to use image can be used to process LaTeX source code. With
 Docker, compile this thesis in every supported operating system @docker-install
-is just a matter of running this command on a shell:
+is just a matter of running this command on a shell from the thesis directory:
 
-	$ docker run -v $PWD:/code michelesr/latex /bin/bash pdflatex tesi.tex
+	$ docker run -v $PWD:/code michelesr/latex pdflatex thesis.tex
 
 This command will search for the `michelesr/latex` image in the system, and if
 is not found, will pull the image from Docker Hub. Then the working directory,
