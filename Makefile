@@ -2,7 +2,7 @@ pdf: latex
 	bash scripts/run_latex_container.sh
 
 clean:
-	find . -regex '.*.\(pdf\|aux\|toc\|lo*\)' -exec rm -v {} \+
+	find . -regex '.*.\(pdf\|aux\|toc\|lot\|lof\|log\)' -exec rm -v {} \+
 	rm -rvf dist/
 
 clean-container:
