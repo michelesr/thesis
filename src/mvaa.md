@@ -559,7 +559,7 @@ variables configuration. In order to start the Gasista Felice application:
     $ git checkout master-dj17
     $ make up
 
-To insert test data inside the database:
+The following command can be used to load the test database:
     
     $ make dbtest
     
