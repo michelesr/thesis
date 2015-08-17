@@ -367,9 +367,9 @@ online documentation. Docker Toolbox for Mac OS X includes Docker Compose.
 ### The docker-compose.yml configuration file
 
 The `docker-compose.yml` configuration file Docker Compose contains a
-description of the application containers to instantiate, link and run. The
-syntax used by this configuration file is *YAML*, a language for
-data serialization (like *JSON*).
+declarative description of the application containers to instantiate, link and
+run. The syntax used by this configuration file is *YAML*, a language for data
+serialization (like *JSON*).
 
 An example of a simple web app configuration consists in a Dockerfile for the
 application server and a `docker-compose.yml`:
