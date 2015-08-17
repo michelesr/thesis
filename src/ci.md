@@ -443,13 +443,13 @@ then the test database is loaded and the tests are launched. Before finishing
 the build, the containers are stopped. The build configuration can be tested
 clicking on the `Build Now` button in the project dashboard.
 
-### Add a hook for triggering a SCM poll
+### Remote repository hook configuration
 
 In order to trigger the SCM poll from Jenkins when a push is performed, a hook
 for the `gasistafelice` repository in Gogs has to be added:
 
     $ cd $HOME/gogs_data/git/repositories/mike/gasistafelice.git/hooks
-    $ sudo vi post-receive
+    # touch post-recieve
 
 The `post-recieve` hook script content is:
 
@@ -458,12 +458,12 @@ The `post-recieve` hook script content is:
     ?url=http://localhost:3000/Mike/gasistafelice/ \
     2>/dev/null
 
-Then the script permission must be setted:
+Then the script ownership and execution permission have to be setted:
 
-    $ sudo chown 999:999 post-receive
-    $ sudo chmod -x post-receive
+    # chown 999:999 post-receive
+    # chmod -x post-receive
 
-To test the configuration, push to the remote `gasistafelice` repository:
+The configuration can be verified pushing to the remote `gasistafelice` repository:
 
     $ cd path/to/gasistafelice/
     $ git checkout dev
@@ -479,13 +479,12 @@ To test the configuration, push to the remote `gasistafelice` repository:
      * [new branch]      dev -> dev
 
 As can be seen from the command output, a poll of `gasistafelice` has been
-scheduled by Jenkins and if changes are found on the `dev` or `master` branch, the
-project will be built and tested. The tracked branches can be setted in
-the Job Configuration of Jenkins. The status of all the build of the project can
-be found at the url: `http://localhost:5000/job/gasistafelice/`.
+scheduled by Jenkins and if changes are found on the `dev` or `master` branches,
+the project will be built. The tracked branches can be setted in the project
+configuration page. The status of all the project builds can be found at the
+url: `http://localhost:5000/job/gasistafelice/`.
 
-![Gogs triggers a SCM poll in reply to a developer
-push](images/jenkins-poll.eps)
+![Gogs triggers a SCM poll after a developer push](images/jenkins-poll.eps)
 
 ### Scheduling of periodic polls and builds
 
