@@ -1,0 +1,10 @@
+digraph protractor_selenium {
+  size="3.0"
+  autosize=false
+  node [shape=rectangle]
+  Protractor -> "Selenium Grid Hub" [label="http"]
+  "Selenium Grid Hub" -> "Firefox driver node"
+  "Selenium Grid Hub" -> "Chrome driver node"
+  "Firefox driver node" -> "Web application"
+  "Chrome driver node" -> "Web application"
+}
