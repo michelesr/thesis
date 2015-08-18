@@ -1,0 +1,13 @@
+graph test_containers {
+  size="3.5,3.5"
+  autosize=false
+  node [shape=rectangle]
+  E2E -- Hub [label="http"]
+  Hub -- Firefox
+  Hub -- Chrome
+  Firefox -- Proxy [label="http(s)"]
+  Chrome -- Proxy [label="http(s)"]
+  Proxy -- Front [label="http"]
+  Proxy -- Back [label="uwsgi"]
+  Back -- DB [label="sql"]
+}
