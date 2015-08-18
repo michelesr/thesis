@@ -179,11 +179,7 @@ The default `docker-compose.yml` file has been extended with testing containers:
 In particular, the `firefox` and `chrome` containers are linked to `hub` for
 registering and to `proxy` in order to access the web application. The `e2e`
 tests is linked with the `hub` in order to allow the forwarding of test
-requests.
-
-![Testing containers linking with application containers](images/test-containers.eps)
-
-This new configuration file has been called `docker-compose-dev.yml` and is used
+requests. This new configuration file has been called `docker-compose-dev.yml` and is used
 to run the tests from the Makefile:
 
     ...
@@ -199,6 +195,8 @@ to run the tests from the Makefile:
 The `@` is used as command prefix to avoid their printing on the console. The
 `sleep 5` is used to wait 5 seconds after containers start in order to made
 their processes initiate correctly before sending requests to them.
+
+![Testing containers linking with application containers](images/test-containers.eps)
 
 ### Test Running
 
@@ -262,9 +260,14 @@ exposed previously.
 ### Inspect browsers behaviour through VNC
 
 The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
-distributed with a built-in VNC server that can be accessed in order to visually inspect
-the browser behaviour during the running of end-to-end tests. For this purpose
-the `docker-compose-dev.yml` exposes ports `5900` of `firefox` and `chrome`
-containers as `5900` and `5901`, so they can be accessed with a VNC client.
+distributed with a built-in VNC server that can be accessed in order to visually
+inspect the browser behaviour during the running of end-to-end tests. For this
+purpose the `docker-compose-dev.yml` exposes ports `5900` of `firefox` and
+`chrome` containers as `5900` and `5901`, so they can be accessed with a VNC
+client. The environment configuration file `test/e2e/settings.env` can be used
+to set the screen resolution used by the VNC servers:
+
+    SCREEN_WIDTH=1920
+    SCREEN_HEIGHT=1080
 
 ![Google Chrome browser running inside the chrome container](images/chrome-vnc.png)
