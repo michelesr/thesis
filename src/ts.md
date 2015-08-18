@@ -200,6 +200,8 @@ The `@` is used as command prefix to avoid their printing on the console. The
 `sleep 5` is used to wait 5 seconds after containers start in order to made
 their processes initiate correctly before sending requests to them.
 
+### Test Running
+
 The end-to-end tests can be launched from Gasista Felice repository root with:
 
     $ make up
@@ -257,12 +259,12 @@ Selenium developers and retrieved from Docker Hub. The `michelesr/protractor`
 image is retrieved from Docker Hub and has been built using the Dockerfile
 exposed previously.
 
-### Inspect browser behaviour using VNC
+### Inspect browsers behaviour through VNC
 
 The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
 distributed with a built-in VNC server that can be accessed in order to visually inspect
 the browser behaviour during the running of end-to-end tests. For this purpose
-the `docker-compose-dev.yml` expose ports `5900` of `firefox` and `chrome`
+the `docker-compose-dev.yml` exposes ports `5900` of `firefox` and `chrome`
 containers as `5900` and `5901`, so they can be accessed with a VNC client.
 
 ![Google Chrome browser running inside the chrome container](images/chrome-vnc.png)
