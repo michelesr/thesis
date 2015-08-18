@@ -5,6 +5,6 @@ digraph protractor_selenium {
   Protractor -> "Selenium Grid Hub" [label="http"]
   "Selenium Grid Hub" -> "Firefox driver node"
   "Selenium Grid Hub" -> "Chrome driver node"
-  "Firefox driver node" -> "Web application"
-  "Chrome driver node" -> "Web application"
+  "Firefox driver node" -> "Web application" [label="http(s)"]
+  "Chrome driver node" -> "Web application" [label="http(s)"]
 }
