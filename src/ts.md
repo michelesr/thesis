@@ -98,3 +98,171 @@ accessible with the http protocol.
 
 ![Interactions between Protractor and Selenium
 ecosystem](images/protractor-selenium.eps)
+
+## Containers configuration
+
+In order to link the testing containers to the application a new Docker Compose
+configuration file is required:
+
+    proxy:
+      image: befair/gasistafelice-proxy:latest
+      volumes:
+        - ./proxy:/etc/nginx/conf.d:ro
+      volumes_from:
+        - back
+      ports:
+        - '127.0.0.1:8080:80'
+        - '127.0.0.1:8443:443'
+      links:
+        - front
+        - back
+
+    front:
+      image: befair/gasistafelice-front:latest
+      volumes:
+        - ./ui:/code/ui:rw
+
+    back:
+      image: befair/gasistafelice-back:latest
+      volumes:
+        - ./gasistafelice:/code/gasistafelice:ro
+        - ./gasistafelice/fixtures:/code/gasistafelice/fixtures:rw
+        - /tmp/gf_tracebacker:/tmp/tracebacker:rw
+        - /tmp/gf_profiling:/tmp/profiling:rw
+      ports:
+        - '127.0.0.1:7000:7000'
+      links:
+        - db
+      env_file: ./settings.env
+
+    db:
+      image: postgres:9.4
+      env_file: ./settings.env
+
+    hub:
+      image: selenium/hub:latest
+
+    firefox:
+      image: selenium/node-firefox-debug:latest
+      links:
+        - hub
+        - proxy
+      ports:
+        - '127.0.0.1:5900:5900'
+      env_file:
+        - ./test/e2e/settings.env
+
+    chrome:
+      image: selenium/node-chrome-debug:latest
+      links:
+        - hub
+        - proxy
+      ports:
+        - '127.0.0.1:5901:5900'
+      env_file:
+        - ./test/e2e/settings.env
+
+    e2e:
+      image: michelesr/protractor:latest
+      volumes:
+        - ./test/e2e:/code:ro
+      links:
+        - hub
+
+The default `docker-compose.yml` file has been extended with testing containers:
+
+- `hub` is the container of Selenium Grid hub
+- `firefox` is the container of the Selenium Grid node for Mozilla Firefox browser
+- `chrome` is the container of the Selenium Grid node for Google Chrome browser
+- `e2e` is the Protractor container
+
+In particular, the `firefox` and `chrome` containers are linked to `hub` for
+registering and to `proxy` in order to access the web application. The `e2e`
+tests is linked with the `hub` in order to allow the forwarding of test
+requests.
+
+![Testing containers linking with application containers](images/test-containers.eps)
+
+This new configuration file has been called `docker-compose-dev.yml` and is used
+to run the tests from the Makefile:
+
+    ...
+
+    test-e2e:
+        @echo 'End-to-end test: running protractor'
+        @docker-compose -f docker-compose-test.yml up -d
+        @sleep 5
+        @docker-compose -f docker-compose-test.yml run --rm e2e
+
+    ...
+
+The `@` is used as command prefix to avoid their printing on the console. The
+`sleep 5` is used to wait 5 seconds after containers start in order to made
+their processes initiate correctly before sending requests to them.
+
+The end-to-end tests can be launched from Gasista Felice repository root with:
+
+    $ make up
+    Starting gasistafelice_front_1...
+    Starting gasistafelice_db_1...
+    Starting gasistafelice_back_1...
+    Starting gasistafelice_proxy_1...
+
+    $ make dbtest
+    ...
+    ...
+
+    $ make test-e2e
+    End-to-end test: running protractor
+    Creating gasistafelice_hub_1...
+    gasistafelice_db_1 is up-to-date
+    gasistafelice_back_1 is up-to-date
+    Creating gasistafelice_e2e_1...
+    gasistafelice_front_1 is up-to-date
+    gasistafelice_proxy_1 is up-to-date
+    Creating gasistafelice_chrome_1...
+    Creating gasistafelice_firefox_1...
+    [launcher] Running 2 instances of WebDriver
+    .................
+    ------------------------------------
+    [chrome #2] PID: 16
+    [chrome #2] Specs: /code/spec.js
+    [chrome #2]
+    [chrome #2] Using the selenium server at http://hub:4444/wd/hub
+    [chrome #2] ............
+    [chrome #2]
+    [chrome #2] Finished in 24.756 seconds
+    [chrome #2] 12 tests, 26 assertions, 0 failures
+    [chrome #2]
+
+    [launcher] 1 instance(s) of WebDriver still running
+    ...
+    ------------------------------------
+    [firefox #1] PID: 11
+    [firefox #1] Specs: /code/spec.js
+    [firefox #1]
+    [firefox #1] Using the selenium server at http://hub:4444/wd/hub
+    [firefox #1] ............
+    [firefox #1]
+    [firefox #1] Finished in 31.339 seconds
+    [firefox #1] 12 tests, 26 assertions, 0 failures
+    [firefox #1]
+
+    [launcher] 0 instance(s) of WebDriver still running
+    [launcher] chrome #2 passed
+    [launcher] firefox #1 passed
+
+The images used for `hub`, `firefox` and `chrome` containers are provided by
+Selenium developers and retrieved from Docker Hub. The `michelesr/protractor`
+image is retrieved from Docker Hub and has been built using the Dockerfile
+exposed previously.
+
+### Inspect browser behaviour using VNC
+
+The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
+distributed with a built-in VNC server that can be accessed in order to visually inspect
+the browser behaviour during the running of end-to-end tests. For this purpose
+the `docker-compose-dev.yml` expose ports `5900` of `firefox` and `chrome`
+containers as `5900` and `5901`, so they can be accessed with a VNC client.
+
+![Google Chrome browser running inside the chrome container](images/chrome-vnc.png)
