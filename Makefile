@@ -15,9 +15,10 @@ latex:
 	mkdir -p dist/
 	bash scripts/compile_tex.sh
 
-IMG='src/images'
+IMG=src/images
 
 dot: 
 	dot -Teps $(IMG)/dot/gf-components.dot -o $(IMG)/gf-components.eps
 	dot -Teps $(IMG)/dot/gf-containers.dot -o $(IMG)/gf-containers.eps
 	dot -Teps $(IMG)/dot/protractor-selenium.dot -o $(IMG)/protractor-selenium.eps
+	dot -Teps $(IMG)/dot/test-containers.dot -o $(IMG)/test-containers.eps
