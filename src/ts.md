@@ -179,7 +179,7 @@ The default `docker-compose.yml` file has been extended with testing containers:
 In particular, the `firefox` and `chrome` containers are linked to `hub` for
 registering and to `proxy` in order to access the web application. The `e2e`
 tests is linked with the `hub` in order to allow the forwarding of test
-requests. This new configuration file has been called `docker-compose-dev.yml` and is used
+requests. This new configuration file has been called `docker-compose-test.yml` and is used
 to run the tests from the Makefile:
 
     ...
@@ -262,7 +262,7 @@ exposed previously.
 The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
 distributed with a built-in VNC server that can be accessed in order to visually
 inspect the browser behaviour during the running of end-to-end tests. For this
-purpose the `docker-compose-dev.yml` exposes ports `5900` of `firefox` and
+purpose the `docker-compose-test.yml` exposes ports `5900` of `firefox` and
 `chrome` containers as `5900` and `5901`, so they can be accessed with a VNC
 client. The environment configuration file `test/e2e/settings.env` can be used
 to set the screen resolution used by the VNC servers:
