@@ -505,10 +505,10 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
     proxy:
       image: befair/gasistafelice-proxy:latest
       volumes:
-        - ./proxy:/etc/nginx/conf.d:ro
+        - ./proxy/site.conf.dev:/etc/nginx/conf.d/site.conf:ro
       ports:
-        - '127.0.0.1:8080:80'
-        - '127.0.0.1:8443:443'
+        - '127.0.0.1:8080:8080'
+        - '127.0.0.1:8443:8443'
       links:
         - front
         - back
@@ -535,17 +535,17 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
       image: postgres:9.4
       env_file: ./settings.env
 
-For the `proxy` component, the configuration files are mounted from `./proxy` to
-`/etc/nginx/conf.d` in read-only mode, the `80` (http) and `443` (https) ports are exposed in
-the host `8080` and `8443` of the host machine, `front` and `back` containers
-are linked in order to allow Nginx to connect to the application frontend and
-backend.
+For the `proxy` component, the configuration file `./proxy/site.conf.dev` is
+mounted to `/etc/nginx/conf.d` in read-only mode, the `8080` (http) and `8443`
+(https) ports are exposed, `front` and `back` containers are linked in order to
+allow Nginx to connect to the application frontend and backend.
 
 For the `front` component, the directory containing the source code of the
-AngularJS interface are mounted inside `/code/ui` in read-write mode to allow
-their conversion by HarpJS.
+AngularJS interface is mounted inside `/code/ui` in read-write mode to be served
+by HarpJS. Write permissions on the file system are required in order to allow
+file processing by HarpJS.
 
-For the `backend` component, source code and fixtures are mounted inside the
+For the `back` component, source code and fixtures are mounted inside the
 container, and the `7000` is exposed from uWSGI to enable direct http connection
 for debug purposes. The backend is linked to `db` container to access database
 features and the `settings.env` file is used for instancing environment
