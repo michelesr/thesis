@@ -157,7 +157,7 @@ the one used in production, a new `docker-compose.yml` is required:
 In this `docker-compose.yml` the `image` declarations are replaced with `build`,
 and path for the Dockerfile with the build instructions are provided for every
 application component image. To avoid conflicts with the original Docker Compose
-file, this new configuration file is called `docker-compose-ci.yml`. The ports
+file, this new configuration file is called `compose/ci.yml`. The ports
 used for debugging purposes are removed.
 
 The `settings.env` has been replaced with `settings_ci.env` in some components
@@ -428,14 +428,14 @@ Other options:
 
 Shell script for the build:
 
-    mv docker-compose-ci.yml docker-compose.yml
+    mv compose/ci.yml docker-compose.yml
     sudo docker-compose build
     sudo docker-compose up -d
     sudo make dbtest
     sudo docker-compose run --rm e2e
     sudo docker-compose stop
 
-The `docker-compose-ci.yml` is renamed to `docker-compose.yml`, replacing the
+The `compose/ci.yml` is renamed to `docker-compose.yml`, replacing the
 configuration used for development with the one used in Continuous Integration
 builds, that is more similar to the production environment configuration. Docker
 Compose is used to build the container from the Dockerfiles, link and run them,
@@ -511,7 +511,7 @@ Docker Compose can be instructed to avoid the using of the Docker cache,
 ensuring that all the build is done from scratch, creating a new job with a
 modified build script:
 
-    mv docker-compose-ci.yml docker-compose.yml
+    mv compose/ci.yml docker-compose.yml
     sudo docker-compose build --no-cache
     ...
     ...
