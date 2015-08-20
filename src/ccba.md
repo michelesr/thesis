@@ -529,11 +529,11 @@ The `docker-compose.yml` used for the development of Gasista Felice is:
         - '127.0.0.1:7000:7000'
       links:
         - db
-      env_file: ./settings.env
+      env_file: ./compose/settings.env
 
     db:
       image: postgres:9.4
-      env_file: ./settings.env
+      env_file: ./compose/settings.env
 
 For the `proxy` component, the configuration file `./proxy/site.conf.dev` is
 mounted to `/etc/nginx/conf.d` in read-only mode, the `8080` (http) and `8443`
