@@ -111,8 +111,8 @@ the one used in production, a new `docker-compose.yml` is required:
     proxy:
       build: ./proxy
       ports:
-        - '127.0.0.1:8080:80'
-        - '127.0.0.1:8443:443'
+        - '127.0.0.1:8080:8080'
+        - '127.0.0.1:8443:8443'
       links:
         - front
         - back
@@ -124,11 +124,11 @@ the one used in production, a new `docker-compose.yml` is required:
       build: ./gasistafelice
       links:
         - db
-      env_file: ./settings_ci.env
+      env_file: ./compose/settings_ci.env
 
     db:
       image: postgres:9.4
-      env_file: ./settings_ci.env
+      env_file: ./compose/settings_ci.env
 
     hub:
       image: selenium/hub:latest
