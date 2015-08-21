@@ -596,11 +596,13 @@ Periodical builds can be set filling the form in `Build Triggers -> Build
 Periodically` using the same syntax used for scheduling pools. For daily builds
 Docker Compose can be instructed to avoid the using of the Docker cache,
 ensuring that all the build is done from scratch, creating a new job with a
-modified build script:
+modified build script where the build script:
 
-    mv compose/ci.yml docker-compose.yml
-    sudo docker-compose build --no-cache
     ...
+
+    # modified images build instruction
+    sudo docker-compose build --no-cache
+
     ...
 
 Then the new job can be scheduled for daily or weekly execution.
