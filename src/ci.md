@@ -494,20 +494,38 @@ Then `mike` can be used for `Credentials` field. Other options are:
 Then a shell script for the build has to be added from `Build -> Add a build
 step -> Execute shell`:
 
+    # override configuration
     mv compose/ci.yml docker-compose.yml
-    sudo docker-compose build
-    sudo docker-compose up -d
-    sudo make dbtest
-    sudo docker-compose run --rm e2e
+
+    # stop and rm old containers
     sudo docker-compose stop
+    sudo docker-compose rm -f
+
+    # build images
+    sudo docker-compose build
+
+    # start containers
+    sudo docker-compose up -d
+
+    # prepare the database
+    sudo make dbtest
+
+    # run e2e tests
+    sudo docker-compose run --rm e2e
+
+    # stop and rm running containers
+    sudo docker-compose stop
+    sudo docker-compose rm -f
 
 The `compose/ci.yml` is renamed to `docker-compose.yml`, replacing the
 configuration used for development with the one used in Continuous Integration
 builds, that is more similar to the production environment configuration. Docker
 Compose is used to build the container from the Dockerfiles, link and run them,
 then the test database is loaded and the tests are launched. Before finishing
-the build, the containers are stopped. The build configuration can be tested
-clicking on the `Build Now` button in the project dashboard.
+the build, the containers are stopped and removed. The reason for having `stop`
+and `rm` both at the top and bottom of the script is that if the build fails for
+some reason the containers are not stopped and removed. The build configuration
+can be tested clicking on the `Build Now` button in the project dashboard. 
 
 ### Remote repository hook configuration
 
