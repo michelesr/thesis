@@ -19,7 +19,7 @@ Applications, a Protractor image has been builded and pushed to the Docker Hub.
 The image is called `michelesr/protractor`, and this is the Dockerfile used for
 the build:
 
-    FROM iojs:2.4
+    FROM iojs:3
 
     MAINTAINER Michele Sorcinelli "mikefender@cryptolab.net"
 
@@ -37,7 +37,7 @@ run Protractor, a *Io.js* image as been used as base. Io.js is a fork of the
 Node.js open-source project, created for the primary purpose of moving the
 Node.js project to a structure where the contributors and community can step in
 and effectively solve the problems facing Node (including the lack of active and
-new contributors and the lack of releases) @node-to-iojs . From the `iojs:2.4`
+new contributors and the lack of releases) @node-to-iojs . From the `iojs:3`
 base image, Protractor framework is installed using `nmp` (Node Package
 Manager), a `/code/` directory is created and used as working directory, and the
 `protractor conf.js` command is used as default command for running the
@@ -104,70 +104,35 @@ ecosystem](images/protractor-selenium.eps)
 In order to link the testing containers to the application a new Docker Compose
 configuration file is required:
 
-    proxy:
-      image: befair/gasistafelice-proxy:latest
-      volumes:
-        - ./proxy:/etc/nginx/conf.d:ro
-      volumes_from:
-        - back
-      ports:
-        - '127.0.0.1:8080:80'
-        - '127.0.0.1:8443:443'
-      links:
-        - front
-        - back
+hub:
+  image: selenium/hub:latest
 
-    front:
-      image: befair/gasistafelice-front:latest
-      volumes:
-        - ./ui:/code/ui:rw
+firefox:
+  image: selenium/node-firefox-debug:latest
+  links:
+    - hub
+    - proxy
+  ports:
+    - '127.0.0.1:5900:5900'
+  env_file:
+    - ./test/e2e/settings.env
 
-    back:
-      image: befair/gasistafelice-back:latest
-      volumes:
-        - ./gasistafelice:/code/gasistafelice:ro
-        - ./gasistafelice/fixtures:/code/gasistafelice/fixtures:rw
-        - /tmp/gf_tracebacker:/tmp/tracebacker:rw
-        - /tmp/gf_profiling:/tmp/profiling:rw
-      ports:
-        - '127.0.0.1:7000:7000'
-      links:
-        - db
-      env_file: ./settings.env
+chrome:
+  image: selenium/node-chrome-debug:latest
+  links:
+    - hub
+    - proxy
+  ports:
+    - '127.0.0.1:5901:5900'
+  env_file:
+    - ./test/e2e/settings.env
 
-    db:
-      image: postgres:9.4
-      env_file: ./settings.env
-
-    hub:
-      image: selenium/hub:latest
-
-    firefox:
-      image: selenium/node-firefox-debug:latest
-      links:
-        - hub
-        - proxy
-      ports:
-        - '127.0.0.1:5900:5900'
-      env_file:
-        - ./test/e2e/settings.env
-
-    chrome:
-      image: selenium/node-chrome-debug:latest
-      links:
-        - hub
-        - proxy
-      ports:
-        - '127.0.0.1:5901:5900'
-      env_file:
-        - ./test/e2e/settings.env
-
-    e2e:
-      image: michelesr/protractor:latest
-      volumes:
-        - ./test/e2e:/code:ro
-      links:
-        - hub
+e2e:
+  image: michelesr/protractor:latest
+  volumes:
+    - ./test/e2e:/code:ro
+  links:
+    - hub
 
 The default `docker-compose.yml` file has been extended with testing containers:
 
@@ -179,22 +144,35 @@ The default `docker-compose.yml` file has been extended with testing containers:
 In particular, the `firefox` and `chrome` containers are linked to `hub` for
 registering and to `proxy` in order to access the web application. The `e2e`
 tests is linked with the `hub` in order to allow the forwarding of test
-requests. This new configuration file has been called `docker-compose-test.yml` and is used
+requests. This new configuration file has been called `compose/test.yml` and is used
 to run the tests from the Makefile:
 
     ...
 
-    test-e2e:
-        @echo 'End-to-end test: running protractor'
-        @docker-compose -f docker-compose-test.yml up -d
-        @sleep 5
-        @docker-compose -f docker-compose-test.yml run --rm e2e
+    test-cat.yml: docker-compose.yml compose/test.yml
+            @cat docker-compose.yml compose/test.yml > test-cat.yml
 
     ...
 
-The `@` is used as command prefix to avoid their printing on the console. The
-`sleep 5` is used to wait 5 seconds after containers start in order to made
-their processes initiate correctly before sending requests to them.
+    test: test-info test-unit test-integration test-e2e
+            @echo 'All tests passed!'
+
+    ...
+
+    test-e2e: test-cat.yml
+            @echo 'End-to-end test: running protractor'
+            @docker-compose -f test-cat.yml up -d
+            @sleep 5
+            @docker-compose -f test-cat.yml run --rm e2e
+
+    ...
+
+The `test-cat.yml` file is generated as concatenation of `docker-compose.yml`
+and `compose/test.yml` and is used by the `test-e2e` objective of the Makefile
+as configuration file of Docker Compose. The `@` is used as command prefix to
+avoid their printing on the console. The `sleep 5` is used to wait 5 seconds
+after containers start in order to made their processes initiate correctly
+before sending requests to them.
 
 ![Testing containers linking with application containers](images/test-containers.eps)
 
@@ -262,7 +240,7 @@ exposed previously.
 The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
 distributed with a built-in VNC server that can be accessed in order to visually
 inspect the browser behaviour during the running of end-to-end tests. For this
-purpose the `docker-compose-test.yml` exposes ports `5900` of `firefox` and
+purpose the `compose/test.yml` exposes ports `5900` of `firefox` and
 `chrome` containers as `5900` and `5901`, so they can be accessed with a VNC
 client. The environment configuration file `test/e2e/settings.env` can be used
 to set the screen resolution used by the VNC servers:
