@@ -327,6 +327,8 @@ The warning appears at the first connection to the server, then the public key
 of the server is added to `~/.ssh/known_hosts` and the message doesn't present
 again.
 
+![Gasista felice repository page at Gogs](images/gogs-gf.png)
+
 ## Jenkins
 
 *Jenkins* is a open source software for Continuous Integration written in Java.
@@ -602,6 +604,8 @@ modified build script:
     ...
 
 Then the new job can be scheduled for daily or weekly execution.
+
+![Jenkins git pooling log](images/jenkins-pool.png)
 
 #### Parallel Jobs
 
