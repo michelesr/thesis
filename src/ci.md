@@ -201,18 +201,21 @@ choice made for this implementation.
 
 In order to install Gogs, a prebuilt image from Docker Hub is used:
 
-    $ docker pull codeskyblue/docker-gogs
+    $ docker pull gogs/gogs
     $ docker run --name gogs -d \
           -p 3000:3000 \
           -p 5000:8080 \
+          -p 32:22 \
           -v $HOME/gogs_data:/data \
-          codeskyblue/docker-gogs
+          gogs/gogs
 
-The ports `3000` and `8080` are exported respectively to `3000` and `5000`
-of the host. The port `3000` is reserved for the Gogs service, while the `8080`
-is used for the Continuous Integration system, that will be linked with Gogs
-later. Gogs require a directory for configuration files and data storage, so
-`$HOME/gogs_data` has been mounted inside the container as `/data`.
+The ports `3000`, `8080` and `22` are exposed respectively to `3000` and `5000`
+and `32`of the host. The port `3000` (http) is reserved for the Gogs service,
+while the `8080` (http) is used for the Continuous Integration system, that will
+be linked with Gogs later, and `22` is for ssh, that is used to establish
+secure connections to git repositories. Gogs require a directory for
+configuration files and data storage, so `$HOME/gogs_data` has been mounted
+inside the container as `/data`.
 
 ### Configuration
 
@@ -221,13 +224,15 @@ configuration page. The configuration to adopt is:
 
 - Database type:  `SQLite3`
 - Database path: `data/gogs.db`
+- Application Name: `Gogs: Go Git Service`
 - Repository Root Path: `/home/git/repositories`
 - Run User: `git`
 - Domain: `localhost`
+- SSH Port: `22`
 - HTTP Port: `3000`
 - Application URL: `http://localhost:3000/`
 
-For the admin account:
+For the admin account settings:
 
 - Username: `SuperUser`
 - Password: `*********`
@@ -236,9 +241,62 @@ For the admin account:
 Settings are confirmed with `Install Gogs` button. Then a normal user account
 has to be registered through the `Register` button:
 
-- Username: `Mike`
+- Username: `mike`
 - Email: `mikefender@cryptolab.net`
 - Password: `*********`
+- CAPTCHA: fill with the characters in the picture
+
+### SSH Configuration
+
+When the user connects to the repositories using http or https protocol, the
+authentication is password based. Password can be lost or stolen, and an
+asymmetric key based authentication is more secure. Also if http is used, the
+connection isn't ciphered and sensible data can be sniffed from the network.
+
+When the user register a public key for his account, the key can be used to
+authenticate him on repository accesses through ssh protocol. In order to
+generate a key pair, the user can run this command in his machine:
+
+    $ ssh-keygen -C "ECDSA key for Gogs service" \
+                 -f id_ecdsa_gogs -t ecdsa -b 256
+
+    Generating public/private ecdsa key pair.
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved in id_ecdsa_gogs.
+    Your public key has been saved in id_ecdsa_gogs.pub.
+    The key fingerprint is:
+    SHA256:/j+EDsnTpW2F+JXXeF5IwqYIa7pG/5j+bZFgSMBgUAg
+    ECDSA key for Gogs service
+    The key's randomart image is:
+    +---[ECDSA 256]---+
+    |E++o..     .     |
+    |..  . o     + .  |
+    |     . + . + + +.|
+    |      + + o o * =|
+    |     o oS+ B o +.|
+    |    o  .= * =   .|
+    |   . o  .+ +     |
+    |    o .o oo .    |
+    |   . .+oo.o...   |
+    +----[SHA256]-----+
+
+The command generates a 256 bit *ECDSA* (Elliptic Curve Digital Signature
+Algorithm) key pair. The ECDSA provides smaller key size than RSA algorithm for
+the equivalent level of security @cloudflare-ecdsa. An optional passphrase can
+be added to lock and unlock the private key. The ssh client has to be configured
+to use the right key and port to access Gogs, through the `~/.ssh/config` file:
+
+    Host localhost
+      User mike
+      Port 32
+      IdentityFile ~/.ssh/id_ecdsa_gogs
+      IdentitiesOnly yes
+
+The public key `id_ecdsa_gogs.pub` can be added to the Gogs server accessing to
+the user account settings and selecting `SSH Keys -> Add Key`. The key content
+has to be provided in the `Content` field, and an arbitrary name can be chosen,
+then the operation is confirmed with `Add Key` button.
 
 ### Adding the Gasista Felice repository
 
@@ -247,23 +305,27 @@ After the registration and sign in, a repository for Gasista Felice named
 be pushed on the Gogs server using git:
 
     $ cd path/to/gasistafelice/
-    $ git remote add gogs http://localhost:3000/mike/gasistafelice.git
+    $ git remote add gogs git@localhost:mike/gasistafelice.git
 
     $ git push gogs master
-    Username for 'http://localhost:3000': Mike
-    Password for 'http://Mike@localhost:3000':
-    Counting objects: 22003, done.
+    The authenticity of host '[localhost]:32 ([127.0.0.1]:32)'
+    can't be established.
+    ECDSA key fingerprint is
+    SHA256:agpFsLWSqB4UJG/W0VQDu5pRVIT2pmp7h+94IMYReec.
+    Are you sure you want to continue connecting (yes/no)? yes
+    Warning: Permanently added '[localhost]:32' (ECDSA)
+    to the list of known hosts.
+    Counting objects: 22310, done.
     Delta compression using up to 4 threads.
-    Compressing objects: 100% (7984/7984), done.
-    Writing objects: 100% (22003/22003), 19.19 MiB | 37.32 MiB/s, done.
-    Total 22003 (delta 13947), reused 21384 (delta 13454)
-    To http://localhost:3000/mike/gasistafelice.git
-    * [new branch]      master -> master
+    Compressing objects: 100% (8108/8108), done.
+    Writing objects: 100% (22310/22310), 19.24 MiB | 18.89 MiB/s, done.
+    Total 22310 (delta 14168), reused 21654 (delta 13629)
+    To git@localhost:mike/gasistafelice.git
+     * [new branch]      master -> master
 
-Note: the http protocol has been used for the connection because the Gogs server
-is running in a local environment, and for security reasons, needs to be
-replaced with https or ssh when the SCM system runs in a remote machine.
-
+The warning appears at the first connection to the server, then the public key
+of the server is added to `~/.ssh/known_hosts` and the message doesn't present
+again.
 
 ## Jenkins
 
@@ -309,7 +371,7 @@ environment](images/jenkins-docker.eps)
 In order to install Jenkins and the support software, a custom Dockerfile is
 required:
 
-    FROM jenkins:1.596
+    FROM jenkins:latest
 
     MAINTAINER Michele Sorcinelli "mikefender@cryptolab.net"
 
@@ -368,7 +430,7 @@ The command has been tested on an Arch Linux distribution and some parameters
 
 If the UID doesn't match, it can always be forced with:
 
-    # chmod 1000:1000 $HOME/jenkins_data
+    # chown 1000:1000 $HOME/jenkins_data -R
 
 Assuming that Gogs is running and has been launched with the command provided
 previously, Jenkins can be accessed at the url `http://localhost:5000`, because
@@ -401,13 +463,14 @@ configuration page and setting:
 
 ### Gasista Felice job configuration
 
-Navigating to the page `http://localhost:5000/newJob` a new job for the Gasista
-Felice project can be setted choosing the `Freestyle Project` option and
-`gasistafelice` as project name. Configuration for the project is:
+Logging-in and navigating to the page `http://localhost:5000/newJob` a new job
+for the Gasista Felice project can be setted choosing the `Freestyle Project`
+option and `gasistafelice` as `Item name`. Configuration for the project
+is:
 
 - Source Code Management: `Git`
 - Build: `Add build step -> Execute Shell`
-- Repository URL: `http://localhost:3000/Mike/gasistafelice`
+- Repository URL: `git@localhost:mike/gasistafelice.git`
 
 More remote repositories and branches for the same project can be tracked, for
 example the upstream and developers forks can be tracked at the same time.
@@ -416,17 +479,20 @@ and avoid rebuilding of the same changes more times if found on different remote
 repositories or branches, for example when commits are merged from a developer
 fork to the upstream. Credentials for private repositories are required:
 
-- Credentials: `Add -> Username with Password`
-- Username: `Mike`
-- Password: `********`
+- Credentials: `Add -> SSH Username with private key`
+- Scope: `Global`
+- Username: `mike`
+- Private Key: the content of private key body
+- Passphrase: the passphrase chosen on key generation if exists
 
-Other options:
+Then `mike` can be used for `Credentials` field. Other options are:
 
 - Branches to build: `dev` and `master`
 - Build Triggers: `Poll SCM`
 - Schedule: leave blank
 
-Shell script for the build:
+Then a shell script for the build has to be added from `Build -> Add a build
+step -> Execute shell`:
 
     mv compose/ci.yml docker-compose.yml
     sudo docker-compose build
@@ -455,27 +521,28 @@ The `post-recieve` hook script content is:
 
     #! /bin/sh
     curl http://localhost:8080/git/notifyCommit\
-    ?url=http://localhost:3000/Mike/gasistafelice/ \
+    ?url=git@localhost:mike/gasistafelice.git \
     2>/dev/null
 
 Then the script ownership and execution permission have to be setted:
 
     # chown 999:999 post-receive
-    # chmod -x post-receive
+    # chmod +x post-receive
 
 The configuration can be verified pushing to the remote `gasistafelice` repository:
 
     $ cd path/to/gasistafelice/
-    $ git checkout dev
-    Switched to branch 'dev'
+    $ git checkout origin/dev -b dev
+    Branch dev set up to track remote branch dev from origin.
+    Switched to a new branch 'dev'
     $ git push gogs dev
-    Counting objects: 12, done.
+    Counting objects: 22, done.
     Delta compression using up to 4 threads.
-    Compressing objects: 100% (11/11), done.
-    Writing objects: 100% (12/12), 1.51 KiB | 0 bytes/s, done.
-    Total 12 (delta 5), reused 0 (delta 0)
+    Compressing objects: 100% (22/22), done.
+    Writing objects: 100% (22/22), 2.87 KiB | 0 bytes/s, done.
+    Total 22 (delta 13), reused 0 (delta 0)
     remote: Scheduled polling of gasistafelice
-    To http://localhost:3000/mike/gasistafelice.git
+    To git@localhost:mike/gasistafelice.git
      * [new branch]      dev -> dev
 
 As can be seen from the command output, a poll of `gasistafelice` has been
