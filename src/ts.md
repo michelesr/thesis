@@ -174,7 +174,7 @@ avoid their printing on the console. The `sleep 5` is used to wait 5 seconds
 after containers start in order to made their processes initiate correctly
 before sending requests to them.
 
-![Testing containers linking with application containers](images/test-containers.eps)
+![Linking of testing containers with application containers](images/test-containers.eps)
 
 ### Test Running
 
