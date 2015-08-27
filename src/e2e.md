@@ -31,9 +31,11 @@ tests with the Protractor framework for the Gasista Felice AngularJS web
 application. The key principles of AngularJS framework are explained in order to
 permit their exploitation trough Protractor. In fact, the reason that lead to
 choosing Protractor as framework are its integration with the constructs of
-AngularJS framework. At last, will be showed how to repeat the same test
-routines more times with different parameters, and how a mobile responsive
-interface can be tested with different window sizes.
+AngularJS framework: Protractor supports Angular-specific locator strategies,
+which allows to test Angular-specific elements without any setup effort
+@protractor. At last, will be showed how to repeat the same test routines more
+times with different parameters, and how a mobile responsive interface can be
+tested with different window sizes.
 
 ## Gasista Felice end-to-end testing
 
