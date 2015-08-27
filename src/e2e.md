@@ -24,13 +24,16 @@ implemented correctly.
 
 While unit tests can be launched without additional configuration of the
 software, end-to-end tests require a more complex configuration, and that
-configuration will be discussed in detail in the next chapter. This chapter will
-focus on the implementation of web automation based end-to-end tests with the
-Protractor framework for the Gasista Felice AngularJS web application. The key
-principles of AngularJS framework are explained in order to permit their
-exploitation trough Protractor. In fact, the reason that lead to choosing
-Protractor as framework are its integration with the constructs of AngularJS
-framework.
+configuration will be discussed in detail in the next chapter.
+
+This chapter will focus on the implementation of web automation based end-to-end
+tests with the Protractor framework for the Gasista Felice AngularJS web
+application. The key principles of AngularJS framework are explained in order to
+permit their exploitation trough Protractor. In fact, the reason that lead to
+choosing Protractor as framework are its integration with the constructs of
+AngularJS framework. At last, will be showed how to repeat the same test
+routines more times with different parameters, and how a mobile responsive
+interface can be tested with different window sizes.
 
 ## Gasista Felice end-to-end testing
 
@@ -76,14 +79,15 @@ specification:
         ...
     });
 
-### Page title
+### Connection to the application
 
 The first step for Gasista Felice testing consists in assure that the
 application is up, inspecting the web page title:
 
     it('should have a title', function() {
       browser.get('http://proxy:8080/');
-      expect(browser.getTitle()).toEqual('Gasista Felice');
+      expect(browser.getTitle())
+        .toEqual('Gasista Felice');
     });
 
 In this snippet of code, the web browser performs a get request to
@@ -111,8 +115,10 @@ redirects to the user order page:
     it('should connect to the user order page', function() {
 
       // fill login form
-      element(by.model('app.username')).sendKeys('01gas1');
-      element(by.model('app.password')).sendKeys('des');
+      element(by.model('app.username'))
+        .sendKeys('01gas1');
+      element(by.model('app.password'))
+        .sendKeys('des');
 
       // click on 'GO' button!
       $$('#go').click();
@@ -197,7 +203,7 @@ related total price is correct:
        function () {
       // get the second item in the table
       var item = element.all(
-                     by.repeater('product in order.pm.products')
+                   by.repeater('product in order.pm.products')
                  ).get(1);
 
       // click 20 time on '+'
@@ -210,11 +216,13 @@ related total price is correct:
 
       // qty should be 10 units
       expect(item.element(by.model('product.quantity'))
-        .getAttribute('value')).toBe('10');
+        .getAttribute('value'))
+          .toBe('10');
 
       // price should be 250 euros
       expect(item.element(by.binding('product.quantity'))
-        .getText()).toBe('€ 250,00');
+        .getText())
+          .toBe('€ 250,00');
     });
 
 To retrieve the product from the list, the following construct is used:
@@ -223,13 +231,14 @@ To retrieve the product from the list, the following construct is used:
 
 Repeater is another of the feature of the AngularJS framework. In particular,
 the `ng-repeat` permits to generate DOM elements using an html template and an
-array of objects. In Gasista Felice the list of products is generated using the
-`ng-repeat` with `product in order.pm.products` as repeater, so the same
-repeater can be used to retrieve the products in Protractor. In the code above
-the second product is retrieved from the product list and the increment and
-decrement buttons are retrieved using its css class. Even if there are more
+array of objects @ng-repeat. In Gasista Felice the list of products is generated
+using the `ng-repeat` with `product in order.pm.products` as repeater, so the
+same repeater can be used to retrieve the products in Protractor. In the code
+above the second product is retrieved from the product list and the increment
+and decrement buttons are retrieved using its css class. Even if there are more
 buttons (a pair for every product) that share the same class, the right pair is
-retrieved because the `$$()` is called as method of the `item` object.
+retrieved because the `$$()` is called as method of the `item` object. The
+button are clicked multiple times using loops.
 
 Product quantity and price using model selector and binding selector,
 respectively, and again, the methods are called from the `item` object to
@@ -237,7 +246,8 @@ exclude other products. A particular attention have to be paid at this
 instruction:
 
       expect(item.element(by.binding('product.quantity'))
-        .getText()).toBe('€ 250,00');
+        .getText())
+          .toBe('€ 250,00');
 
 The `product.quantity` binding is used. The relation between the used binding
 and the total price of the product has to be researched from its DOM element
@@ -254,22 +264,169 @@ be separated from the view, and putting operation in the template violates this
 principle. This is an example of how writing tests can lead to the discovery of
 bad code design choices.
 
-Other implemented order management tests are:
+Another check to perform is that the quantity for a product should never go
+under zero:
 
     it('should never decrement the price/qty under 0',
     function () {
       var item = element.all(
-                     by.repeater('product in order.pm.products')
+                   by.repeater('product in order.pm.products')
                  ).get(1);
 
       for (var i=0; i < 20; i++)
         item.$$('.glyphicon-minus').click();
 
       expect(item.element(by.model('product.quantity'))
-        .getAttribute('value')).toBe('0');
+        .getAttribute('value'))
+          .toBe('0');
 
       expect(item.element(by.binding('product.quantity'))
-        .getText()).toBe('€ 0,00');
+        .getText())
+          .toBe('€ 0,00');
     });
 
-The meaning is obvious.
+The second product is retrieved from the list, the decrement button pressed 20 times and
+the quantity value checked.
+
+### Insertion and check of products in the basket
+
+In order to check the insertion of the products in the basket, the following
+test is used:
+
+    it('should add a product to the basket', 
+       function() {
+
+      var item = element.all(
+                    by.repeater('product in order.pm.products')
+                 ).get(2);
+
+      // set the quantity to 3
+      item.element(by.model('product.quantity'))
+        .clear();
+      item.element(by.model('product.quantity'))
+        .sendKeys('3');
+
+      // add to the basket
+      element(by.buttonText('Aggiungi al paniere')).click();
+
+      // handle the alert popup
+      handleAlertPopup();
+
+      // go to the basket
+      browser.setLocation('basket');
+
+      // get the first order
+      item = element.all(
+               by.repeater('item in basket.open_ordered_products')
+             ).get(0);
+
+      // get all the column from the first order
+      var columns = item.$$('td');
+
+      // expects to have 8 columns (counting the hidden ones)
+      expect(columns.count())
+        .toBe(8);
+
+      // check the fields
+      expect(columns.get(0).getText())
+        .toBe('Ord. 59');
+      expect(columns.get(1).getText())
+        .toBe('Fornitore 01');
+      expect(columns.get(2).getText())
+        .toBe('Scarpe Uomo (paio)');
+      expect(columns.get(3).getText())
+        .toBe('€ 20,00');
+      expect(item.element(by.model('item.quantity'))
+        .getAttribute('value'))
+          .toBe('3');
+      expect(columns.get(6).getText())
+        .toBe('€ 60,00');
+    });
+
+The third product is retrieved from list, then its quantity field is cleared and
+set to 3, then the `Aggiungi al paniere` button is retrieved from its text and
+clicked to add the product to the basket, and the resulting alert is managed
+with the `handleAlertPopup()` function:
+
+    var handleAlertPopup = function() {
+      var EC = protractor.ExpectedConditions;
+      browser.wait(EC.alertIsPresent(), 5000);
+      browser.switchTo().alert().accept();
+    };
+    
+Then the location is set to the basket page, the list of the ordered products
+its retrieved and for the first item in the list the fields are counted and
+checked.
+
+### Test parametrization and mobile responsive applications
+
+Gasista Felice is a mobile responsive application, so the implemented tests
+have to be applied two times with different window dimensions.
+
+In order to repeat two times the tests the `map()` method of `Array` objects can
+be exploited. *The map() method creates a new array with the results of calling a
+provided function on every element in this array* @mdn-map. With the `map()`
+method an array of index can be created and these index are used as parameter
+for the execution of test routines:
+
+    [0,1].map(function(index) {
+
+      it('should have a title', function() {
+        if (!index)
+          browser.driver.manage().window().maximize();
+        else
+          browser.driver.manage().window().setSize(768, 1024);
+        browser.get('http://proxy:8080/');
+        expect(browser.getTitle()).toEqual('Gasista Felice');
+      });
+
+      ...
+    });
+
+In this way the routines are performed two times, the first time with a
+maximized window (the size of the maximized window depends on the desktop
+resolution used in the operating system that runs the browser), the second time
+with a fixed size that triggers the mobile interface. The `index` variable can
+always be checked in order to determine the current interface. More index can be
+used in order to repeat the tests with different window sizes.
+
+The main difference between the Gasista Felice desktop and mobile
+interface is that the second make use of a navigation bar that display user
+related informations and logout and settings buttons, while in the desktop
+interface these elements are always showed. This navigation bar can be showed
+and hided with the click of its toggle button.
+
+Button toggle can be implemented with simple if-else instructions:
+
+    ...
+
+    it('should connect to the user order page', function() {
+      ...
+
+      // check user displayed name
+      if (index) {
+        $$('.navbar-toggle').click();
+        expect(element(by.binding('person.display_name')).getText())
+          .toBe("Gasista_01 DelGas_01");
+        $$('.navbar-toggle').click();
+      }
+      else
+        expect(element(by.binding('person.display_name')).getText())
+          .toBe("Gasista_03 DelGas_01");
+    });
+
+    ...
+
+The button for showing and hiding the navigation bar is retrieved from its css
+class and clicked twice (first time to show, second time to hide again).
+
+#### Logout
+
+Because with the use of `map()` the login routine is performed twice, a logout
+routine has to be appended to the bottom of test specifications:
+
+    it('should logout', function() {
+      if(index)
+        $$('.navbar-toggle').click();
+      $$('#btn-logout').click();
+    });
