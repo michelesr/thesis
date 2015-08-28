@@ -1,4 +1,5 @@
 #! /bin/bash
+mkdir -p template/chapters
 for x in src/*.md
 do
   pandoc $x -t latex --biblatex --chapters -o template/chapters/$(echo $x | cut -d/ -f2 | cut -d. -f1).tex
