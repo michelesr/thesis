@@ -3,7 +3,7 @@
 End-to-end testing is the practice of testing the software from the user's point
 of view. In a web application, an efficient approach to the end-to-end testing
 is obtained with the implementation of browser automation scripts, that involve
-the programmatic driving of one or different web browsers in order to access the
+the programmatic drive of one or different web browsers in order to access the
 application as client and test the features provided by its user web interface.
 
 End-to-end tests are not sufficient to ensure the quality of the software: in
@@ -14,28 +14,28 @@ the application: if an operation provides an unexpected result for the user, or
 triggers a server internal error, the causes of that behaviour have to be
 researched in the related core components of the software. End-to-end testing
 helps also to discover the bugs that are more visible to the final user, thus
-the most important.
+the most urgent.
 
 In addition to this, end-to-end tests can be used in Test Driven Development to
-better define the specifications of the application. In fact, end-to-end
+better define the specifications of the application. In fact, end-to-end testing
 objective is to ensure that the application specifications are satisfied, and
-can be used as a demonstration for the client that required functions are
+can be used as a demonstration for the client that required features are
 implemented correctly.
-
-While unit tests can be launched without additional configuration of the
-software, end-to-end tests require a more complex configuration, and that
-configuration will be discussed in detail in the next chapter.
 
 This chapter will focus on the implementation of web automation based end-to-end
 tests with the Protractor framework for the Gasista Felice AngularJS web
 application. The key principles of AngularJS framework are explained in order to
 permit their exploitation trough Protractor. In fact, the reason that lead to
-choosing Protractor as framework are its integration with the constructs of
-AngularJS framework: Protractor supports Angular-specific locator strategies,
-which allows to test Angular-specific elements without any setup effort
-@protractor. At last, will be showed how to repeat the same test routines more
-times with different parameters, and how a mobile responsive interface can be
-tested with different window sizes.
+choosing Protractor are its integration with the constructs of AngularJS
+framework: Protractor supports Angular-specific locator strategies, which allows
+to test Angular-specific elements without any setup effort @protractor. At last,
+will be showed how to repeat the same test routines more times with different
+parameters, and how a mobile responsive interface can be tested with different
+window sizes.
+
+While unit tests can be launched without additional configurations of the
+software, end-to-end tests require a more complex configuration, that will be
+discussed in detail in the next chapter.
 
 ## Gasista Felice end-to-end testing
 
@@ -295,7 +295,7 @@ the quantity value checked.
 In order to check the insertion of the products in the basket, the following
 test is used:
 
-    it('should add a product to the basket', 
+    it('should add a product to the basket',
        function() {
 
       var item = element.all(
@@ -355,7 +355,7 @@ with the `handleAlertPopup()` function:
       browser.wait(EC.alertIsPresent(), 5000);
       browser.switchTo().alert().accept();
     };
-    
+
 Then the location is set to the basket page, the list of the ordered products
 its retrieved and for the first item in the list the fields are counted and
 checked.
