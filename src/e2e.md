@@ -45,15 +45,17 @@ specifications for the end-to-end tests to perform should contain the following
 constructs:
 
     describe('Name of application or component', function() {
-        it('should have feature X', function () {
-          // test code for feature X
-          ...
-        });
-        it('should perform operation Y', function() {
-          // test code for operation Y
-          ...
-        });
+      it('should have feature X', function () {
+        // test code for feature X
         ...
+      });
+
+      it('should perform operation Y', function() {
+        // test code for operation Y
+        ...
+      });
+
+      ...
     });
 
 The `describe()` function provided by Protractor framework can be used in order to
@@ -78,7 +80,7 @@ For Gasista Felice, the `test/e2e/spec.js` script is used as
 specification:
 
     describe('GF ng-app', function() {
-        ...
+      ...
     });
 
 ### Connection to the application
@@ -131,8 +133,9 @@ application redirects to the user's order page:
         .toBe('/order/');
 
       // check user displayed name
-      expect(element(by.binding('person.display_name')).getText())
-        .toBe("Gasista_01 DelGas_01");
+      expect(element(by.binding('person.display_name'))
+        .getText())
+          .toBe("Gasista_01 DelGas_01");
     });
 
 The username and password fields are retrieved from the page DOM by its model
@@ -205,6 +208,7 @@ related total price is correct:
 
     it('should increment/decrement the price/qty when "+/-" are clicked',
        function () {
+
       // get the second item in the table
       var item = element.all(
                    by.repeater('product in order.pm.products')
@@ -212,11 +216,13 @@ related total price is correct:
 
       // click 20 time on '+'
       for (var i=0; i < 20; i++)
-        item.$$('.glyphicon-plus').click();
+        item.$$('.glyphicon-plus')
+          .click();
 
       // click 10 times on '-'
       for (var i=0; i < 10; i++)
-        item.$$('.glyphicon-minus').click();
+        item.$$('.glyphicon-minus')
+          .click();
 
       // qty should be 10 units
       expect(item.element(by.model('product.quantity'))
@@ -272,13 +278,15 @@ Another check to perform is that the quantity for a product should never go
 under zero:
 
     it('should never decrement the price/qty under 0',
-    function () {
+       function () {
+
       var item = element.all(
                    by.repeater('product in order.pm.products')
                  ).get(1);
 
       for (var i=0; i < 20; i++)
-        item.$$('.glyphicon-minus').click();
+        item.$$('.glyphicon-minus')
+          .click();
 
       expect(item.element(by.model('product.quantity'))
         .getAttribute('value'))
@@ -311,7 +319,8 @@ test is used:
         .sendKeys('3');
 
       // add to the basket
-      element(by.buttonText('Aggiungi al paniere')).click();
+      element(by.buttonText('Aggiungi al paniere'))
+        .click();
 
       // handle the alert popup
       handleAlertPopup();
@@ -332,19 +341,24 @@ test is used:
         .toBe(8);
 
       // check the fields
-      expect(columns.get(0).getText())
-        .toBe('Ord. 59');
-      expect(columns.get(1).getText())
-        .toBe('Fornitore 01');
-      expect(columns.get(2).getText())
-        .toBe('Scarpe Uomo (paio)');
-      expect(columns.get(3).getText())
-        .toBe('€ 20,00');
+      expect(columns.get(0)
+        .getText())
+          .toBe('Ord. 59');
+      expect(columns.get(1)
+        .getText())
+          .toBe('Fornitore 01');
+      expect(columns.get(2)
+        .getText())
+          .toBe('Scarpe Uomo (paio)');
+      expect(columns.get(3)
+        .getText())
+          .toBe('€ 20,00');
       expect(item.element(by.model('item.quantity'))
         .getAttribute('value'))
           .toBe('3');
-      expect(columns.get(6).getText())
-        .toBe('€ 60,00');
+      expect(columns.get(6)
+        .getText())
+          .toBe('€ 60,00');
     });
 
 The third product is retrieved from list, then its quantity field is cleared and
@@ -380,14 +394,15 @@ method an array of indexes can be created and these indexes can be used as
 parameter for the execution of test routines:
 
     [0,1].map(function(index) {
-
       it('should have a title', function() {
         if (!index)
           browser.driver.manage().window().maximize();
         else
           browser.driver.manage().window().setSize(768, 1024);
+
         browser.get('http://proxy:8080/');
-        expect(browser.getTitle()).toEqual('Gasista Felice');
+        expect(browser.getTitle())
+          .toEqual('Gasista Felice');
       });
 
       ...
@@ -416,13 +431,15 @@ Button toggle can be implemented with simple if-else instructions:
       // check user displayed name
       if (index) {
         $$('.navbar-toggle').click();
-        expect(element(by.binding('person.display_name')).getText())
-          .toBe("Gasista_01 DelGas_01");
+        expect(element(by.binding('person.display_name'))
+          .getText())
+            .toBe("Gasista_01 DelGas_01");
         $$('.navbar-toggle').click();
       }
       else
-        expect(element(by.binding('person.display_name')).getText())
-          .toBe("Gasista_03 DelGas_01");
+        expect(element(by.binding('person.display_name'))
+          .getText())
+            .toBe("Gasista_03 DelGas_01");
     });
 
     ...
@@ -439,7 +456,7 @@ The `map()` method can also be used from an array of objects:
             .toBe(obj.foo);
           expect(barValue)
             .toBe(obj.bar);
-          });
+        });
         ...
       });
 
