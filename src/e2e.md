@@ -83,7 +83,7 @@ specification:
 
 ### Connection to the application
 
-The first step for Gasista Felice testing consists in assure that the
+The first step for Gasista Felice testing consists in assuring that the
 application is up, connecting to the home page and inspecting the title
 displayed by the browser:
 
@@ -112,8 +112,8 @@ if the two object aren't equal.
 
 ### Login
 
-The next step is performing the login action and ensure that the application
-redirects to the user order page:
+The next step consists in performing the login action and ensuring that the
+application redirects to the user's order page:
 
     it('should connect to the user order page', function() {
 
@@ -135,13 +135,13 @@ redirects to the user order page:
         .toBe("Gasista_01 DelGas_01");
     });
 
-The username and password field are retrieved from the page DOM by its model
+The username and password fields are retrieved from the page DOM by its model
 name. Model is a feature provided by the AngularJS framework that permits the
 two-way binding between a value of a DOM element and a object in the AngularJS
 application scope. Two-way binding means that if the value of the object is
-changed in the application scope the change is reflected in the DOM and
-viceversa @two-way-binding. The definition of username and password elements for
-Gasista Felice is:
+changed in the application scope the change reflects on the related DOM element
+and viceversa @two-way-binding. The definition of username and password elements
+for Gasista Felice is:
 
     <input ng-model="app.username" id="username"
            type="text" class="validate">
@@ -149,13 +149,13 @@ Gasista Felice is:
            type="password" class="validate">
 
 The `ng-model` directive permits the binding of a DOM element to a property of
-the AngularJS scope @ng-model. This is an example of how Protractor is designed to
-work with AngularJS constructs. css selectors can be used as well but assuming
-that the model of the username and password fields will never be changed, the
-model name provides a more reliable reference to these elements. However,
-sometimes the use of css selectors is the only way to select a DOM element, such
-as for the `GO` button of Gasista Felice login page. The `$$(css_selector)` function is an
-alias for:
+the AngularJS scope @ng-model. This is an example of how Protractor is designed
+to work with AngularJS constructs. Css selectors can be used as well but
+assuming that the model of the username and password fields will never be
+changed, the model name provides a more reliable reference to these elements.
+However, sometimes the use of a css selector is the only way to select a DOM
+element, such as for the `GO` button of Gasista Felice login page. The
+`$$(css_selector)` function is an alias for:
 
     element(by.css(css_selector))
 
@@ -174,15 +174,16 @@ One of the button classes could be used as well, but the id is preferable
 (assuming that it's unique in the page context).
 
 After the login, the `getLocationAbsUrl()` method of the `browser` object is
-used to check that the current url match the one related to the orders page.
+used to check that the current url matches the one related to the orders page.
 
-The `person.display_name` binding is used to refer the DOM element with the
-function of displaying the name and verify that the value is the expected.
+The `person.display_name` binding is used as reference to the DOM element with
+the function of displaying the person name and its `getText()` method is used to
+retrieve the text to verify with the `expect()` function.
 Binding is another feature of the AngularJS framework that permits the one-way
 binding between the application scope and the DOM element. One-way binding means
 that if the value of the object is changed in the application scope the change
-is reflected in the DOM element, but a change in the DOM element doesn't reflect
-in the application scope. In order to perform a one-way binding the `ng-bind`
+reflects on the DOM element, but a change in the DOM element doesn't reflect on
+the application scope. In order to perform a one-way binding the `ng-bind`
 @ng-bind or double curly brackets can be used:
 
     <p ng-bind="expression"></p>
