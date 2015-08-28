@@ -348,7 +348,7 @@ test is used:
     });
 
 The third product is retrieved from list, then its quantity field is cleared and
-set to 3, then the `Aggiungi al paniere` button is retrieved from its text and
+set to 3, the `Aggiungi al paniere` button is retrieved from its text and
 clicked to add the product to the basket, and the resulting alert is managed
 with the `handleAlertPopup()` function:
 
@@ -358,9 +358,15 @@ with the `handleAlertPopup()` function:
       browser.switchTo().alert().accept();
     };
 
-Then the location is set to the basket page, the list of the ordered products
-its retrieved and for the first item in the list the fields are counted and
-checked.
+Then the location is set to the basket page trough the `setLocation()` method of
+the `browser` object, the list of the ordered products is retrieved and for the
+first item in the list the fields are counted and checked. As can be seen from
+the code snippet above, a selection method such as `$$()` can return more than
+one element, and in that case, the elements can be counted with the `count()`
+method and individually accessed providing an index to the `get()` method. As
+`getText()` can be used to get the text of a DOM element, the `getAttribute()`
+method can be used to get the value of the DOM element attribute provided as
+parameter.
 
 ### Test parametrization and mobile responsive applications
 
@@ -368,10 +374,10 @@ Gasista Felice is a mobile responsive application, so the implemented tests
 have to be applied two times with different window dimensions.
 
 In order to repeat two times the tests the `map()` method of `Array` objects can
-be exploited. *The map() method creates a new array with the results of calling a
-provided function on every element in this array* @mdn-map. With the `map()`
-method an array of index can be created and these index are used as parameter
-for the execution of test routines:
+be exploited. *The map() method creates a new array with the results of calling
+a provided function on every element in this array* @mdn-map. With the `map()`
+method an array of indexes can be created and these indexes can be used as
+parameter for the execution of test routines:
 
     [0,1].map(function(index) {
 
@@ -391,8 +397,8 @@ In this way the routines are performed two times, the first time with a
 maximized window (the size of the maximized window depends on the desktop
 resolution used in the operating system that runs the browser), the second time
 with a fixed size that triggers the mobile interface. The `index` variable can
-always be checked in order to determine the current interface. More index can be
-used in order to repeat the tests with different window sizes.
+always be checked in order to determine the current interface. More indexes can
+be used in order to repeat the tests with different window sizes.
 
 The main difference between the Gasista Felice desktop and mobile
 interface is that the second make use of a navigation bar that display user
@@ -423,6 +429,22 @@ Button toggle can be implemented with simple if-else instructions:
 
 The button for showing and hiding the navigation bar is retrieved from its css
 class and clicked twice (first time to show, second time to hide again).
+
+The `map()` method can also be used from an array of objects:
+
+    [{foo: 1, bar:2}, {foo:2, bar:1}]
+      .map(function(obj) {
+        it('...', function() {
+          expect(fooValue)
+            .toBe(obj.foo);
+          expect(barValue)
+            .toBe(obj.bar);
+          });
+        ...
+      });
+
+This technique permits to run test routines more times with different sets of
+values.
 
 #### Logout
 
