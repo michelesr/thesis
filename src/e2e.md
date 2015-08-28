@@ -84,7 +84,8 @@ specification:
 ### Connection to the application
 
 The first step for Gasista Felice testing consists in assure that the
-application is up, inspecting the web page title:
+application is up, connecting to the home page and inspecting the title
+displayed by the browser:
 
     it('should have a title', function() {
       browser.get('http://proxy:8080/');
