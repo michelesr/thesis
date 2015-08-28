@@ -198,7 +198,7 @@ The related DOM element definition is:
 
 ### Order management
 
-Once the user is logged and the browser is in the order page, the order
+Once the user is logged and the browser is located in the order page, the order
 management is tested. The first action to perform is trying to increment and
 decrement the quantity for a product and verify that the displayed quantity and
 related total price is correct:
@@ -233,29 +233,29 @@ To retrieve the product from the list, the following construct is used:
 
     element.all(by.repeater(repeater)).get(index);
 
-Repeater is another of the feature of the AngularJS framework. In particular,
-the `ng-repeat` permits to generate DOM elements using an html template and an
-array of objects @ng-repeat. In Gasista Felice the list of products is generated
-using the `ng-repeat` with `product in order.pm.products` as repeater, so the
-same repeater can be used to retrieve the products in Protractor. In the code
-above the second product is retrieved from the product list and the increment
-and decrement buttons are retrieved using its css class. Even if there are more
-buttons (a pair for every product) that share the same class, the right pair is
-retrieved because the `$$()` is called as method of the `item` object. The
-button are clicked multiple times using loops.
+Repeater is another of the features of the AngularJS framework. In particular,
+the `ng-repeat` directive permits to generate DOM elements using an html
+template and an array of objects @ng-repeat. In Gasista Felice the list of
+products is generated using the `ng-repeat` directive with `product in
+order.pm.products` as repeater, so the same repeater can be used to retrieve the
+products in Protractor. In the code above the second product is retrieved from
+the list and the increment and decrement buttons are retrieved using its css
+class. Even if there are more buttons (a pair for every product) that share the
+same class, the right pair is retrieved because the `$$()` is called as method
+of the `item` object. The buttons are clicked multiple times using `for` loops.
 
-Product quantity and price using model selector and binding selector,
-respectively, and again, the methods are called from the `item` object to
-exclude other products. A particular attention have to be paid at this
+Product quantity and price are retrieved using model selector and binding
+selector, respectively, and again, the methods are called from the `item` object
+to exclude other products. A particular attention have to be paid at this
 instruction:
 
       expect(item.element(by.binding('product.quantity'))
         .getText())
           .toBe('€ 250,00');
 
-The `product.quantity` binding is used. The relation between the used binding
-and the total price of the product has to be researched from its DOM element
-definition:
+The `product.quantity` binding is used in order to retrieve the total price for
+the product. The relation between the used binding and the total price of the
+product has to be researched in its DOM element definition:
 
     <td data-title="total" class="tdprod" >
       {{product.quantity*product.price | currency:"€"}}
@@ -264,9 +264,9 @@ definition:
 AngularJS framework permits to perform operations in the template, in this case
 the total price is calculated as product between unitary price and quantity. In
 a *MVC* (Model View Controller) software architecture, the business logic should
-be separated from the view, and putting operation in the template violates this
-principle. This is an example of how writing tests can lead to the discovery of
-bad code design choices.
+be separated from the view, and performing operations in the template violates
+this principle. This is an example of how writing tests can lead to the
+discovery of bad code design choices.
 
 Another check to perform is that the quantity for a product should never go
 under zero:
