@@ -4,7 +4,7 @@ pdf: latex
 
 clean:
 	find . -regex '.*.\(pdf\|aux\|toc\|lot\|lof\|log\)' -exec rm -v {} \+
-	rm -rvf dist/
+	rm -rvf dist/ template/chapters/
 
 clean-container:
 	docker rm -f thesis
