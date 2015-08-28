@@ -58,7 +58,7 @@ constructs:
 
 The `describe()` function provided by Protractor framework can be used in order to
 describe the entire application or one of its components. The prototype of
-describe function is:
+the `describe()` function is:
 
     describe(string, function)
 
@@ -71,10 +71,10 @@ application or component. The `it()` prototype is:
     it(string, function)
 
 A description of the feature or operation to test has to be provided as first
-parameter, and an anonymous function with the implementation of the test is
-provided as second parameter.
+parameter, and an anonymous function with the implementation of the test routine
+is provided as second parameter.
 
-For Gasista Felice application, the `test/e2e/spec.js` script is used as
+For Gasista Felice, the `test/e2e/spec.js` script is used as
 specification:
 
     describe('GF ng-app', function() {
