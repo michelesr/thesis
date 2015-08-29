@@ -1,4 +1,4 @@
-# Containers and container based applications
+# Containers and containerized applications
 
 In the past virtual machines covered a role of great importance in cloud
 computing and virtualization, because of their attitude to provide standardized
@@ -26,7 +26,7 @@ verification for improved security. @docker-content-trust
 This chapter exposes the main features of *Docker* container engine and *Docker
 Compose*, a container orchestration tool for defining and instancing
 reproducible development environments. Once the reader is familiar with the main
-features of Docker and Docker Compose, the container based structure of Gasista
+features of Docker and Docker Compose, the containerized structure of Gasista
 Felice is explained in detail.
 
 ## Docker container engine
@@ -319,7 +319,7 @@ container, Docker links the container named `foobar`, registering an entry in
     root@59633390aff6:/# cat /etc/hosts | grep webserver
     172.17.1.210    webserver d3dd23d4b9c6 foobar
 
-Containers linking is the base of serving container based web applications, that
+Containers linking is the base of serving containerized web applications, that
 usally are divided in different containers, such as:
 
 - Database
@@ -328,7 +328,7 @@ usally are divided in different containers, such as:
 - Web Interface
 - Testing containers
 
-To simplify the process of building, linking and managing a container based
+To simplify the process of building, linking and managing a containerized
 application, *Docker Compose* can be used.
 
 ## Docker Compose
@@ -342,7 +342,7 @@ command. Your application’s structure and configuration are held in a single
 place, which makes spinning up applications simple and repeatable everywhere
 @docker-compose.*
 
-Docker Compose is a powerful tool for the development of container based
+Docker Compose is a powerful tool for the development of containerized
 applications. With Docker Compose, the entire application structure can be
 defined in a single configuration file called `docker-compose.yml`, and
 instanced with a singe command. Docker compose is written in the *Python*
@@ -475,9 +475,9 @@ The routing of requests consists in the following rules:
 - requests related to the REST API or the old user interface are forwarded to
   *uWGSI* using the uwsgi protocol
 
-HarpJS is a static file server with built-in preprocessing and its role
-consist in serving HTML, CSS and Javascript files, that can be served directly
-or converted on request from higher abstraction level languages such as:
+HarpJS is a static file server with built-in preprocessing and its role consists
+in serving HTML, CSS and Javascript files, that can be served directly or
+converted on request from higher abstraction level languages such as:
 
 - *Markdown*, *Jade* and *EJS* for HTML
 - *Sass*, *Less*, *Stylus* for CSS

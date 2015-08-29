@@ -83,7 +83,7 @@ specification:
       ...
     });
 
-### Connection to the application
+### Connecting to the application
 
 The first step for Gasista Felice testing consists in assuring that the
 application is up, connecting to the home page and inspecting the title
@@ -199,12 +199,12 @@ The related DOM element definition is:
        {{ person.display_name }}
     </a>
 
-### Order management
+### Purchasing management
 
-Once the user is logged and the browser is located in the order page, the order
-management is tested. The first action to perform is trying to increment and
-decrement the quantity for a product and verify that the displayed quantity and
-related total price is correct:
+Once the user is logged and the browser is located in the order page, the
+purchasing management is tested. The first action to perform is trying to
+increment and decrement the quantity for a product and verify that the displayed
+quantity and related total price is correct:
 
     it('should increment/decrement the price/qty when "+/-" are clicked',
        function () {
@@ -382,7 +382,7 @@ method and individually accessed providing an index to the `get()` method. As
 method can be used to get the value of the DOM element attribute provided as
 parameter.
 
-### Test parametrization and mobile responsive applications
+### Testing parametrization and mobile responsive applications
 
 Gasista Felice is a mobile responsive application, so the implemented tests
 have to be applied two times with different window dimensions.

@@ -12,7 +12,7 @@
 
 ### End-to-end tests
 
-## From Waterfall to Agile Development
+## From the Waterfall Model to Agile Development
 
 ## Test driven Development
 
