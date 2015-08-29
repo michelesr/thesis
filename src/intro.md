@@ -64,7 +64,9 @@ containerized one.
 
 ## Organization
 
-Chapter 2 is the context.
+Chapter 2 exposes the technological and social context that lead to the thesis
+work, as well as the motivation of choosing the end-to-end testing typology and
+the container based virtualization.
 
 Chapter 3 introduces and explains in detail the Docker container engine, with
 practical examples of usage, then it shows how Docker Compose container
@@ -74,15 +76,13 @@ structure of Gasista Felice, as well as its configuration of the development
 environment.
 
 Chapter 4 will cover the end-to-end test techniques used to ensure a better
-quality of the tested software. In particularly *AngularJS* applications will be
-tested using *Protractor* testing framework. Testing often reveals bad design
-choice made during the development process, so this chapter will also give some
-advice to how to write a better software and better tests.
+quality of the tested software. In particularly, the Gasista Felice *AngularJS*
+web application will be tested using *Protractor* testing framework.
 
 Chapter 5 shows the main tools used in end-to-end tests and how to configure the
-testing framework to work with the container ecosystem. The configuration is an
-integral part of this thesis and aims to reduce the developer effort to get the
-testing environment.
+testing framework to work with the Gasista Felice application container
+ecosystem. The configuration is an integral part of this thesis and aims to
+reduce the developer effort to get the testing environment.
 
 Chapter 6 will explain how to build a Continuous Integration system to provide
 automatic run of tests once the code is updated and pushed into the project
