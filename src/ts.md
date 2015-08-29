@@ -96,8 +96,7 @@ our implementation the hub and the nodes runs inside Docker containers, and they
 are linked through the Docker VPN. Like Selenium RC, the Selenium Grid hub is
 accessible with the http protocol.
 
-![Interactions between Protractor and Selenium
-ecosystem](images/protractor-selenium.eps)
+![Interactions between Protractor and Selenium ecosystem](images/eps/protractor-selenium.eps)
 
 ## Containers configuration
 
@@ -174,7 +173,7 @@ avoid their printing on the console. The `sleep 5` is used to wait 5 seconds
 after containers start in order to made their processes initiate correctly
 before sending requests to them.
 
-![Linking of testing containers with application containers](images/test-containers.eps)
+![Linking of testing containers with application containers](images/eps/test-containers.eps)
 
 ### Test Running
 
@@ -248,4 +247,4 @@ to set the screen resolution used by the VNC servers:
     SCREEN_WIDTH=1920
     SCREEN_HEIGHT=1080
 
-![Google Chrome browser running inside the chrome container](images/chrome-vnc.png)
+![Google Chrome browser running inside the chrome container](images/png/chrome-vnc.png)

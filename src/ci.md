@@ -327,7 +327,7 @@ The warning appears at the first connection to the server, then the public key
 of the server is added to `~/.ssh/known_hosts` and the message doesn't present
 again.
 
-![Gasista Felice repository page at Gogs](images/gogs-gf.png)
+![Gasista Felice repository page at Gogs](images/png/gogs-gf.png)
 
 ## Jenkins
 
@@ -365,8 +365,7 @@ Jenkins container has been adopted for the following reasons:
 - using the same Docker daemon increases the chances to exploit cache
 - the implementation is simple
 
-![Jenkins interaction with Docker and testing
-environment](images/jenkins-docker.eps)
+![Jenkins interaction with Docker and testing environment](images/eps/jenkins-docker.eps)
 
 ### Installation
 
@@ -571,7 +570,7 @@ the project will be built. The tracked branches can be setted in the project
 configuration page. The status of all the project builds can be found at the
 url: `http://localhost:5000/job/gasistafelice/`.
 
-![Gogs triggers a SCM poll after a developer push](images/jenkins-poll.eps)
+![Gogs triggers a SCM poll after a developer push](images/eps/jenkins-poll.eps)
 
 ### Scheduling of periodic polls and builds
 
@@ -607,7 +606,7 @@ modified build script where the build script:
 
 Then the new job can be scheduled for daily or weekly execution.
 
-![Jenkins Git pooling log](images/jenkins-pool.png)
+![Jenkins Git pooling log](images/png/jenkins-pool.png)
 
 #### Parallel Jobs
 

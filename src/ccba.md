@@ -45,9 +45,9 @@ different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers)
 and *systemd-nspawn* @wikipedia-docker. Docker is written in the *Go*
 programming language.
 
-![Applications running in virtual machines](images/vm-diagram.eps)
+![Applications running in virtual machines](images/eps/vm-diagram.eps)
 
-![Applications running in Docker containers](images/docker-diagram.eps)
+![Applications running in Docker containers](images/eps/docker-diagram.eps)
 
 ### Installation
 
@@ -489,7 +489,7 @@ uWSGI is an application server and its role consists in:
 - forwarding the requests to the processes
 - serving static files for the legacy interface
 
-![Requests routing for Gasista Felice application](images/gf-components.eps)
+![Requests routing for Gasista Felice application](images/eps/gf-components.eps)
 
 The containers for the Gasista Felice application are:
 
@@ -498,7 +498,7 @@ The containers for the Gasista Felice application are:
 - `front`: HarpJs container
 - `db`: PostrgreSQL container
 
-![Gasista Felice containers and their interaction](images/gf-containers.eps)
+![Gasista Felice containers and their interaction](images/eps/gf-containers.eps)
 
 The `docker-compose.yml` used for the development of Gasista Felice is:
 
