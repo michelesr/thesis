@@ -200,29 +200,29 @@ The end-to-end tests can be launched from Gasista Felice repository root with:
     Creating gasistafelice_chrome_1...
     Creating gasistafelice_firefox_1...
     [launcher] Running 2 instances of WebDriver
-    .................
+    ............
     ------------------------------------
-    [chrome #2] PID: 16
+    [chrome #2] PID: 15
     [chrome #2] Specs: /code/spec.js
     [chrome #2]
     [chrome #2] Using the selenium server at http://hub:4444/wd/hub
     [chrome #2] ............
     [chrome #2]
-    [chrome #2] Finished in 24.756 seconds
-    [chrome #2] 12 tests, 26 assertions, 0 failures
+    [chrome #2] Finished in 17.822 seconds
+    [chrome #2] 12 tests, 28 assertions, 0 failures
     [chrome #2]
 
     [launcher] 1 instance(s) of WebDriver still running
-    ...
+    ........
     ------------------------------------
-    [firefox #1] PID: 11
+    [firefox #1] PID: 10
     [firefox #1] Specs: /code/spec.js
     [firefox #1]
     [firefox #1] Using the selenium server at http://hub:4444/wd/hub
     [firefox #1] ............
     [firefox #1]
-    [firefox #1] Finished in 31.339 seconds
-    [firefox #1] 12 tests, 26 assertions, 0 failures
+    [firefox #1] Finished in 21.79 seconds
+    [firefox #1] 12 tests, 28 assertions, 0 failures
     [firefox #1]
 
     [launcher] 0 instance(s) of WebDriver still running
