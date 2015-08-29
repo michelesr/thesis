@@ -48,12 +48,6 @@ run also in a Continuous Integration environment. Once the code is pushed to a
 automatically deployed (Continuous Delivery). If the tests don't pass, the
 deploy must abort and developers have to be warned about the critical situation.
 
-*Gasista Felice*, developed by the beFair team and released as *FLOSS* (Free
-Libre and Open Source Software), is the use case for this work.  *Gasista
-Felice* is an online management application made for GAS (Ethical Purchasing
-Groups) initially developed for *DES* (Solidarity-based Economy District)
-Macerata.
-
 This work outcome from a collaboration with the *beFair* software development
 team, that begun at the firsts months of this year, when the team realized that
 a boost in the quality of the development process and final product could be
@@ -61,6 +55,12 @@ obtained with the application of automated software testing, and, at the same
 time, it decided to change the way applications are developed and deployed,
 shifting from a traditional development and deploying approach, to a
 containerized one.
+
+*Gasista Felice*, developed by the beFair team and released as *FLOSS* (Free
+Libre and Open Source Software), is the use case for this work.  *Gasista
+Felice* is an online management application made for GAS (Ethical Purchasing
+Groups) initially developed for *DES* (Solidarity-based Economy District)
+Macerata.
 
 ## Organization
 
