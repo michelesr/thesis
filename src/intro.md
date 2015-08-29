@@ -75,9 +75,9 @@ development and testing environment. The last section of the chapter exposes the
 structure of Gasista Felice, as well as its configuration of the development
 environment.
 
-Chapter 4 will cover the end-to-end test techniques used to ensure a better
-quality of the tested software. In particularly, the Gasista Felice *AngularJS*
-web application will be tested using *Protractor* testing framework.
+Chapter 4 will cover the implementation of browser automation routines with the
+*Protractor* framework for the end-to-end testing of *AngularJS* web
+applications, and in particular, of Gasista Felice AngularJS web client.
 
 Chapter 5 shows the main tools used in end-to-end tests and how to configure the
 testing framework to work with the Gasista Felice application container
