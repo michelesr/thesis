@@ -1,7 +1,7 @@
-# Introduction 
+# Introduction
 
 This work aims to cover the whole development process of modern web applications
-organized in micro-environments called *containers*. It shows how development
+organized in lightweight environments called *containers*. It shows how development
 can be made easier with containers adoption, and how automated testing with a
 good test suite, together with a Continuous Integration system, improve
 effectively the software quality because they help in discovering bugs and act
