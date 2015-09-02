@@ -2,7 +2,7 @@
 
 Computer Science is a young discipline, but even if young it drastically evolved
 over a few amount of decades. The diffusion of personal computers and internet,
-as well as mobile devices and cloud computing in the last years lead to an
+as well as mobile devices and cloud computing in the last years leaded to an
 exponential increase of information technology related products and services
 usage, thus incrementing also the necessity of productivity improvement in
 software development organizations. To overcome this necessity, different
@@ -130,9 +130,9 @@ Development*" @agile-manifesto, that gives value to:
 - Responding to change over following a plan
 
 In the Agile model the highest priority is the customer satisfaction, reached
-though early and continuous delivery of the software @agile-principles. The
-Agile workflow promotes the embracing of the changes. In order to adopt an Agile
-workflow, the Continuous Integration is essential.
+trough collaboration, and continuous delivery of the software @agile-principles.
+In order to actually provide continuous delivery and flexibility to changes,
+Continuous Integration is essential.
 
 Continuous integration is a practice where the members of the development team
 integrates their work frequently (daily or even more frequently). Every
@@ -163,41 +163,50 @@ routines have the only role of calling program procedures with a set of fixed
 parameters and comparing the return value with the expected).
 
 Sometimes the called methods needs the interaction with an external component,
-such as a database, in that case, the interaction with the component has to be
+such as a database; in that case, the interaction with the component has to be
 replaced with the interaction with a dummy object that usually has the role of
 returning a fixed value.
 
-Integration tests regard the testing a grouped set of modules in order to
-verify their interaction. It can involve the interaction with external
-components, and in that case, the testing environment has to be configured in
-order to permit this interaction (for example an integration test that involve a
-database query has to be ran in an environment provided with a test database).
+Integration tests regard the testing a grouped set of modules in order to verify
+their interaction. It can involve the interaction with external components, and
+in that case, the testing environment has to be configured in order to permit
+this interaction (for example an integration test that involve a database query
+has to be executed in an environment provided with a test database).
 
-End-to-end test, sometimes called also System Tests regard the testing of
+End-to-end tests, sometimes called system tests, regard the testing of
 application from the user point of view. For web application end-to-end are
-implemented as browser automations scripts, that require the configuration of a
-software that connects and drive different browsers in order to access the
-application and testing its features.
+implemented with browser automations scripts, that require the configuration of
+a software that act as a driver for different browsers in order to make them
+access the web application and test its features.
 
-For the Gasista Felice application the typology chosen for starting the
-implementation of automated tests is the last one, for different reasons:
+The chosen typology for starting the implementation of automated tests in the
+Gasista Felice application is the last one, for different reasons:
 
-- the end-to-end are in the outer layer of the application,
-  thus have an higher probability of discover bugs because they involve the
-  executions of more procedures (that can be located in any application
-  component)
+- End-to-end tests operate in the outer layer of the application, thus have an
+  higher probability of discovering bugs because they also trigger the
+  executions of procedures in all the application underlying layers
 
-- end-to-end tests can be used in order to ensure that the application
-  requirements are correctly satisfied, and can be used in the interaction with
-  the customer as demonstration of the work done
+- End-to-end tests can be used in order to ensure that the application
+  requirements are correctly satisfied, and can be used in the interactions with
+  the customer as demonstration of the implemented features
 
-- the bug discovered by end-to-end tests are the most evident for the customer,
+- Bugs discovered by end-to-end tests are the most evident for the customer,
   thus the most urgent
 
-- configuring the container environment to include containers of the testing
+- Configuring the container environment to include containers for the testing
   framework will permit the running of end-to-end tests without additional
-  configuration to be done by developers in the future, while Unit tests can
-  also be implemented without additional configuration
+  configuration to be done by developers in the future, while unit tests can
+  also be implemented without additional configurations
+
+A particular importance is attributed to the last point, because after the
+containers configuration is done, developers can develop and run both unit and
+end-to-end tests, opening the way for the Test Driven Development, the practice
+of write tests as specifications of a feature to implement, before actually
+implement that feature. Before writing a new method, the developer can write a
+unit test to verify its behaviour, and before implementing a feature requested
+by the client, a end-to-end tests can be written as specification of that
+feature. With this approach, the last implemented features are also covered with
+automated testing, drastically improving the quality of the software.
 
 ## Economical-social context
 
