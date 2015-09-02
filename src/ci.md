@@ -645,9 +645,9 @@ domestic:
      http://www.spamhaus.org/query/bl?ip=82.51.4.196
      (in reply to RCPT TO command))
 
-To work around this problem, a remote SMTP server can configured (this is
-required only for domestic Jenkins installations). An e-mail notification for a
-project can be added from the job configuration page:
+To work around this problem, a different IP can be used or a remote SMTP server
+can be configured. An e-mail notification for a project can be added from the
+job configuration page:
 
 - Add post-build action -> E-mail Notification
 - Recipients: whitespace-separated list of recipient addresses
