@@ -138,26 +138,66 @@ Continuous integration is a practice where the members of the development team
 integrates their work frequently (daily or even more frequently). Every
 integration is verified by an automated system that download the last software
 version, and run automated tests to verify its correctness @martinfowler-ci.
+
 This thesis work will cover the implementation of automated tests for the
-Gasista Felice project and the installation and Continuous Integration system
-and its integration with the container infrastructure of Gasista Felice and with
-a SCM (Source Code Managament) system.
-
-# Delimiter
-
-## Agile
-
-### CI
+Gasista Felice project and the installation and configuration of a Continuous
+Integration system, as well as its integration with the container infrastructure
+of Gasista Felice and with a SCM (Source Code Managament) system for automatic
+triggering of the builds.
 
 ## Testing
 
-### Unit Tests
+There are different categories of automated tests, and in particular:
 
-### Integration Tests
+- Unit tests
+- Integration tests
+- End-to-end tests
 
-### Acceptance Tests
+Unit tests regard the testing of computational units. A computational unit can
+be seen as the smallest testable part of an application (for example a class or
+a method in OOP), and is performed by executing the unit with an input parameter
+and evaluating the returned results, that has to be the expected. The value
+expected as result should be hardcoded (the first error made by unexperienced
+testers is to think that testing routines should do computation, while testing
+routines have the only role of calling program procedures with a set of fixed
+parameters and comparing the return value with the expected).
 
-#### E2E
+Sometimes the called methods needs the interaction with an external component,
+such as a database, in that case, the interaction with the component has to be
+replaced with the interaction with a dummy object that usually has the role of
+returning a fixed value.
+
+Integration tests regard the testing a grouped set of modules in order to
+verify their interaction. It can involve the interaction with external
+components, and in that case, the testing environment has to be configured in
+order to permit this interaction (for example an integration test that involve a
+database query has to be ran in an environment provided with a test database).
+
+End-to-end test, sometimes called also System Tests regard the testing of
+application from the user point of view. For web application end-to-end are
+implemented as browser automations scripts, that require the configuration of a
+software that connects and drive different browsers in order to access the
+application and testing its features.
+
+For the Gasista Felice application the typology chosen for starting the
+implementation of automated tests is the last one, for different reasons:
+
+- the end-to-end are in the outer layer of the application,
+  thus have an higher probability of discover bugs because they involve the
+  executions of more procedures (that can be located in any application
+  component)
+
+- end-to-end tests can be used in order to ensure that the application
+  requirements are correctly satisfied, and can be used in the interaction with
+  the customer as demonstration of the work done
+
+- the bug discovered by end-to-end tests are the most evident for the customer,
+  thus the most urgent
+
+- configuring the container environment to include containers of the testing
+  framework will permit the running of end-to-end tests without additional
+  configuration to be done by developers in the future, while Unit tests can
+  also be implemented without additional configuration
 
 ## Economical-social context
 
