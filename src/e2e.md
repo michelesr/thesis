@@ -449,12 +449,19 @@ class and clicked twice (first time to show, second time to hide again).
 
 The `map()` method can also be used from an array of objects:
 
-    [{foo: 1, bar:2}, {foo:2, bar:1}]
+    var getElementByIndex = function(index) {
+        // implentation
+        ...
+        return item;
+    }
+
+    [{index:1, foo: 1, bar:2}, {index: 2, foo:2, bar:1}]
       .map(function(obj) {
         it('...', function() {
-          expect(fooValue)
+          item = getElementByIndex(obj.index);
+          expect(item.foo)
             .toBe(obj.foo);
-          expect(barValue)
+          expect(item.bar)
             .toBe(obj.bar);
         });
         ...
