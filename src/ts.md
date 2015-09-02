@@ -3,13 +3,15 @@
 While in the previous chapter the Protractor framework has been used in order to
 implement browser automation based end-to-end tests for the AngularJS web
 interface of Gasista Felice application, in this chapter the software used to
-run Protractor tests is discussed and in particular its container based
-virtualization and interaction with the web application. Assuming that the
-developer is already using Docker and Docker Compose to run the containerized
+run Protractor based end-to-end tests is discussed and in particular its
+container based virtualization and interaction with the web application
+containers.
+
+Given that Docker and Docker are already used to run the containerized
 application, the container structure is extended in order to include the testing
 containers and to permit the running of the end-to-end tests without the burden
 of manual installation and configuration of the testing framework resting on
-him.
+developers.
 
 ## Protractor
 
@@ -34,7 +36,7 @@ the build:
 Protractor is a *Node.js* application. Node.js is a cross-platform runtime
 environment for server-side and networking Javascript applications. In order to
 run Protractor, an *Io.js* image has been used as base. Io.js is a fork of the
-Node.js open-source project, created for the primary purpose of moving the
+Node.js open-source software, created for the primary purpose of moving the
 Node.js project to a structure where the contributors and community can step in
 and effectively solve the problems facing Node (including the lack of active and
 new contributors and the lack of releases) @node-to-iojs. From the `iojs:3`
@@ -57,7 +59,7 @@ The `conf.js` configuration file is the entry point of Protractor:
 The `exports.config` object is used to define the configuration of the
 Protractor framework, that includes:
 
-- a list of specification files used to run the end-to-end tests
+- a list of the test routine specification files
 - a list of the browsers used as clients for the web application
 - the network address of the *Selenium* server
 
@@ -70,90 +72,86 @@ The history of Selenium begin with *Selenium Remote Control*. Selenium RC is a
 server that accept requests for browser automation through an http API. The http
 API can be accessed with drivers available for different programming language,
 such as Java, Python, PHP, Ruby, .NET, Perl and Javascript. With the diffusion
-of Selenium and browser automation scripts, browsers start to provide
-native support for the automation, leading to the born of *Selenium Web Driver*.
+of Selenium and browser automation scripts, browsers start to provide their
+native support to automation, leading to the born of *Selenium Web Driver*.
 
-Selenium Web Driver is the successor of Selenium RC, and the main different is
-in the interaction with web browsers, that is implemented with browser specific
+Selenium Web Driver is the successor of Selenium RC, and the main difference
+consists in its interaction with web browsers, implemented with browser specific
 drivers. While in Selenium RC a server for running tests is required, Selenium
 Web Driver directly starts and controls the browsers. Client API for Selenium
 Web Driver are available for different languages, so that the automation scripts
 can be written in the developer preferred language. In order to run Web Driver
-on remote machines a Selenium Grid server is required.  Selenium Grid consist of
-different components:
+on remote machines a Selenium Grid server is required. Selenium Grid is divided
+in different components:
 
 - a Selenium server, called *hub*, that serves as controller for the browsers
-- Web Driver nodes for the required browsers (Firefox and Chrome)
+- one or more web driver nodes for the required browsers (Firefox and Chrome)
 
 The Web Driver nodes attach to the Selenium hub in order to be controlled, then
 the Protractor testing framework sends request to the hub in order to run
 end-to-end tests in the desired browsers. The hub search the required browsers
 from the available nodes and controls them in order to test the web application.
 
-The nodes can be in different machines and operating system. In particular, in
-our implementation the hub and the nodes runs inside Docker containers, and they
-are linked through the Docker VPN. Like Selenium RC, the Selenium Grid hub is
-accessible with the http protocol.
+The nodes can be located in different machines and operating systems. In
+particular, in this implementation the hub and the nodes runs inside Docker
+containers, and they are linked through the Docker VPN. Like Selenium RC, the
+Selenium Grid hub is accessible through the http protocol.
 
 ![Interactions between Protractor and Selenium ecosystem](images/eps/protractor-selenium.eps)
 
 ## Containers configuration
 
-In order to link the testing containers to the application a new Docker Compose
-configuration file is required:
+The containers used for end-to-end testing purpose are:
 
-hub:
-  image: selenium/hub:latest
+- `hub`:  Selenium Grid hub
+- `firefox`: Selenium Grid node for Mozilla Firefox browser
+- `chrome`:  Selenium Grid node for Google Chrome browser
+- `e2e`: Protractor framework
 
-firefox:
-  image: selenium/node-firefox-debug:latest
-  links:
-    - hub
-    - proxy
-  ports:
-    - '127.0.0.1:5900:5900'
-  env_file:
-    - ./test/e2e/settings.env
+In order to define the testing containers and their interaction with the
+application a new Docker Compose configuration file is provided:
 
-chrome:
-  image: selenium/node-chrome-debug:latest
-  links:
-    - hub
-    - proxy
-  ports:
-    - '127.0.0.1:5901:5900'
-  env_file:
-    - ./test/e2e/settings.env
+    hub:
+      image: selenium/hub:latest
 
-e2e:
-  image: michelesr/protractor:latest
-  volumes:
-    - ./test/e2e:/code:ro
-  links:
-    - hub
+    firefox:
+      image: selenium/node-firefox-debug:latest
+      links:
+        - hub
+        - proxy
+      ports:
+        - '127.0.0.1:5900:5900'
+      env_file:
+        - ./test/e2e/settings.env
 
-The default `docker-compose.yml` file has been extended with testing containers:
+    chrome:
+      image: selenium/node-chrome-debug:latest
+      links:
+        - hub
+        - proxy
+      ports:
+        - '127.0.0.1:5901:5900'
+      env_file:
+        - ./test/e2e/settings.env
 
-- `hub` is the container of Selenium Grid hub
-- `firefox` is the container of the Selenium Grid node for Mozilla Firefox browser
-- `chrome` is the container of the Selenium Grid node for Google Chrome browser
-- `e2e` is the Protractor container
+    e2e:
+      image: michelesr/protractor:latest
+      volumes:
+        - ./test/e2e:/code:ro
+      links:
+        - hub
+
 
 In particular, the `firefox` and `chrome` containers are linked to `hub` for
-registering and to `proxy` in order to access the web application. The `e2e`
-tests is linked with the `hub` in order to allow the forwarding of test
-requests. This new configuration file has been called `compose/test.yml` and is used
-to run the tests from the Makefile:
+registering and to `proxy` that acts as entry point of the web application. The
+`e2e` tests is linked with the `hub` in order to allow the forwarding of test
+requests. This new configuration file is named `compose/test.yml` and is
+used to run the tests trough the Makefile:
 
     ...
 
     test-cat.yml: docker-compose.yml compose/test.yml
             @cat docker-compose.yml compose/test.yml > test-cat.yml
-
-    ...
-
-    test: test-info test-unit test-integration test-e2e
-            @echo 'All tests passed!'
 
     ...
 
@@ -166,11 +164,11 @@ to run the tests from the Makefile:
     ...
 
 The `test-cat.yml` file is generated as concatenation of `docker-compose.yml`
-and `compose/test.yml` and is used by the `test-e2e` objective of the Makefile
-as configuration file of Docker Compose. The `@` is used as command prefix to
-avoid their printing on the console. The `sleep 5` is used to wait 5 seconds
-after containers start in order to made their processes initiate correctly
-before sending requests to them.
+and `compose/test.yml` and is used by the `test-e2e` role of the Makefile as
+configuration file of Docker Compose. The `@` is used as command prefix to avoid
+their printing on the console. The `sleep 5` is used to wait 5 seconds after
+containers start in order to made their processes initiate correctly before
+sending requests to them.
 
 ![Linking of testing containers with application containers](images/eps/test-containers.eps)
 
@@ -228,10 +226,10 @@ The end-to-end tests can be launched from Gasista Felice repository root with:
     [launcher] chrome #2 passed
     [launcher] firefox #1 passed
 
-The images used for `hub`, `firefox` and `chrome` containers are provided by
-Selenium developers and retrieved from Docker Hub. The `michelesr/protractor`
-image is retrieved from Docker Hub and has been built using the Dockerfile
-exposed previously.
+The images used for `hub`, `firefox` and `chrome` containers, provided by
+Selenium developers, are retrieved from Docker Hub. The `michelesr/protractor`
+image, retrieved from Docker Hub, has been built using the Dockerfile exposed
+previously.
 
 ### Inspect browsers behaviour through VNC
 
