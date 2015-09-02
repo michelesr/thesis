@@ -116,7 +116,8 @@ following steps (that can be adapted):
 - Verification
 - Maintenance
 
-This model provides a very slow development, integration and delivery process.
+Given that the steps are executed sequentially, this model provides a very slow
+development, integration and delivery process.
 
 ### Agile and Continuous Integration
 
