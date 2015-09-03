@@ -6,16 +6,16 @@ as well as mobile devices and cloud computing in the last years leaded to an
 exponential increase of information technology related products and services
 usage, thus incrementing also the necessity of productivity improvement in
 software development organizations. To overcome this requirement, different
-approaches have been implemented in different
-areas of interest in software development, and in particular:
+approaches have been implemented in different areas of interest in software
+development, and in particular:
 
 - Architecture
 - Infrastructure
 - Development Workflow
 
-We are going to see how Information Technology has been evolving in these
-categories and how the state of art are present in this thesis project
-and in the case of study of the web application Gasista Felice.
+This chapter provides an overview of how Information Technology evolved in these
+categories and how the state of art is present in this thesis project and in the
+case of study of the Gasista Felice web application.
 
 ## Evolution of software architectures
 
@@ -28,7 +28,7 @@ failure. The situation improved when developers began to divide the code using a
 modular approach, as suggested by the Unix philosophy @unix, assuring reuse and
 a better maintenance of the projects.
 
-### From monolith to Model View Controller
+### Model View Controller
 
 Regarding web applications, a common adopted software architecture is the *MVC*
 (Model View Controller), that consists in the separation of the application in
@@ -39,7 +39,7 @@ three distinct components:
 - A controller that acts as intermediary between the model and view,
   manipulating the model
 
-A web application that adopt this pattern permits a good separation of concerns,
+A web application that adopts this pattern permits a good separation of concerns,
 but is still a monolith application, and even if a monolith application can be
 divided in modules, often the code is not well decoupled, thus leading to
 circular dependencies among them and thus rending changes to a module more
@@ -66,51 +66,53 @@ seen as a new implementation of the Unix principles of modularity: the
 applications themselves serves as modules for a project, and are completely
 independent.
 
-In this thesis project the Gasista Felice web application has been containerized,
-so its infrastructure and development process has been prepared to embrace a migration
-to the microservice software architecture. In fact, the container infrastructure is the key of development
-and deployment of microservice structured application.
+In this thesis project the Gasista Felice web application has been
+containerized, so its infrastructure and development process has been prepared
+to embrace a migration to the microservice software architecture. In fact, the
+container infrastructure is the key of development and deployment of
+microservice structured application.
 
 ## Software infrastructures and development environments
 
 In the past web applications were deployed in physical machines, leading to
-different problems in management and maintenance due to their physical and so *static* constraints.
-Virtual machines permitted to resolve these problems, delegating the management of the
-physical server machines to third parties, thus freeing the organization of this
-duty.
+different problems in management and maintenance due to their physical and so
+*static* constraints. Virtual machines permitted to resolve these problems,
+delegating the management of the physical server machines to third parties, thus
+freeing the organization from this duty.
 
 While virtual machines emulate every aspect of the desired machine and operating
 system, those features are heavy and often unnecessary, and that's the reason of
 the diffusion of containers. Containers are lighter than virtual machines,
 because they don't aim to reproduce an entire machine, but only the environment
-required to run a particular software. The Docker container engine, use the virtualization
-feature of the Linux kernel in order to reproduce a software development
-environment in a native and lightweight way. Due to theirs lightweight nature,
-containers seems today to be the perfect infrastructure for the development and deployment of
-applications with a microservice architecture.
+required to run a particular software. The Docker container engine use the
+virtualization features of the Linux kernel in order to reproduce a software
+operating environment in a native and lightweight way. Thanks to their
+lightweight nature, containers seems today to be the perfect infrastructure for
+the development and deployment of applications with a microservice architecture.
 
-Regarding the development of a web traditional, uncontainerized, application, developers install all
-the required tools, such the database management system or the application
-framework, in their machines, through the installation procedures for their
-operating system. These installation procedures are complicated and frustrating,
-and distract the developers from the development activity. In addition to that,
-the development environment created trough the installation and configuration
-performed by a developer can be different to the environment installed by
-another developer due to the differences between their operating systems, and
-these differences can lead to difficulties when attempting to reproduce and
-fix a reported bug that is related to a particular environment.
+In the development of a web application with a traditional infrastructure,
+developers install all the required tools, such the database management system
+or the application framework, in their machines, through the installation
+procedures available for their operating system. These installation procedures
+are complicated and frustrating, and distract the developers from the
+development activity. In addition to that, the development environment created
+trough the installation and configuration performed by a developer can be
+different to the environment created by another developer due to the
+differences between their operating systems, and these differences can lead to
+difficulties when attempting to reproduce and fix a reported bug that is related
+to a particular environment.
 
-These problems leaded to the use of virtualization tools, that permits to
+These problems leaded to the diffusion of virtualization tools, that permits to
 formally define the development environment and his features, and to virtually
 reproduce them in every machine. Virtualization can be obtained both with
 virtual machines and containers.
 
-After the containerization of the Gasista Felice application,
-this thesis work will show how this change affect the whole development environment.
+After the containerization of the Gasista Felice application, this thesis work
+will show how this change affects the whole development environment.
 
 ## Development Workflow
 
-A classic development workflow is the *Waterfall* model, that consist in the
+A classic development workflow is the *Waterfall* model, that consists in the
 following steps (that can be adapted):
 
 - Requirements specifications
@@ -133,14 +135,15 @@ Development*" @agile-manifesto, that gives value to:
 - Responding to change over following a plan
 
 In the Agile model the highest priority is the customer satisfaction, reached
-trough collaboration, and continuous delivery of the software @agile-principles.
-In order to actually provide continuous delivery and flexibility to changes,
-Continuous Integration is essential.
+trough collaboration, and early and continuous delivery of the software
+@agile-principles. In order to actually provide continuous delivery and
+flexibility to changes, Continuous Integration is essential.
 
-Continuous integration is a practice where the members of the development team
+Continuous Integration is a practice where the members of the development team
 integrates their work frequently (daily or even more frequently). Every
 integration is verified by an automated system that download the last software
-version, and run automated tests to verify its correctness @martinfowler-ci.
+revisions, and run automated tests to verify the correctness of the application
+in its entirety. @martinfowler-ci.
 
 This thesis work will cover the implementation of automated tests for the
 Gasista Felice project and the installation and configuration of a Continuous
@@ -162,7 +165,7 @@ a method in OOP), and is performed by executing the unit with an input parameter
 and evaluating the returned results, that has to be the expected. The value
 expected as result should be hardcoded (the first error made by unexperienced
 testers is to think that testing routines should do computation, while testing
-routines have the only role of calling program procedures with a set of fixed
+routines have the role of calling program procedures with a set of fixed
 parameters and comparing the return value with the expected).
 
 Sometimes the called methods needs the interaction with an external component,
@@ -199,15 +202,15 @@ Gasista Felice application is the last one, for different reasons:
 - Configuring the container environment to include containers for the testing
   framework will permit the running of end-to-end tests without additional
   configuration to be done by developers in the future, while unit tests can
-  also be implemented without additional configurations
+  also be executed without additional configurations
 
 A particular importance is attributed to the last point, because after the
-containers configuration is done, developers can develop and run both unit and
+containers configuration is done, developers can implement and run both unit and
 end-to-end tests, opening the way for the Test Driven Development, the practice
-of write tests as specifications of a feature to implement, before actually
+of writing tests as specifications of a feature to implement, before actually
 implement that feature. Before writing a new method, the developer can write a
 unit test to verify its behaviour, and before implementing a feature requested
-by the client, a end-to-end tests can be written as specification of that
+by the customer, a end-to-end tests can be written as specification of that
 feature. With this approach, the last implemented features are also covered with
 automated testing, drastically improving the quality of the software.
 
