@@ -634,7 +634,7 @@ A local STMP relay server can be installed and linked with Jenkins:
 
 The recipient SMTP server can be configured with a anti-spam filter that can
 block this kind of e-mail notifications, especially if the IP address is
-domestic:
+domestic or dynamic:
 
      postfix/smtp[200]: B5F3581CEE: to=<jenkins@mail.example.org>,
      relay=mail.befair.it[80.85.85.154]:25, delay=0.58,
