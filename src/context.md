@@ -55,22 +55,22 @@ making the project hard (if not impossible) to maintain.
  organization around business capability, automated deployment, intelligence in
  the endpoints, and decentralized control of languages and data.* @martinfowler-ms
 
-In the microservice software architecture, the project is developed as a set of
+In the microservices software architecture, the project is developed as a set of
 small and lightweight applications, that communicate amongst them through a well
 defined API. These small applications can be written in different languages, and
 replaced when they are obsolete.
 
-In addition of deployment advantages (such as scalability) of microservice
-structured applications, in software development a microservice approach can be
+In addition of deployment advantages (such as scalability) of microservices
+structured applications, in software development a microservices approach can be
 seen as a new implementation of the Unix principles of modularity: the
 applications themselves serves as modules for a project, and are completely
 independent.
 
 In this thesis project the Gasista Felice web application has been
 containerized, so its infrastructure and development process has been prepared
-to embrace a migration to the microservice software architecture. In fact, the
+to embrace a migration to the microservices software architecture. In fact, the
 container infrastructure is the key of development and deployment of
-microservice structured application.
+microservices structured application.
 
 ## Software infrastructures and development environments
 
@@ -88,7 +88,7 @@ required to run a particular software. The Docker container engine use the
 virtualization features of the Linux kernel in order to reproduce a software
 operating environment in a native and lightweight way. Thanks to their
 lightweight nature, containers seems today to be the perfect infrastructure for
-the development and deployment of applications with a microservice architecture.
+the development and deployment of applications with a microservices architecture.
 
 In the development of a web application with a traditional infrastructure,
 developers install all the required tools, such the database management system
@@ -149,7 +149,7 @@ Continuous Integration is a practice where the members of the development team
 integrates their work frequently (daily or even more frequently). Every
 integration is verified by an automated system that download the last software
 revisions, and run automated tests to verify the correctness of the application
-in its entirety. @martinfowler-ci.
+in its entirety @martinfowler-ci.
 
 This thesis work will cover the implementation of automated tests for the
 Gasista Felice project and the installation and configuration of a Continuous

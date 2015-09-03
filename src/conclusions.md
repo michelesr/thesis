@@ -28,7 +28,7 @@ All the implemented solutions runs in a containerized infrastructure, so this
 thesis demonstrates how working with this tools can be easy and productive.
 
 The future developments regard the reorganization of the application to a
-microservice architecture, that can be easily obtained thanks to the migration
+microservices architecture, that can be easily obtained thanks to the migration
 to a container based infrastructure, and the extension of the implemented
 Continuous Integration system to provide integration with git server specific
 features, and better improve the productivity of the development team. 
