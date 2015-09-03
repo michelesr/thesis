@@ -129,10 +129,10 @@ development, integration and delivery process.
 A more modern model is provided in the "*Manifesto for Agile Software
 Development*" @agile-manifesto, that gives value to:
 
-- Individuals and interactions over processes and tools
-- Working software over comprehensive documentation
-- Customer collaboration over contract negotiation
-- Responding to change over following a plan
+- *Individuals and interactions over processes and tools*
+- *Working software over comprehensive documentation*
+- *Customer collaboration over contract negotiation*
+- *Responding to change over following a plan*
 
 In the Agile model the highest priority is the customer satisfaction, reached
 trough collaboration, and early and continuous delivery of the software
