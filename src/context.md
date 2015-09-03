@@ -5,16 +5,19 @@ over a few amount of decades. The diffusion of personal computers and internet,
 as well as mobile devices and cloud computing in the last years leaded to an
 exponential increase of information technology related products and services
 usage, thus incrementing also the necessity of productivity improvement in
-software development organizations. To overcome this necessity, different
-development methodologies has been applied. These methodologies regard different
-area of interest in the software development, and in particular three distinct
-categories:
+software development organizations. To overcome this requirement, different
+approaches have been implemented in different
+areas of interest in software development, and in particular:
 
 - Architecture
 - Infrastructure
 - Development Workflow
 
-## Software architectures
+We are going to see how Information Technology has been evolving in these
+categories and how the state of art are present in this thesis project
+and in the case of study of the web application Gasista Felice.
+
+## Evolution of software architectures
 
 The first developed applications in the history of information technology
 weren't equipped with a well defined software architecture. For simple, small,
@@ -25,7 +28,7 @@ failure. The situation improved when developers began to divide the code using a
 modular approach, as suggested by the Unix philosophy @unix, assuring reuse and
 a better maintenance of the projects.
 
-### Model View Controller
+### From monolith to Model View Controller
 
 Regarding web applications, a common adopted software architecture is the *MVC*
 (Model View Controller), that consists in the separation of the application in
@@ -43,7 +46,7 @@ circular dependencies among them and thus rending changes to a module more
 difficult and frustrating. A monolith application can grow in a unexpected way,
 making the project hard (if not impossible) to maintain.
 
-### Microservices
+### From MVC to Microservices
 
  *The term "Microservice Architecture" has sprung up over the last few years to
  describe a particular way of designing software applications as suites of
@@ -63,17 +66,16 @@ seen as a new implementation of the Unix principles of modularity: the
 applications themselves serves as modules for a project, and are completely
 independent.
 
-Even if the Gasista Felice application, the case of study of this thesis work,
-hasn't a microservice software architecture, the work is aimed to predispose
-its infrastructure and development process to embrace a future migration to this
-new software architecture. Container infrastructure is the key of development
+In this thesis project the Gasista Felice web application has been containerized,
+so its infrastructure and development process has been prepared to embrace a migration
+to the microservice software architecture. In fact, the container infrastructure is the key of development
 and deployment of microservice structured application.
 
 ## Software infrastructures and development environments
 
 In the past web applications were deployed in physical machines, leading to
-different problems related to their management and maintenance. Virtual
-machines permitted to resolve these problems, delegating the management of the
+different problems in management and maintenance due to their physical and so *static* constraints.
+Virtual machines permitted to resolve these problems, delegating the management of the
 physical server machines to third parties, thus freeing the organization of this
 duty.
 
@@ -81,13 +83,13 @@ While virtual machines emulate every aspect of the desired machine and operating
 system, those features are heavy and often unnecessary, and that's the reason of
 the diffusion of containers. Containers are lighter than virtual machines,
 because they don't aim to reproduce an entire machine, but only the environment
-required to run a particular software. Docker containers use the virtualization
+required to run a particular software. The Docker container engine, use the virtualization
 feature of the Linux kernel in order to reproduce a software development
-environment in a native and lightweight way. Due to its lightweight nature,
-containers are a perfect infrastructure for the development and deployment of
+environment in a native and lightweight way. Due to theirs lightweight nature,
+containers seems today to be the perfect infrastructure for the development and deployment of
 applications with a microservice architecture.
 
-Regarding the development of the web application, often developers install all
+Regarding the development of a web traditional, uncontainerized, application, developers install all
 the required tools, such the database management system or the application
 framework, in their machines, through the installation procedures for their
 operating system. These installation procedures are complicated and frustrating,
@@ -101,9 +103,10 @@ fix a reported bug that is related to a particular environment.
 These problems leaded to the use of virtualization tools, that permits to
 formally define the development environment and his features, and to virtually
 reproduce them in every machine. Virtualization can be obtained both with
-virtual machines and containers. This thesis work will cover the creation of a
-standardized development environment for the Gasista Felice application through
-the container based virtualization.
+virtual machines and containers.
+
+After the containerization of the Gasista Felice application,
+this thesis work will show how this change affect the whole development environment.
 
 ## Development Workflow
 
