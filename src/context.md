@@ -245,10 +245,38 @@ by the customer, a end-to-end tests can be written as specification of that
 feature. With this approach, the last implemented features are also covered with
 automated testing, drastically improving the quality of the software.
 
-## Economical-social context
+## Gasista Felice
 
-### FLOSS
+Gasista Felice @gasistafelice is an online management application made for *GAS*
+(Ethical Purchasing Groups) by the beFair team, and initially developed for
+*DES* (Solidarity-based Economy District) Macerata.
 
-### Sharing Economy
+Gasista Felice is the use case for the thesis work, and in particular, is
+infrastructure, that will be containerized, and its *AngularJS* based web
+interface, that acts as use case of end-to-end tests implementation.
 
-### Gasista Felice and beFair
+The beFair team is involved in *Sharing Economy* @sharing-economy, that focuses
+on a major interaction between providers and consumers, enhances the community,
+creates discussion places, and provides direct feedback.
+
+### Free Libre and Open Source Software
+
+This work is made, in its entirety, with FLOSS (Free Libre and Open Source
+Software), and is also released as FLOSS.
+
+The beFair team is oriented to FLOSS principles, that are explained in detail in
+by the *GNU* (GNU is Not Unix) project website:
+
+*“Free software” means software that respects users' freedom and community.
+Roughly, it means that the users have the freedom to run, copy, distribute,
+study, change and improve the software. Thus, “free software” is a matter of
+liberty, not price. To understand the concept, you should think of “free” as in
+“free speech,” not as in “free beer”. We sometimes call it “libre software” to
+show we do not mean it is gratis.* @free-software
+
+In fact, free doesn't mean gratis, but means that if the user obtains a copy of
+the software, obtain also the right to do all the things listed above.
+
+Free software ensures communication and collaboration with the customer,
+transparency, reuse, better feedback and lower release times, so it's an added
+value to a software product, and fits well with the Sharing Economy principles.
