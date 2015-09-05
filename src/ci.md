@@ -220,31 +220,44 @@ inside the container as `/data`.
 ### Configuration
 
 The opening of the browser at `http://localhost:3000/` redirects to the first
-configuration page. The configuration to adopt is:
+configuration page. The configurations to adopt are showed in 6.1 and 6.2 tables:
 
-- Database type:  `SQLite3`
-- Database path: `data/gogs.db`
-- Application Name: `Gogs: Go Git Service`
-- Repository Root Path: `/home/git/repositories`
-- Run User: `git`
-- Domain: `localhost`
-- SSH Port: `22`
-- HTTP Port: `3000`
-- Application URL: `http://localhost:3000/`
+Option                Value
+------------------    --------------------
+Database type         `SQLite3`
+Database path         `data/gogs.db`
+Application Name      `Gogs: Go Git Service`
+Repository Root Path  `/home/git/repositories`
+Run User              `git`
+Domain                `localhost`
+SSH Port              `22`
+HTTP Port             `3000`
+Application URL       `http://localhost:3000/`
+------------------    ------------------------
 
-For the admin account settings:
+Table: Gogs initial configuration
 
-- Username: `SuperUser`
-- Password: `*********`
-- Email: `superuser@example.org`
+Option        Value
+---------     ------------------------
+Username      `SuperUser`
+Password      `*********`
+Email         `superuser@example.org`
+---------     ------------------------
+
+Table: Admin settings for Gogs
 
 Settings are confirmed with `Install Gogs` button. Then a normal user account
-has to be registered through the `Register` button:
+has to be registered through the `Register` button.
 
-- Username: `mike`
-- Email: `mikefender@cryptolab.net`
-- Password: `*********`
-- CAPTCHA: fill with the characters in the picture
+
+Option        Value
+---------     ------------------------
+Username      `mike`
+Email         `mikefender@cryptolab.net`
+Password      `*********`
+---------     ------------------------
+
+Table: User registration in Gogs
 
 ### SSH Configuration
 
@@ -443,19 +456,29 @@ container.
 In order to avoid the execution of malicious scripts in Jenkins, the creation
 and configuration of jobs has to be restricted to a small set of trusted users.
 In the page `http://localhost:5000/configureSecurity/` the `Enable security`
-checkbox has to be checked, and these options have to be setted:
+checkbox has to be checked, and the options from Table 6.4 have to be setted:
 
-- TCP Port for JNLP slave agents: `Disable`
-- Security realm: `Jenkins own user database`
-- Allow user to sign-up: `unchecked`
+Option                          Value
+------------------------------  ---------------------------
+TCP Port for JNLP slave agents  `Disable`
+Security realm                  `Jenkins own user database`
+Allow user to sign-up           `unchecked`
+------------------------------  ---------------------------
+
+Table: Security configuration for Jenkins
 
 After confirming, an user has to be added accessing the page at the url:
-`http://localhost:5000/securityRealm/addUser`:
+`http://localhost:5000/securityRealm/addUser`, as showed in Table 6.5:
 
-- Username: `mike`
-- Password: `*********`
-- Full name: `Michele Sorcinelli`
-- E-mail address: `mikefender@cryptolab.net`
+Option                          Value
+------------------------------  ---------------------------
+Username                        `mike`
+Password                        `*********`
+Full name                       `Michele Sorcinelli`
+E-mail address                  `mikefender@cryptolab.net`
+------------------------------  ---------------------------
+
+Table: User registration in Jenkins
 
 Then the access to unlogged user is disabled returning to the security
 configuration page and setting:
@@ -467,11 +490,16 @@ configuration page and setting:
 Logging-in and navigating to the page `http://localhost:5000/newJob` a new job
 for the Gasista Felice project can be setted choosing the `Freestyle Project`
 option and `gasistafelice` as `Item name`. Configuration for the project
-is:
+is showed in Table 6.6:
 
-- Source Code Management: `Git`
-- Build: `Add build step -> Execute Shell`
-- Repository URL: `git@localhost:mike/gasistafelice.git`
+Option                          Value
+------------------------------  ---------------------------------------
+Source Code Management          `Git`
+Build                           `Add build step -> Execute Shell`
+Repository URL                  `git@localhost:mike/gasistafelice.git`
+------------------------------  ---------------------------------------
+
+Table: Configuration for Gasista Felice Jenkins job (1)
 
 More remote repositories and branches for the same project can be tracked, for
 example the upstream and developers forks can be tracked at the same time.
@@ -480,17 +508,27 @@ and avoid rebuilding of the same changes more times if found on different remote
 repositories or branches, for example when commits are merged from a developer
 fork to the upstream. Credentials for private repositories are required:
 
-- Credentials: `Add -> SSH Username with private key`
-- Scope: `Global`
-- Username: `mike`
-- Private Key: the content of private key body
-- Passphrase: the passphrase chosen on key generation if exists
+Option                          Value
+------------------------------  ---------------------------------------
+Credentials                     `Add -> SSH Username with private key`
+Scope                           `Global`
+Username                        `mike`
+Private Key                     content of private key body
+Passphrase                      passphrase chosen on key generation if exists
+------------------------------  ---------------------------------------
+
+Table: Credentials for Gasista Felice repository
 
 Then `mike` can be used for `Credentials` field. Other options are:
 
-- Branches to build: `dev` and `master`
-- Build Triggers: `Poll SCM`
-- Schedule: leave blank
+Option                          Value
+------------------------------  ---------------------------------------
+Branches to build               `dev`, `master`
+Build Triggers                  `Poll SCM`
+Schedule
+------------------------------  ---------------------------------------
+
+Table: Configuration for Gasista Felice Jenkins job (2)
 
 Then a shell script for the build has to be added from `Build -> Add a build
 step -> Execute shell`:
@@ -526,7 +564,7 @@ then the test database is loaded and the tests are launched. Before finishing
 the build, the containers are stopped and removed. The reason for having `stop`
 and `rm` both at the top and bottom of the script is that if the build fails for
 some reason the containers are not stopped and removed. The build configuration
-can be tested clicking on the `Build Now` button in the project dashboard. 
+can be tested clicking on the `Build Now` button in the project dashboard.
 
 ### Remote repository hook configuration
 
@@ -618,10 +656,8 @@ navigate to the Jenkins system configuration page and set the number of executor
 ### E-mail notifications
 
 Jenkins can be configured to send e-mails with build reports. From the system
-configuration page, the following settings has to be provided:
-
-- Jenkins Location -> System Admin e-mail address
-- E-mail notification -> SMTP Server
+configuration page, a STMP server and an email adress can be configured (if the
+`STMP server` field is left blank, `localhost` will be used).
 
 A local STMP relay server can be installed and linked with Jenkins:
 
