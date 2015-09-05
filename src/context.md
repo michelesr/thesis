@@ -39,12 +39,13 @@ three distinct components:
 - A controller that acts as intermediary between the model and view,
   manipulating the model
 
-A web application that adopts this pattern permits a good separation of concerns,
-but is still a monolith application, and even if a monolith application can be
-divided in modules, often the code is not well decoupled, thus leading to
-circular dependencies among them and thus rending changes to a module more
-difficult and frustrating. A monolith application can grow in a unexpected way,
-making the project hard (if not impossible) to maintain.
+A web application that adopts this pattern permits a good separation of
+concerns, but is still a layered monolith application, and even if a layered
+monolith application is divided in modules, often the code is not well
+decoupled, thus leading to circular dependencies among them and thus rending
+changes to a module more difficult and frustrating. A monolith application can
+grow in a unexpected way, making the project hard (if not impossible) to
+maintain.
 
 ### From MVC to Microservices
 
@@ -110,6 +111,7 @@ virtual machines and containers.
 After the containerization of the Gasista Felice application, this thesis work
 will show how this change affects the whole development environment.
 
+
 ## Development Workflow
 
 A classic development workflow is the *Waterfall* model, that consists in the
@@ -156,6 +158,29 @@ Gasista Felice project and the installation and configuration of a Continuous
 Integration system, as well as its integration with the container infrastructure
 of Gasista Felice and with a SCM (Source Code Managament) system for automatic
 triggering of the builds.
+
+#### DevOps
+
+DevOps @devops (Development and Operations) is an extension of the Agile
+workflow that adds the priority of establishing a parity between development and
+production environments and promotes collaborations between developers and IT
+operators.
+
+In this context Continuous Integration is associated with the Continuous
+Delivery of the software product. Continuous Delivery consists in automatic
+deploy of the software as soon as the Continuous Integration system verified its
+correctness.
+
+The necessity of a Continuous Delivery system is covered by this work with the
+installation and configuration of the Continuous Integration system.
+
+                1990's             2000's            2010's
+--------------  -----------------  ----------------  ---------------
+Architecture    Monolith           Layered Monolith  Microservices
+Infrastructure  Phisical Machines  Virtual Machines  Containers
+Dev. Workflow   Waterfall          Agile             DevOps
+
+Table: The evolution of Information Techonlogy
 
 ## Testing
 
