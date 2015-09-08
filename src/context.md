@@ -119,7 +119,6 @@ virtual machines and containers.
 After the containerization of the Gasista Felice application, this thesis work
 will show how this change affects the whole development environment.
 
-
 ## Development Workflow
 
 A classic development workflow is the *Waterfall* model, that consists in the
