@@ -20,7 +20,7 @@ disadvantages arising from the differences between these two environments, such
 as bugs related to different versions of one or more application components.
 Furthermore, providing a containerized development environment helps the
 reproduction of reported bugs, given that all the developers work in a
-standardized and easy to obtain environment.
+standardized, reproducible, and easy to obtain environment.
 
 Part of the research work preceding the thesis consisted in comparing different
 typologies of tests that could be implemented for a software, and finding the
@@ -35,8 +35,8 @@ interacting with the application and so ensuring that the application features
 are working properly.
 
 Regarding the testing of the software, there is a series of steps to perform in
-order to adapt the testing process to the container based virtualization, gaining
-the advantages of a standardized testing environment that is completely
+order to adapt the testing process to the container based virtualization,
+gaining the advantages of a standardized testing environment that is completely
 reproducible. Often developers don't run integration and end-to-end tests on
 their desktop or laptop machines because they don't want to configure the
 testing environment, or different configurations can lead to different test
@@ -50,10 +50,10 @@ from its born to the last version. A Continuous Integration system is a software
 that provides automatic check of software projects, building and testing the
 applications at every revision. Tests can run in the developers machines, but it
 is mostly important that they run also in a Continuous Integration system. Once
-revision are uploaded in a SCM system, the automated tests have to be run
+revision are uploaded in a SCM system, automated tests have to be run
 (Continuous Integration), and if the tests pass, then the application can be
-automatically deployed (Continuous Delivery), while if the tests don't pass, the
-deploy must abort and developers have to be warned about the critical situation.
+automatically deployed (Continuous Delivery), else, the deploy must abort and
+developers have to be warned about the critical situation.
 
 This work is the outcome of a collaboration with the *beFair* software development
 team, that begun at the firsts months of 2015, when the team realized that
