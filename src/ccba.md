@@ -455,7 +455,7 @@ The `--rm` option is equal to the `--rm` option of `docker run` command.
 
 Gasista Felice born as a *Python/Django* application with a *jQuery* based
 interface. The evolution of technologies in web application clients and the
-diffusion of the mobile devices leaded to the necessity of a new mobile responsive
+diffusion of the mobile devices led to the necessity of a new mobile responsive
 web interface. Gasista Felice now provides a new interface based on *AngularJS*
 framework by Google, and the old jQuery interface referred as *legacy* user
 interface. *Nginx* web server is used as the application entry point. The role

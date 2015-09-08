@@ -2,7 +2,7 @@
 
 Computer Science is a young discipline, but even if young it drastically evolved
 over a few amount of decades. The diffusion of personal computers and internet,
-as well as mobile devices and cloud computing in the last years leaded to an
+as well as mobile devices and cloud computing in the last years led to an
 exponential increase of information technology related products and services
 usage, thus incrementing also the necessity of productivity improvement in
 software development organizations. To overcome this requirement, different
@@ -23,7 +23,7 @@ The first developed applications in the history of information technology
 weren't equipped with a well defined software architecture. For simple, small,
 applications, developed by few (often one) persons, the absence of a defined
 software architecture wasn't a problem, but in bigger projects this absence
-often leaded to examples of *spaghetti code*, that brought entire projects to
+often led to examples of *spaghetti code*, that brought entire projects to
 failure. The situation improved when developers began to divide the code using a
 modular approach, as suggested by the Unix philosophy @unix, assuring reuse and
 a better maintenance of the projects.
@@ -103,7 +103,7 @@ differences between their operating systems, and these differences can lead to
 difficulties when attempting to reproduce and fix a reported bug that is related
 to a particular environment.
 
-These problems leaded to the diffusion of virtualization tools, that permits to
+These problems led to the diffusion of virtualization tools, that permits to
 formally define the development environment and his features, and to virtually
 reproduce them in every machine. Virtualization can be obtained both with
 virtual machines and containers.
