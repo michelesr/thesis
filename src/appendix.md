@@ -1,6 +1,6 @@
 # Source Code
 
-In this appendix are showed the most relevant source code files:
+This appendix includes most source code files relevant to the thesis:
 
 - Dockerfiles
 - Docker Compose files
