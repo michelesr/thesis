@@ -1,23 +1,26 @@
 # Introduction
 
 This work aims to cover the whole development process of modern web applications
-organized in lightweight environments called *containers*. It shows how development
-can be made easier with containers adoption, and how automated testing with a
-good test suite, together with a Continuous Integration system, improve
-effectively the software quality because they help in discovering bugs and act
-by themselves as quality indicators.
+organized in lightweight environments called *containers*. It shows how
+development can be made easier with containers adoption, and how automated
+testing with a good test suite, together with a Continuous Integration system,
+effectively improve the software quality because they help in discovering bugs
+and act by themselves as quality indicators.
 
 A container is an isolated environment where an application resides and runs.
 Containers can communicate to each other using a virtual network provided by the
 *container engine*, which is also the software that creates and manage them. A
 container based virtualization approach leads to different advantages in
-production, where provides scalability, reliability, automation, better
-management, and rolling updates. For the developers, containers can be used to
-obtain a development environment similar to the production one, eliminating the
+production, in terms of scalability, reliability, automation, better management,
+and rolling updates.
+
+In the development of web applications, containers can be used to obtain a
+development environment similar to the production environment, eliminating the
 disadvantages arising from the differences between these two environments, such
-as bugs related to different versions of one or more application components. For
-example the web server application used in production could be different (or a
-different version) from that used in development.
+as bugs related to different versions of one or more application components.
+Furthermore, providing a containerized development environment helps the
+reproduction of reported bugs, given that all the developers work in a
+standardized and easy to obtain environment.
 
 Part of the research work preceding the thesis consisted in comparing different
 typologies of tests that could be implemented for a software, and finding the
@@ -41,26 +44,30 @@ results. This work will cover the aspects of integrating the container approach
 to the software testing, and will provide simple procedures to run all the
 implemented tests without effort for the developers.
 
-Tests can run in the developers machines, but it is mostly important that they
-run also in a Continuous Integration environment. Once the code is pushed to a
-*SCM* (Source Code Management) system, a hook for automated tests has to be run
+A *SCM* (Source Code Management) system is a software used to manage the source
+code of one or more projects, registering every change and addition introduced
+from its born to the last version. A Continuous Integration system is a software
+that provides automatic check of software projects, building and testing the
+applications at every revision. Tests can run in the developers machines, but it
+is mostly important that they run also in a Continuous Integration system. Once
+revision are uploaded in a SCM system, the automated tests have to be run
 (Continuous Integration), and if the tests pass, then the application can be
-automatically deployed (Continuous Delivery). If the tests don't pass, the
+automatically deployed (Continuous Delivery), while if the tests don't pass, the
 deploy must abort and developers have to be warned about the critical situation.
 
-This work outcome from a collaboration with the *beFair* software development
-team, that begun at the firsts months of this year, when the team realized that
+This work is the outcome of a collaboration with the *beFair* software development
+team, that begun at the firsts months of 2015, when the team realized that
 a boost in the quality of the development process and final product could be
 obtained with the application of automated software testing, and, at the same
 time, it decided to change the way applications are developed and deployed,
 shifting from a traditional development and deploying approach, to a
 containerized one.
 
-*Gasista Felice*, developed by the beFair team and released as *FLOSS* (Free
-Libre and Open Source Software), is the use case for this work.  *Gasista
-Felice* is an online management application made for GAS (Ethical Purchasing
-Groups) initially developed for *DES* (Solidarity-based Economy District)
-Macerata.
+*Gasista Felice* @gasistafelice, developed by the beFair team and released as
+*FLOSS* (Free Libre and Open Source Software) @free-software, is the use case
+for this work. *Gasista Felice* is an online management application made for GAS
+(Ethical Purchasing Groups) initially developed for *DES* (Solidarity-based
+Economy District) Macerata.
 
 ## Organization
 
@@ -76,8 +83,8 @@ structure of Gasista Felice, as well as its configuration of the development
 environment.
 
 Chapter 4 will cover the implementation of browser automation routines with the
-*Protractor* framework for the end-to-end testing of *AngularJS* web
-applications, and in particular, of Gasista Felice AngularJS web client.
+*Protractor* @protractor framework for the end-to-end testing of *AngularJS* @ng
+web applications, and in particular, of Gasista Felice AngularJS web client.
 
 Chapter 5 shows the main tools used in end-to-end tests and how to configure the
 testing framework to work with the Gasista Felice application container
