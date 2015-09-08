@@ -4,7 +4,7 @@ In the past virtual machines covered a role of great importance in cloud
 computing and virtualization, because of their attitude to provide standardized
 and reproducible environments, installable everywhere. The main problem with
 Virtual Machines is that their configuration concerns also with the detail of
-the machine, such as hardware (ram, hard disk, processor, network interfaces,
+the machine, such as hardware (RAM, hard disk, processor, network interfaces,
 etc.), when often those features don't require reproduction and introduce
 overhead.  In fact, the most important part of the virtualization is the
 operating system and application configuration, features that are reproduced
@@ -453,13 +453,13 @@ The `--rm` option is equal to the `--rm` option of `docker run` command.
 
 ## Gasista Felice architecture
 
-Gasista Felice born as a *Python/Django* application with a *jQuery* based
-interface. The evolution of technologies in web application clients and the
-diffusion of the mobile devices led to the necessity of a new mobile responsive
-web interface. Gasista Felice now provides a new interface based on *AngularJS*
-framework by Google, and the old jQuery interface referred as *legacy* user
-interface. *Nginx* web server is used as the application entry point. The role
-of Nginx consists in:
+Gasista Felice was initially created as a *Python/Django* application with a
+*jQuery* based interface. The evolution of technologies in web application
+clients and the diffusion of the mobile devices led to the necessity of a new
+mobile responsive web interface. Gasista Felice now provides a new interface
+based on *AngularJS* framework by Google, and the old jQuery interface referred
+as *legacy* user interface. *Nginx* web server is used as the application entry
+point. The role of Nginx consists in:
 
 - routing the requests through the application components
 - managing buffering and queueing of the requests
