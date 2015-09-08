@@ -95,7 +95,7 @@ displayed by the browser:
         .toEqual('Gasista Felice');
     });
 
-In this snippet of code, the web browser performs a get request to
+In this snippet of code, the web browser performs a GET request to
 `http://proxy:8080` in order to access the home page of Gasista Felice, and
 checks that the title is the expected. The `get()` method of the `browser`
 object can be used to perform the request:
