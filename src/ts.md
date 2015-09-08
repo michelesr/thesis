@@ -7,7 +7,7 @@ run Protractor based end-to-end tests is discussed and in particular its
 container based virtualization and interaction with the web application
 containers.
 
-Given that Docker and Docker are already used to run the containerized
+Given that Docker and Docker Compose are already used to run the containerized
 application, the container structure is extended in order to include the testing
 containers and to permit the running of the end-to-end tests without the burden
 of manual installation and configuration of the testing framework resting on
@@ -69,11 +69,11 @@ Selenium is an application framework for the execution of browser automation
 scripts, and is written in the Java programming language.
 
 The history of Selenium begin with *Selenium Remote Control*. Selenium RC is a
-server that accept requests for browser automation through an http API. The http
+server that accept requests for browser automation through an HTTP API. The HTTP
 API can be accessed with drivers available for different programming language,
 such as Java, Python, PHP, Ruby, .NET, Perl and Javascript. With the diffusion
 of Selenium and browser automation scripts, browsers start to provide their
-native support to automation, leading to the born of *Selenium Web Driver*.
+native support to automation, leading to the creation of *Selenium Web Driver*.
 
 Selenium Web Driver is the successor of Selenium RC, and the main difference
 consists in its interaction with web browsers, implemented with browser specific
@@ -95,7 +95,7 @@ from the available nodes and controls them in order to test the web application.
 The nodes can be located in different machines and operating systems. In
 particular, in this implementation the hub and the nodes runs inside Docker
 containers, and they are linked through the Docker VPN. Like Selenium RC, the
-Selenium Grid hub is accessible through the http protocol.
+Selenium Grid hub is accessible through the HTTP API.
 
 ![Interactions between Protractor and Selenium ecosystem](images/eps/protractor-selenium.eps)
 
