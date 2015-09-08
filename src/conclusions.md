@@ -12,8 +12,8 @@ thus increasing their productivity. This benefits act also as an incentive
 to external collaborations, because the effort to start the development is
 reduced.
 
-The configuration of the end-to-end test environment containers predispose the
-possibility for the developers of writing end-to-end tests that can be executed
+The configuration of the end-to-end test environment containers lays the
+foundation for developers writing end-to-end tests that can be executed
 without additional configurations, and those tests can be used to reproduce
 reported bugs and verify their resolution, as well as specifications of new
 features to implement.
@@ -28,7 +28,7 @@ the entire team, giving rapid feedbacks for every change introduced in the
 software, and testing the application in a context similar to the production
 environment.
 
-All the implemented solutions runs in containerized infrastructures, so this
+All the implemented solutions run in containerized infrastructures, so this
 thesis demonstrates how working with containers can be easy and productive.
 
 The future developments regard the reorganization of the Gasista Felice
@@ -41,5 +41,5 @@ Continuous Integration system can be integrated with the production stack in
 order to provide Continuous Delivery, and this will be done soon as the
 production stack is predisposed to the container infrastructure.
 
-A good part of this work is flexible and can be reused in the development of
-other applications, so further developments are left to the imagination.
+Most of the work presented in this thesis is flexible and can be easily reused
+in the development of other applications.
