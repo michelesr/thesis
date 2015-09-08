@@ -1,32 +1,32 @@
 # Context
 
 Computer Science is a young discipline, but even if young it drastically evolved
-over a few amount of decades. The diffusion of personal computers and internet,
+over a few decades. The diffusion of personal computers and the internet,
 as well as mobile devices and cloud computing in the last years led to an
 exponential increase of information technology related products and services
 usage, thus incrementing also the necessity of productivity improvement in
-software development organizations. To overcome this requirement, different
-approaches have been implemented in different areas of interest in software
-development, and in particular:
+software development organizations.
 
-- Architecture
-- Infrastructure
-- Development Workflow
+To overcome this requirement, different approaches have been implemented in
+different areas of interest in software development, in particular in terms of
+new software architectures, changes in infrastructure and in the workflow
+adopted during development.
 
 This chapter provides an overview of how Information Technology evolved in these
-categories and how the state of art is present in this thesis project and in the
-case of study of the Gasista Felice web application.
+categories and how both this thesis project and the *Gasista Felice* web
+application represent the current state of the art.
 
 ## Evolution of software architectures
 
 The first developed applications in the history of information technology
 weren't equipped with a well defined software architecture. For simple, small,
-applications, developed by few (often one) persons, the absence of a defined
-software architecture wasn't a problem, but in bigger projects this absence
-often led to examples of *spaghetti code*, that brought entire projects to
-failure. The situation improved when developers began to divide the code using a
-modular approach, as suggested by the Unix philosophy @unix, assuring reuse and
-a better maintenance of the projects.
+applications, developed by few people (if not single developers), the absence of
+a defined software architecture wasn't a problem, but in bigger projects this
+absence often led to examples of so called *spaghetti code* (code with a
+complicated structure, difficult to read and maintain), that brought entire
+projects to failure. The situation improved when developers began to divide the
+code using a modular approach, as suggested by the Unix philosophy @unix,
+assuring reuse and a better maintenance of the projects.
 
 ### Model View Controller
 
@@ -49,7 +49,7 @@ maintain.
 
 ### From MVC to Microservices
 
- *The term "Microservice Architecture" has sprung up over the last few years to
+> *The term "Microservice Architecture" has sprung up over the last few years to
  describe a particular way of designing software applications as suites of
  independently deployable services. While there is no precise definition of this
  architectural style, there are certain common characteristics around
@@ -117,11 +117,11 @@ will show how this change affects the whole development environment.
 A classic development workflow is the *Waterfall* model, that consists in the
 following steps (that can be adapted):
 
-- Requirements specifications
-- Design
-- Implementation
-- Verification
-- Maintenance
+1. Requirements specifications
+2. Design
+3. Implementation
+4. Verification
+5. Maintenance
 
 Given that the steps are executed sequentially, this model provides a very slow
 development, integration and delivery process.
@@ -131,15 +131,15 @@ development, integration and delivery process.
 A more modern model is provided in the *Manifesto for Agile Software
 Development*:
 
-*We are uncovering better ways of developing software by doing it and helping
+> *We are uncovering better ways of developing software by doing it and helping
 others do it. Through this work we have come to value:*
-
-- *Individuals and interactions over processes and tools*
-- *Working software over comprehensive documentation*
-- *Customer collaboration over contract negotiation*
-- *Responding to change over following a plan*
-
-*That is, while there is value in the items on the right, we value the items on
+>
+> - *Individuals and interactions over processes and tools*
+> - *Working software over comprehensive documentation*
+> - *Customer collaboration over contract negotiation*
+> - *Responding to change over following a plan*
+>
+> *That is, while there is value in the items on the right, we value the items on
 the left more.* @agile-manifesto
 
 In the Agile model the highest priority is the customer satisfaction, reached
@@ -267,7 +267,7 @@ Software), and is also released as FLOSS.
 The beFair team is oriented to FLOSS principles, that are explained in detail in
 by the *GNU* (GNU is Not Unix) project website:
 
-*“Free software” means software that respects users' freedom and community.
+> *“Free software” means software that respects users' freedom and community.
 Roughly, it means that the users have the freedom to run, copy, distribute,
 study, change and improve the software. Thus, “free software” is a matter of
 liberty, not price. To understand the concept, you should think of “free” as in
