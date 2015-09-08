@@ -94,8 +94,8 @@ from the available nodes and controls them in order to test the web application.
 
 The nodes can be located in different machines and operating systems. In
 particular, in this implementation the hub and the nodes runs inside Docker
-containers, and they are linked through the Docker VPN. Like Selenium RC, the
-Selenium Grid hub is accessible through the HTTP API.
+containers, and they are linked through the Docker VPN (Figure 5.1). Like
+Selenium RC, the Selenium Grid hub is accessible through the HTTP API.
 
 ![Interactions between Protractor and Selenium ecosystem](images/eps/protractor-selenium.eps)
 
@@ -109,7 +109,8 @@ The containers used for end-to-end testing purpose are:
 - `e2e`: Protractor framework
 
 In order to define the testing containers and their interaction with the
-application a new Docker Compose configuration file is provided:
+application (Figure 5.2), a new Docker Compose configuration file is provided:
+
 
     hub:
       image: selenium/hub:latest
@@ -236,10 +237,10 @@ previously.
 The `selenium/node-firefox-debug` and `selenium/node-chrome-debug` are
 distributed with a built-in VNC server that can be accessed in order to visually
 inspect the browser behaviour during the running of end-to-end tests. For this
-purpose the `compose/test.yml` exposes ports `5900` of `firefox` and
-`chrome` containers as `5900` and `5901`, so they can be accessed with a VNC
-client. The environment configuration file `test/e2e/settings.env` can be used
-to set the screen resolution used by the VNC servers:
+purpose the `compose/test.yml` exposes ports `5900` of `firefox` and `chrome`
+containers as `5900` and `5901`, so they can be accessed with a VNC client
+(Figure 5.3). The environment configuration file `test/e2e/settings.env` can be
+used to set the screen resolution used by the VNC servers:
 
     SCREEN_WIDTH=1920
     SCREEN_HEIGHT=1080

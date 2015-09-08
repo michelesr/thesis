@@ -8,9 +8,17 @@ usage, thus incrementing also the necessity of productivity improvement in
 software development organizations.
 
 To overcome this requirement, different approaches have been implemented in
-different areas of interest in software development, in particular in terms of
-new software architectures, changes in infrastructure and in the workflow
-adopted during development.
+different areas of interest in software development (Table 2.1), in particular
+in terms of new software architectures, changes in infrastructure and in the
+workflow adopted during development.
+
+                1990's             2000's            2010's
+--------------  -----------------  ----------------  ---------------
+Architecture    Monolith           Layered Monolith  Microservices
+Infrastructure  Phisical Machines  Virtual Machines  Containers
+Dev. Workflow   Waterfall          Agile             DevOps
+
+Table: The evolution of Information Technology
 
 This chapter provides an overview of how Information Technology evolved in these
 categories and how both this thesis project and the *Gasista Felice* web
@@ -173,14 +181,6 @@ correctness.
 
 The necessity of a Continuous Delivery system is covered by this work with the
 installation and configuration of the Continuous Integration system.
-
-                1990's             2000's            2010's
---------------  -----------------  ----------------  ---------------
-Architecture    Monolith           Layered Monolith  Microservices
-Infrastructure  Phisical Machines  Virtual Machines  Containers
-Dev. Workflow   Waterfall          Agile             DevOps
-
-Table: The evolution of Information Techonlogy
 
 ## Testing
 

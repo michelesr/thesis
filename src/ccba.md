@@ -39,11 +39,11 @@ Windows.* @wikipedia-docker
 Docker permits to build images of applications that can be instanced as
 containers. For any container, Docker provides an isolated and reproducible
 environment with the advantage of accessing directly to the virtualization
-features of Linux kernel, avoiding the overhead of installing and maintaining
-virtual machines. To access the virtualization features, Docker can use
-different interfaces such as *libcontainer*, *libvirt*, *LXC* (Linux Containers)
-and *systemd-nspawn* @wikipedia-docker. Docker is written in the *Go*
-programming language.
+features of Linux kernel (Figure 3.2), avoiding the overhead of installing and
+maintaining virtual machines (Figure 3.1). To access the virtualization
+features, Docker can use different interfaces such as *libcontainer*, *libvirt*,
+*LXC* (Linux Containers) and *systemd-nspawn* @wikipedia-docker. Docker is
+written in the *Go* programming language.
 
 ![Applications running in virtual machines](images/eps/vm-diagram.eps)
 
@@ -467,7 +467,7 @@ point. The role of Nginx consists in:
 - managing decompression of incoming requests and compression of responses
 - caching the responses for reuse (disabled in development environments)
 
-The routing of requests consists in the following rules:
+The routing of requests (Figure 3.3) consists in the following rules:
 
 - requests related to the new user interface are forwarded to *HarpJS* server
   using the http protocol
@@ -491,7 +491,7 @@ uWSGI is an application server and its role consists in:
 
 ![Requests routing for Gasista Felice application](images/eps/gf-components.eps)
 
-The containers for the Gasista Felice application are:
+The containers for the Gasista Felice application (Figure 3.4) are:
 
 - `proxy`: Nginx container
 - `back`: uWSGI, Python/Django container

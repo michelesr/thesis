@@ -220,7 +220,8 @@ inside the container as `/data`.
 ### Configuration
 
 The opening of the browser at `http://localhost:3000/` redirects to the first
-configuration page. The configurations to adopt are showed in 6.1 and 6.2 tables:
+configuration page. The configurations to adopt are showed in Table 6.1 and
+Table 6.2 .
 
 Option                Value
 ------------------    --------------------
@@ -247,8 +248,7 @@ Email         `superuser@example.org`
 Table: Admin settings for Gogs
 
 Settings are confirmed with `Install Gogs` button. Then a normal user account
-has to be registered through the `Register` button.
-
+has to be registered (Table 6.3) through the `Register` button.
 
 Option        Value
 ---------     ------------------------
@@ -340,6 +340,9 @@ The warning appears at the first connection to the server, then the public key
 of the server is added to `~/.ssh/known_hosts` and the message doesn't present
 again.
 
+After the push, the repository can be managed trough git client and Gogs web
+interface (Figure 6.1).
+
 ![Gasista Felice repository page at Gogs](images/png/gogs-gf.png)
 
 ## Jenkins
@@ -369,8 +372,8 @@ only process running inside the container, the only way to launch a malicious
 script is from a Jenkins job. The creation of Jenkins jobs can be restricted to
 trusted users from the security configuration.
 
-The first solution, consisting in the sharing of Docker daemon inside the
-Jenkins container has been adopted for the following reasons:
+The first solution (Figure 6.2), consisting in the sharing of Docker daemon
+inside the Jenkins container has been adopted for the following reasons:
 
 - it doesn't require the creation of privileged containers
 - the same Docker daemon used to run Gogs and Jenkins is reused from Jenkins,
@@ -456,7 +459,7 @@ container.
 In order to avoid the execution of malicious scripts in Jenkins, the creation
 and configuration of jobs has to be restricted to a small set of trusted users.
 In the page `http://localhost:5000/configureSecurity/` the `Enable security`
-checkbox has to be checked, and the options from Table 6.4 have to be setted:
+checkbox has to be checked, and the options from Table 6.4 have to be setted.
 
 Option                          Value
 ------------------------------  ---------------------------
@@ -468,7 +471,7 @@ Allow user to sign-up           `unchecked`
 Table: Security configuration for Jenkins
 
 After confirming, an user has to be added accessing the page at the url:
-`http://localhost:5000/securityRealm/addUser`, as showed in Table 6.5:
+`http://localhost:5000/securityRealm/addUser`, as showed in Table 6.5 .
 
 Option                          Value
 ------------------------------  ---------------------------
@@ -490,7 +493,7 @@ configuration page and setting:
 Logging-in and navigating to the page `http://localhost:5000/newJob` a new job
 for the Gasista Felice project can be setted choosing the `Freestyle Project`
 option and `gasistafelice` as `Item name`. Configuration for the project
-is showed in Table 6.6:
+is showed in Table 6.6 .
 
 Option                          Value
 ------------------------------  ---------------------------------------
@@ -506,7 +509,8 @@ example the upstream and developers forks can be tracked at the same time.
 Jenkins use the git client to check the hash of the commits introduced on pushes
 and avoid rebuilding of the same changes more times if found on different remote
 repositories or branches, for example when commits are merged from a developer
-fork to the upstream. Credentials for private repositories are required:
+fork to the upstream. Credentials for private repositories are required (Table
+6.7).
 
 Option                          Value
 ------------------------------  ---------------------------------------
@@ -519,7 +523,8 @@ Passphrase                      passphrase chosen on key generation if exists
 
 Table: Credentials for Gasista Felice repository
 
-Then `mike` can be used for `Credentials` field. Other options are:
+Then `mike` can be used for `Credentials` field. Additional project options are
+provided in Table 6.8 .
 
 Option                          Value
 ------------------------------  ---------------------------------------
@@ -568,8 +573,8 @@ can be tested clicking on the `Build Now` button in the project dashboard.
 
 ### Remote repository hook configuration
 
-In order to trigger the SCM poll from Jenkins when a push is performed, a hook
-for the `gasistafelice` repository in Gogs has to be added:
+In order to trigger the SCM poll from Jenkins when a push is performed (Figure
+6.3), a hook for the `gasistafelice` repository in Gogs has to be added:
 
     $ cd $HOME/gogs_data/git/repositories/mike/gasistafelice.git/hooks
     # touch post-recieve
@@ -642,7 +647,9 @@ modified build script where the build script:
 
     ...
 
-Then the new job can be scheduled for daily or weekly execution.
+Then the new job can be scheduled for daily or weekly execution. The pooling log
+(Figure 6.4) can be accessed from the `Git Pooling Log` button in the project
+Dashboard.
 
 ![Jenkins Git pooling log](images/png/jenkins-pool.png)
 
