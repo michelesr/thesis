@@ -59,27 +59,24 @@ maintain.
 
 > *The term "Microservice Architecture" has sprung up over the last few years to
  describe a particular way of designing software applications as suites of
- independently deployable services. While there is no precise definition of this
- architectural style, there are certain common characteristics around
- organization around business capability, automated deployment, intelligence in
- the endpoints, and decentralized control of languages and data.* @martinfowler-ms
+ independently deployable services.* @martinfowler-ms
 
 In the microservices software architecture, the project is developed as a set of
-small and lightweight applications, that communicate amongst them through a well
-defined API. These small applications can be written in different languages, and
+small and lightweight services, that communicate amongst them through a well
+defined API. These small services can be written in different languages, and
 replaced when they are obsolete.
 
 In addition of deployment advantages (such as scalability) of microservices
 structured applications, in software development a microservices approach can be
 seen as a new implementation of the Unix principles of modularity: the
-applications themselves serves as modules for a project, and are completely
+services themselves acts as modules for a software, and are completely
 independent.
 
 In this thesis project the Gasista Felice web application has been
 containerized, so its infrastructure and development process has been prepared
 to embrace a migration to the microservices software architecture. In fact, the
 container infrastructure is the key of development and deployment of
-microservices structured application.
+microservices structured applications.
 
 ## Software infrastructures and development environments
 
