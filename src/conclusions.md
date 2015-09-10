@@ -34,12 +34,13 @@ thesis demonstrates how working with containers can be easy and productive.
 The future developments regard the reorganization of the Gasista Felice
 application to a microservices architecture, that can be easily obtained thanks
 to the migration to a container based infrastructure, and the extension of the
-implemented Continuous Integration system to provide integration with git server
-advanced features (such as the automatic testing of the incoming pull requests),
-to improve even more the productivity of the development team. The implemented
-Continuous Integration system can be integrated with the production stack in
-order to provide Continuous Delivery, and this will be done soon as the
-production stack is predisposed to the container infrastructure.
+implemented Continuous Integration system to provide integration with git @git
+server advanced features (such as the automatic testing of the incoming pull
+requests @pull-request), to improve even more the productivity of the
+development team.  The implemented Continuous Integration system can be
+integrated with the production stack in order to provide Continuous Delivery,
+and this will be done soon as the production stack is predisposed to the
+container infrastructure.
 
 Most of the work presented in this thesis is flexible and can be easily reused
 in the development of other applications.

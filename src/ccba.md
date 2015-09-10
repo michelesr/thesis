@@ -31,7 +31,7 @@ Felice is explained in detail.
 
 ## Docker container engine
 
-*Docker is an open-source project that automates the deployment of applications
+> *Docker is an open-source project that automates the deployment of applications
 inside software containers, by providing an additional layer of abstraction and
 automation of operating-system-level virtualization on Linux, Mac OS and
 Windows.* @wikipedia-docker
@@ -39,7 +39,7 @@ Windows.* @wikipedia-docker
 Docker permits to build images of applications that can be instanced as
 containers. For any container, Docker provides an isolated and reproducible
 environment with the advantage of accessing directly to the virtualization
-features of Linux kernel (Figure 3.2), avoiding the overhead of installing and
+features of the Linux kernel (Figure 3.2), avoiding the overhead of installing and
 maintaining virtual machines (Figure 3.1). To access the virtualization
 features, Docker can use different interfaces such as *libcontainer*, *libvirt*,
 *LXC* (Linux Containers) and *systemd-nspawn* @wikipedia-docker. Docker is
@@ -57,13 +57,17 @@ Docker can be installed in Debian with:
 
 Instructions for other GNU/Linux distributions can be found on Docker online
 documentation. For Windows and Mac OS X, on August 11, 2015, *Docker Toolbox* has
-been released as new installer replacing the older *Boot2Docker*. *The Docker
+been released as new installer replacing the older *Boot2Docker*.
+
+> *The Docker
 Toolbox is an installer to quickly and easily install and setup a Docker
 environment on your computer. Available for both Windows and Mac, the Toolbox
 installs Docker Client, Machine, Compose (Mac only), Kitematic and VirtualBox.
-@docker-toolbox.* It's obvious that the only operating systems that can run
+@docker-toolbox.*
+
+It's obvious that the only operating systems that can run
 Docker natively (without the support of a virtual machine) are those that run
-on Linux kernel.
+on the Linux kernel.
 
 ### Docker images
 
@@ -145,11 +149,11 @@ usage.
 ### Running containers as daemons
 
 Containers can be also used to run daemon applications, such as web servers. For
-example, to run *Gogs*, a Git Service Application for the software versioning
+example, to run *Gogs*, a *Git* @git Service Application for software versioning
 written in *Go*, the command is:
 
     $ mkdir /var/gogs
-    $ docker run -d -p 3000:3000 -v /var/gogs:/data codeskyblue/docker-gogs
+    $ docker run -d -p 3000:3000 -v /var/gogs:/data gogs/gogs
 
 As for the LaTeX image, a volume containing the application configuration files
 is mounted, but also the `-d` parameter is used to inform Docker that the
@@ -223,7 +227,7 @@ contains:
 - temporary files
 
 In particular, the `/var/lib/docker` directory can grow unexpectedly, completely
-filling the machine disk. In order the exhaustion of the disk space, a periodic
+filling the machine disk. To avoid the exhaustion of the disk space, a periodic
 cleaning of unused images, containers, and of the `/var/lib/docker/tmp`
 directory has to be performed.
 
@@ -333,7 +337,7 @@ application, *Docker Compose* can be used.
 
 ## Docker Compose
 
-*Distributed applications consist of many small applications that work together.
+> *Distributed applications consist of many small applications that work together.
 Docker transforms these applications into individual containers that are linked
 together. Instead of having to build, run and manage each individual container,
 Docker Compose allows you to define your multi-container application with all of
@@ -435,7 +439,7 @@ components:
     $ docker-compose logs web db
 
 The `run` function can be used to run a command inside an isolated container
-that can be linked with the application ones, for example a postgres shell can be
+that can be linked with the application ones, for example a PostgreSQL shell can be
 launched from a container linked to `db` for data manipulation:
 
 	docker-compose run --rm web psql
@@ -462,7 +466,7 @@ as *legacy* user interface. *Nginx* web server is used as the application entry
 point. The role of Nginx consists in:
 
 - routing the requests through the application components
-- managing buffering and queueing of the requests
+- managing request buffering and queueing
 - managing cryptography (https/tls)
 - managing decompression of incoming requests and compression of responses
 - caching the responses for reuse (disabled in development environments)

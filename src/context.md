@@ -160,8 +160,8 @@ in its entirety @martinfowler-ci.
 This thesis work will cover the implementation of automated tests for the
 Gasista Felice project and the installation and configuration of a Continuous
 Integration system, as well as its integration with the container infrastructure
-of Gasista Felice and with a SCM (Source Code Managament) system for automatic
-triggering of the builds.
+of Gasista Felice and with a SCM (Source Code Managament) system for the automatic
+triggering of builds.
 
 #### DevOps
 
@@ -200,7 +200,7 @@ such as a database; in that case, the interaction with the component has to be
 replaced with the interaction with a dummy object that usually has the role of
 returning a fixed value.
 
-Integration tests regard the testing a grouped set of modules in order to verify
+Integration tests regard the testing of a grouped set of modules in order to verify
 their interaction. It can involve the interaction with external components, and
 in that case, the testing environment has to be configured in order to permit
 this interaction (for example an integration test that involve a database query
