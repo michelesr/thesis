@@ -97,7 +97,7 @@ particular, in this implementation the hub and the nodes runs inside Docker
 containers, and they are linked through the Docker VPN (Figure 5.1). Like
 Selenium RC, the Selenium Grid hub is accessible through the HTTP API.
 
-![Interactions between Protractor and Selenium ecosystem](images/eps/protractor-selenium.eps)
+![Interactions between Protractor and Selenium ecosystem](images/pdf/protractor-selenium.pdf)
 
 ## Containers configuration
 
@@ -171,7 +171,7 @@ their printing on the console. The `sleep 5` is used to wait 5 seconds after
 containers start in order to made their processes initiate correctly before
 sending requests to them.
 
-![Linking of testing containers with application containers](images/eps/test-containers.eps)
+![Linking of testing containers with application containers](images/pdf/test-containers.pdf)
 
 ### Test Running
 

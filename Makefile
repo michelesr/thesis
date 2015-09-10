@@ -18,7 +18,7 @@ latex:
 IMG=src/images
 
 dot: 
-	dot -Teps $(IMG)/dot/gf-components.dot -o $(IMG)/gf-components.eps
-	dot -Teps $(IMG)/dot/gf-containers.dot -o $(IMG)/gf-containers.eps
-	dot -Teps $(IMG)/dot/protractor-selenium.dot -o $(IMG)/protractor-selenium.eps
-	dot -Teps $(IMG)/dot/test-containers.dot -o $(IMG)/test-containers.eps
+	dot -Tpdf $(IMG)/dot/gf-components.dot -o $(IMG)/pdf/gf-components.pdf
+	dot -Tpdf $(IMG)/dot/gf-containers.dot -o $(IMG)/pdf/gf-containers.pdf
+	dot -Tpdf $(IMG)/dot/protractor-selenium.dot -o $(IMG)/pdf/protractor-selenium.pdf
+	dot -Tpdf $(IMG)/dot/test-containers.dot -o $(IMG)/pdf/test-containers.pdf

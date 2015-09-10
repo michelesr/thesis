@@ -493,7 +493,7 @@ uWSGI is an application server and its role consists in:
 - forwarding the requests to the processes
 - serving static files for the legacy interface
 
-![Requests routing for Gasista Felice application](images/eps/gf-components.eps)
+![Requests routing for Gasista Felice application](images/pdf/gf-components.pdf)
 
 The containers for the Gasista Felice application (Figure 3.4) are:
 
@@ -502,7 +502,7 @@ The containers for the Gasista Felice application (Figure 3.4) are:
 - `front`: HarpJs container
 - `db`: PostrgreSQL container
 
-![Gasista Felice containers and their interaction](images/eps/gf-containers.eps)
+![Gasista Felice containers and their interaction](images/pdf/gf-containers.pdf)
 
 The `docker-compose.yml` used for the development of Gasista Felice is:
 
