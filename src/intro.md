@@ -77,7 +77,7 @@ the container based virtualization.
 
 Chapter 3 introduces and explains in detail the *Docker* @docker container engine,
 with practical examples of usage, then it shows how the *Docker Compose*
-@docker-compose container orchestration tool that can be used to simply define
+@docker-compose container orchestration tool can be used to simply define
 and build portable development and testing environment. The last section of the
 chapter exposes the structure of Gasista Felice, as well as its configuration of
 the development environment.
