@@ -71,7 +71,7 @@ Economy District) Macerata.
 
 ## Organization
 
-Chapter 2 exposes the technological and social context that lead to the thesis
+Chapter 2 exposes the technological and social context that led to the thesis
 work, as well as the motivation of choosing the end-to-end testing typology and
 the container based virtualization.
 
@@ -82,7 +82,7 @@ development and testing environment. The last section of the chapter exposes the
 structure of Gasista Felice, as well as its configuration of the development
 environment.
 
-Chapter 4 will cover the implementation of browser automation routines with the
+Chapter 4 covers the implementation of browser automation routines with the
 *Protractor* @protractor framework for the end-to-end testing of *AngularJS* @ng
 web applications, and in particular, of Gasista Felice AngularJS web client.
 
@@ -91,7 +91,7 @@ testing framework to work with the Gasista Felice application container
 ecosystem. The configuration is an integral part of this thesis and aims to
 reduce the developer effort to get the testing environment.
 
-Chapter 6 will explain how to build a Continuous Integration system to provide
+Chapter 6 explains how to build a Continuous Integration system to provide
 automatic run of tests once the code is updated and pushed into the project
-repository. Continuous integration is essential for continuous delivery and
+repository. Continuous Integration is essential for Continuous Delivery and
 rolling release of the software products.
