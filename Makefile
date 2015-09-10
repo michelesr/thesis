@@ -3,7 +3,8 @@ pdf: latex
 	bash scripts/run_latex_container.sh
 
 clean:
-	find . -regex '.*.\(pdf\|aux\|toc\|lot\|lof\|log\)' -exec rm -v {} \+
+	find . -regex '.*.\(aux\|toc\|lot\|lof\|log\)' -exec rm -v {} \+
+	find . -name *converted* -exec rm -v {} \+
 	rm -rvf dist/ template/chapters/
 
 clean-container:
