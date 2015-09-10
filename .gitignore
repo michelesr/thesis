@@ -1,7 +1,8 @@
-*.pdf
 *.aux
 *.toc
 *.lot
 *.lof
 *.log
+*converted*
+dist
 template/chapters
