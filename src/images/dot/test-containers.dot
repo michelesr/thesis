@@ -1,5 +1,5 @@
 graph test_containers {
-  size="3.5,3.5"
+  size="4.5,4.5"
   autosize=false
   node [shape=rectangle]
   E2E -- Hub [label="http"]
