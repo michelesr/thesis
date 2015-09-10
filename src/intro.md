@@ -65,7 +65,7 @@ containerized one.
 
 *Gasista Felice* @gasistafelice, developed by the beFair team and released as
 *FLOSS* (Free Libre and Open Source Software) @free-software, is the use case
-for this work. *Gasista Felice* is an online management application made for GAS
+for this work. Gasista Felice is an online management application made for GAS
 (Ethical Purchasing Groups) initially developed for *DES* (Solidarity-based
 Economy District) Macerata.
 
@@ -75,12 +75,12 @@ Chapter 2 exposes the technological and social context that led to the thesis
 work, as well as the motivation of choosing the end-to-end testing typology and
 the container based virtualization.
 
-Chapter 3 introduces and explains in detail the Docker container engine, with
-practical examples of usage, then it shows how Docker Compose container
-orchestration tool that can be used to simply define and build portable
-development and testing environment. The last section of the chapter exposes the
-structure of Gasista Felice, as well as its configuration of the development
-environment.
+Chapter 3 introduces and explains in detail *Docker* @docker container engine,
+with practical examples of usage, then it shows how *Docker Compose*
+@docker-compose container orchestration tool that can be used to simply define
+and build portable development and testing environment. The last section of the
+chapter exposes the structure of Gasista Felice, as well as its configuration of
+the development environment.
 
 Chapter 4 covers the implementation of browser automation routines with the
 *Protractor* @protractor framework for the end-to-end testing of *AngularJS* @ng
