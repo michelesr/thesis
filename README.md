@@ -20,6 +20,6 @@ To compile the thesis using Docker and LaTeX:
 A prebuilt version of the document is available
 [here](https://michelesr.github.io/thesis/dist/thesis.pdf).
 
-This thesis is licensed under a [CC-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
+This thesis is licensed under a [CC-BY-SA 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/) license.
 
 © 2015 Michele Sorcinelli
